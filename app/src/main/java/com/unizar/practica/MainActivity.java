@@ -21,8 +21,9 @@ public class MainActivity extends Activity implements SensorEventListener, Compo
     private Vibrator vibrator;
 
     private TextView txt_accelerometer;
+    private Switch swt_vibrate;
 
-    private long[] vibconfig = new long[2];
+    private long[] vibconfig = new long[] {50, 50};
 
 
     protected void onResume() {
@@ -49,15 +50,18 @@ public class MainActivity extends Activity implements SensorEventListener, Compo
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         // listeners
-        ((Switch) findViewById(R.id.swt_vib)).setOnCheckedChangeListener(this);
+        swt_vibrate = findViewById(R.id.swt_vib);
+        swt_vibrate.setOnCheckedChangeListener(this);
         ((SeekBar) findViewById(R.id.skb_on)).setOnSeekBarChangeListener(this);
+        ((SeekBar) findViewById(R.id.skb_off)).setOnSeekBarChangeListener(this);
+        updateVibrationUI();
     }
 
     // ----------------------- sensor -------------------
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        txt_accelerometer.setText(String.format(Locale.getDefault(), "X=%.2f\nY=%.2f\nZ=%.2f", event.values[0], event.values[1], event.values[2]));
+        txt_accelerometer.setText(String.format(Locale.getDefault(), "X=%.5f\nY=%.5f\nZ=%.5f", event.values[0], event.values[1], event.values[2]));
     }
 
     @Override
@@ -70,7 +74,9 @@ public class MainActivity extends Activity implements SensorEventListener, Compo
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             // vibrate
-            vibrator.vibrate(vibconfig, vibconfig.length);
+            vibrator.vibrate(vibconfig, 0);
+        } else {
+            vibrator.cancel();
         }
     }
 
@@ -78,7 +84,12 @@ public class MainActivity extends Activity implements SensorEventListener, Compo
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        vibconfig[seekBar.getId() == R.id.skb_on ? 0 : 1] = progress;
+        vibconfig[seekBar.getId() == R.id.skb_on ? 0 : 1] = progress + 1;
+        updateVibrationUI();
+    }
+
+    private void updateVibrationUI() {
+        swt_vibrate.setText(String.format(Locale.getDefault(), "on=%d - off=%d", vibconfig[0], vibconfig[1]));
     }
 
     @Override
