@@ -34,5 +34,11 @@ class Vibrator(
     private fun updateVibrationUI() {
         cntx.swt_vib.text = "off=${vibconfig[0]} - on=${vibconfig[1]}"
     }
+
+    fun onResume() {
+        toggleVibration(false)
+    }
+
+    fun onPause() = Unit
 }
 

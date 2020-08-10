@@ -9,8 +9,6 @@ import com.unizar.practica.fragment.Speaker
 import com.unizar.practica.fragment.Vibrator
 import kotlinx.android.synthetic.main.activity_main.*
 
-const val SAMPLES = 100
-
 class MainActivity : Activity() {
 
     val accelerometer = Accelerometer(this)
@@ -35,11 +33,19 @@ class MainActivity : Activity() {
     override fun onResume() {
         super.onResume()
         accelerometer.onResume()
+        vibrator.onResume()
+        microphone.onResume()
+        speaker.onResume()
+
     }
 
     override fun onPause() {
         super.onPause()
         accelerometer.onPause()
+        vibrator.onPause()
+        microphone.onPause()
+        speaker.onPause()
+
     }
 
     private fun initHideable() {

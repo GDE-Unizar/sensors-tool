@@ -8,8 +8,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.jjoe64.graphview.series.DataPoint
 import com.unizar.practica.MainActivity
-import com.unizar.practica.SAMPLES
-import com.unizar.practica.tools.FixSerie
+import com.unizar.practica.tools.RangeSerie
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 
@@ -24,9 +23,9 @@ class Accelerometer(
     private var nextX: Double = 0.0
         get() = field++
 
-    private val serieX = FixSerie().apply { color = Color.GREEN }
-    private val serieY = FixSerie().apply { color = Color.RED }
-    private val serieZ = FixSerie().apply { color = Color.BLUE }
+    private val serieX = RangeSerie().apply { color = Color.GREEN }
+    private val serieY = RangeSerie().apply { color = Color.RED }
+    private val serieZ = RangeSerie().apply { color = Color.BLUE }
 
     fun onCreate() {
         // sensor
@@ -35,6 +34,8 @@ class Accelerometer(
 
         // listeners
         cntx.acc_tog.setOnCheckedChangeListener { _, c -> toggleRangePlot(c) }
+        cntx.acc_base.setOnClickListener { listOf(serieX, serieY, serieZ).forEach(RangeSerie::markBase) }
+        cntx.acc_clear.setOnClickListener { listOf(serieX, serieY, serieZ).forEach(RangeSerie::clear) }
 
         // graph acelerometer
         cntx.graph_acc.addSeries(serieX)
@@ -46,7 +47,7 @@ class Accelerometer(
         cntx.graph_acc.viewport.setScalableY(true)
     }
 
-    fun onResume() = sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+    fun onResume() = sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
 
 
     fun onPause() = sensorManager.unregisterListener(this)
@@ -55,13 +56,13 @@ class Accelerometer(
 
         val x = nextX
         for ((i, serie) in mapOf(Pair(0, serieX), Pair(1, serieY), Pair(2, serieZ))) {
-            serie.appendData(DataPoint(x, event.values[i].toDouble()), true, SAMPLES)
+            serie.addData(DataPoint(x, event.values[i].toDouble()))
         }
         cntx.graph_acc.onDataChanged(false, false)
         cntx.graph_acc.viewport.setMaxX(serieX.highestValueX)
-        cntx.graph_acc.viewport.setMinX(serieX.lowestValueX)
+        cntx.graph_acc.viewport.setMinX(serieX.highestValueX - SAMPLES)
 
-        cntx.txt_acc.text = StringBuilder().apply {
+        cntx.acc_txt.text = StringBuilder().apply {
             for ((label, serie) in mapOf(Pair("X", serieX), Pair("Y", serieY), Pair("Z", serieZ))) {
                 append(label)
                 append("=")

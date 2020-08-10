@@ -29,4 +29,10 @@ class Speaker(
         }
     }
 
+    fun onResume() {
+        setState(false)
+    }
+
+    fun onPause() = Unit
+
 }

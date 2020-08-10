@@ -3,45 +3,70 @@ package com.unizar.practica.fragment
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
+import android.os.Handler
+import android.os.Looper
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.unizar.practica.MainActivity
-import com.unizar.practica.SAMPLES
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.concurrent.fixedRateTimer
 import kotlin.math.abs
 
-private val HZ = 8000
+const val HZ = 8000
+
+const val SAMPLES = 100
 
 class Microphone(
         val cntx: MainActivity
 ) {
 
+    val sm = SoundMeter()
+    val micSerie = LineGraphSeries<DataPoint>()
+    var micx = 0.0
+
     fun onCreate() {
+        handler = Handler(Looper.getMainLooper())
+
         // graph microphone
-        val sm = SoundMeter()
-        sm.start()
-        val micSerie = LineGraphSeries<DataPoint>()
-        var micx = 0.0
         cntx.graph_mic.addSeries(micSerie)
         cntx.graph_mic.viewport.isXAxisBoundsManual = true
         cntx.graph_mic.gridLabelRenderer.isHorizontalLabelsVisible = false
+    }
 
-        fixedRateTimer("mic", false, 0, 100) {
-            micSerie.appendData(DataPoint(micx++, sm.amplitude), true, SAMPLES)
-            cntx.graph_mic.onDataChanged(false, false)
-            cntx.graph_mic.viewport.setMaxX(micSerie.highestValueX)
-            cntx.graph_mic.viewport.setMinX(micSerie.lowestValueX)
+    fun updateSound() {
+        micSerie.appendData(DataPoint(micx++, sm.amplitude), true, SAMPLES)
+        cntx.graph_mic.onDataChanged(false, false)
+        cntx.graph_mic.viewport.setMaxX(micSerie.highestValueX)
+        cntx.graph_mic.viewport.setMinX(micSerie.highestValueX - SAMPLES)
+    }
+
+    // ---- updater ---------
+
+    lateinit var handler: Handler
+
+    val updateTask = object : Runnable {
+        override fun run() {
+            updateSound()
+            handler.postDelayed(this, 100)
         }
+    }
+
+    fun onResume() {
+        sm.start()
+        handler.post(updateTask)
+    }
+
+    fun onPause() {
+        handler.removeCallbacks(updateTask)
+        sm.stop()
     }
 }
 
 
 class SoundMeter {
 
-    private var minSize = AudioRecord.getMinBufferSize(HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
+    var minSize = AudioRecord.getMinBufferSize(HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
 
-    private var ar: AudioRecord = AudioRecord(MediaRecorder.AudioSource.MIC, HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, minSize)
+    var ar: AudioRecord = AudioRecord(MediaRecorder.AudioSource.MIC, HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, minSize)
 
     fun start() = ar.startRecording()
 
