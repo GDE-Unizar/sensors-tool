@@ -1,4 +1,4 @@
-package com.unizar.practica
+package com.unizar.practica.tools
 
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
@@ -29,6 +29,6 @@ class FixSerie : LineGraphSeries<DataPoint>() {
 
     fun update() = super.resetData((if (plotRange) rangeData else rawData).toTypedArray())
 
-    var rangeY = 0.0
+    val rangeY
         get() = rangeData.last.y
 }

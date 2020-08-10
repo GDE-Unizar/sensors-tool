@@ -1,4 +1,4 @@
-package com.unizar.practica
+package com.unizar.practica.fragment
 
 import android.content.Context
 import android.graphics.Color
@@ -7,6 +7,9 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.jjoe64.graphview.series.DataPoint
+import com.unizar.practica.MainActivity
+import com.unizar.practica.SAMPLES
+import com.unizar.practica.tools.FixSerie
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 

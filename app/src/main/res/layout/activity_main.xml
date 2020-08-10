@@ -105,18 +105,18 @@
             android:layout_height="wrap_content"
             android:text="Speaker" />
 
-        <EditText
-            android:id="@+id/n_spk"
+        <SeekBar
+            android:id="@+id/spk_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number" />
+            android:max="20000"
+            android:progress="10" />
 
         <Switch
             android:id="@+id/spk_toggle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Switch" />
+            android:text="Enable" />
 
     </LinearLayout>
 

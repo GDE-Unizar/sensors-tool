@@ -1,36 +1,41 @@
-package com.unizar.practica
+package com.unizar.practica.fragment
 
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
+import com.unizar.practica.MainActivity
+import com.unizar.practica.SAMPLES
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.fixedRateTimer
 import kotlin.math.abs
 
+private val HZ = 8000
+
 class Microphone(
         val cntx: MainActivity
 ) {
+
     fun onCreate() {
         // graph microphone
         val sm = SoundMeter()
         sm.start()
         val micSerie = LineGraphSeries<DataPoint>()
         var micx = 0.0
+        cntx.graph_mic.addSeries(micSerie)
+        cntx.graph_mic.viewport.isXAxisBoundsManual = true
+        cntx.graph_mic.gridLabelRenderer.isHorizontalLabelsVisible = false
+
         fixedRateTimer("mic", false, 0, 100) {
-            println(sm.amplitude)
             micSerie.appendData(DataPoint(micx++, sm.amplitude), true, SAMPLES)
             cntx.graph_mic.onDataChanged(false, false)
             cntx.graph_mic.viewport.setMaxX(micSerie.highestValueX)
             cntx.graph_mic.viewport.setMinX(micSerie.lowestValueX)
         }
-        cntx.graph_mic.addSeries(micSerie)
-        cntx.graph_mic.viewport.isXAxisBoundsManual = true
     }
 }
 
-private val HZ = 8000
 
 class SoundMeter {
 

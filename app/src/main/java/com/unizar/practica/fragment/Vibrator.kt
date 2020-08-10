@@ -1,8 +1,9 @@
-package com.unizar.practica
+package com.unizar.practica.fragment
 
 import android.content.Context
 import android.os.Vibrator
-import android.widget.SeekBar
+import com.unizar.practica.MainActivity
+import com.unizar.practica.tools.setOnProgressChangedListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class Vibrator(
@@ -23,7 +24,6 @@ class Vibrator(
 
     }
 
-
     fun updateProgressBar(id: Int, progress: Int) {
         vibconfig[id] = (progress + 1).toLong()
         updateVibrationUI()
@@ -31,21 +31,8 @@ class Vibrator(
 
     fun toggleVibration(state: Boolean) = if (state) vibrator.vibrate(vibconfig, 0) else vibrator.cancel()
 
-
     private fun updateVibrationUI() {
         cntx.swt_vib.text = "off=${vibconfig[0]} - on=${vibconfig[1]}"
     }
 }
 
-inline fun SeekBar.setOnProgressChangedListener(crossinline listener: (Int) -> Unit) {
-    this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            listener(progress)
-        }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-
-    })
-}
