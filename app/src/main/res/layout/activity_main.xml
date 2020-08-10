@@ -10,33 +10,49 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/acc_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:text="Accelerometer:" />
 
-            <TextView
-                android:id="@+id/txt_acc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Accelerometer:" />
-
-            <Switch
-                android:id="@+id/acc_tog"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Variation" />
-        </LinearLayout>
-
-        <view
-            android:id="@+id/graph_acc"
-            class="com.jjoe64.graphview.GraphView"
+        <LinearLayout
+            android:id="@+id/acc_box"
             android:layout_width="match_parent"
-            android:layout_height="200dip" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_acc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Switch
+                    android:id="@+id/acc_tog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Variation" />
+            </LinearLayout>
+
+            <view
+                android:id="@+id/graph_acc"
+                class="com.jjoe64.graphview.GraphView"
+                android:layout_width="match_parent"
+                android:layout_height="200dip" />
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView"
@@ -46,33 +62,41 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/vib_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Vibrator" />
 
-        <SeekBar
-            android:id="@+id/skb_on"
+        <LinearLayout
+            android:id="@+id/vib_box"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="99"
-            android:padding="10dp"
-            android:progress="49" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <SeekBar
-            android:id="@+id/skb_off"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="99"
-            android:padding="10dp"
-            android:progress="49" />
+            <SeekBar
+                android:id="@+id/skb_on"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="99"
+                android:padding="10dp"
+                android:progress="49" />
 
-        <Switch
-            android:id="@+id/swt_vib"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="-" />
+            <SeekBar
+                android:id="@+id/skb_off"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="99"
+                android:padding="10dp"
+                android:progress="49" />
+
+            <Switch
+                android:id="@+id/swt_vib"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="-" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView2"
@@ -82,15 +106,24 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
+            android:id="@+id/mic_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Microphone" />
 
-        <view
-            android:id="@+id/graph_mic"
-            class="com.jjoe64.graphview.GraphView"
+        <LinearLayout
+            android:id="@+id/mic_box"
             android:layout_width="match_parent"
-            android:layout_height="200dip" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <view
+                android:id="@+id/graph_mic"
+                class="com.jjoe64.graphview.GraphView"
+                android:layout_width="match_parent"
+                android:layout_height="200dip" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imageView3"
@@ -100,23 +133,31 @@
             android:background="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/spk_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Speaker" />
 
-        <SeekBar
-            android:id="@+id/spk_progress"
+        <LinearLayout
+            android:id="@+id/spk_box"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="20000"
-            android:progress="10" />
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <Switch
-            android:id="@+id/spk_toggle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Enable" />
+            <SeekBar
+                android:id="@+id/spk_progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="20000"
+                android:progress="10" />
+
+            <Switch
+                android:id="@+id/spk_toggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enable" />
+        </LinearLayout>
 
     </LinearLayout>
 
