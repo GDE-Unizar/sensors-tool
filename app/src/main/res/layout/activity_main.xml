@@ -1,68 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="10dp"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txt_acc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Accelerometer:" />
+
+            <Switch
+                android:id="@+id/acc_tog"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Variation" />
+        </LinearLayout>
+
+        <view
+            android:id="@+id/graph_acc"
+            class="com.jjoe64.graphview.GraphView"
+            android:layout_width="match_parent"
+            android:layout_height="200dip" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/txt_acc"
-            android:layout_width="0dp"
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Accelerometer:" />
+            android:text="Vibrator" />
+
+        <SeekBar
+            android:id="@+id/skb_on"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="99"
+            android:padding="10dp"
+            android:progress="49" />
+
+        <SeekBar
+            android:id="@+id/skb_off"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="99"
+            android:padding="10dp"
+            android:progress="49" />
 
         <Switch
-            android:id="@+id/acc_tog"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Variation" />
+            android:id="@+id/swt_vib"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="-" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Microphone" />
+
+        <view
+            android:id="@+id/graph_mic"
+            class="com.jjoe64.graphview.GraphView"
+            android:layout_width="match_parent"
+            android:layout_height="200dip" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Speaker" />
+
+        <EditText
+            android:id="@+id/n_spk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+
+        <Switch
+            android:id="@+id/spk_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch" />
+
     </LinearLayout>
 
-    <view
-        android:id="@+id/graph"
-        class="com.jjoe64.graphview.GraphView"
-        android:layout_width="match_parent"
-        android:layout_height="200dip" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@android:color/darker_gray"
-        android:paddingRight="5dp" />
-
-    <SeekBar
-        android:id="@+id/skb_on"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="99"
-        android:padding="10dp"
-        android:progress="49" />
-
-    <SeekBar
-        android:id="@+id/skb_off"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="99"
-        android:padding="10dp"
-        android:progress="49" />
-
-    <Switch
-        android:id="@+id/swt_vib"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="Switch" />
-
-</LinearLayout>
+</ScrollView>
