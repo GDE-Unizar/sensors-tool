@@ -1,8 +1,9 @@
 package com.unizar.practica.tools
 
 import android.widget.SeekBar
+import android.widget.Switch
 
-inline fun SeekBar.setOnProgressChangedListener(crossinline listener: (Int) -> Unit) {
+inline fun SeekBar.onProgressChange(crossinline listener: (Int) -> Unit) {
     this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             listener(progress)
@@ -13,4 +14,9 @@ inline fun SeekBar.setOnProgressChangedListener(crossinline listener: (Int) -> U
         override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 
     })
+}
+
+
+inline fun Switch.onCheckedChange(crossinline listener: (Boolean) -> Unit) {
+    this.setOnCheckedChangeListener { _, checked -> listener(checked) }
 }

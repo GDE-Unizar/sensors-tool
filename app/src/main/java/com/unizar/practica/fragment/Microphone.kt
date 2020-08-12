@@ -8,6 +8,7 @@ import android.os.Looper
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.unizar.practica.MainActivity
+import com.unizar.practica.tools.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
@@ -17,13 +18,13 @@ const val SAMPLES = 100
 
 class Microphone(
         val cntx: MainActivity
-) {
+) : Fragment {
 
     val sm = SoundMeter()
     val micSerie = LineGraphSeries<DataPoint>()
     var micx = 0.0
 
-    fun onCreate() {
+    override fun onCreate() {
         handler = Handler(Looper.getMainLooper())
 
         // graph microphone
@@ -50,12 +51,12 @@ class Microphone(
         }
     }
 
-    fun onResume() {
+    override fun onResume() {
         sm.start()
         handler.post(updateTask)
     }
 
-    fun onPause() {
+    override fun onPause() {
         handler.removeCallbacks(updateTask)
         sm.stop()
     }

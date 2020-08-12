@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:animateLayoutChanges="false"
+    android:keepScreenOn="true"
+    android:padding="5dp"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
 
         <TextView
@@ -19,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="5dp"
             android:text="Accelerometer:" />
 
         <LinearLayout
@@ -26,24 +29,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/acc_txt"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:padding="5dp" />
 
                 <Button
                     android:id="@+id/acc_base"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="base" />
 
                 <Button
@@ -51,20 +58,26 @@
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:text="clear" />
 
-                <Switch
+                <ToggleButton
                     android:id="@+id/acc_tog"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Variation" />
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textOff="value"
+                    android:textOn="range" />
+
             </LinearLayout>
 
             <view
                 android:id="@+id/graph_acc"
                 class="com.jjoe64.graphview.GraphView"
                 android:layout_width="match_parent"
-                android:layout_height="200dip" />
+                android:layout_height="200dip"
+                android:padding="5dp" />
 
         </LinearLayout>
 
@@ -73,36 +86,39 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
-            android:background="@android:color/darker_gray" />
+            android:background="@android:color/darker_gray"
+            android:padding="5dp" />
 
         <TextView
             android:id="@+id/vib_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Vibrator" />
+            android:padding="5dp"
+            android:text="Vibrator:" />
 
         <LinearLayout
             android:id="@+id/vib_box"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <SeekBar
                 android:id="@+id/skb_on"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="99"
-                android:padding="10dp"
-                android:progress="49" />
+                android:max="999"
+                android:padding="5dp"
+                android:progress="499" />
 
             <SeekBar
                 android:id="@+id/skb_off"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="99"
-                android:padding="10dp"
-                android:progress="49" />
+                android:max="999"
+                android:padding="5dp"
+                android:progress="499" />
 
             <Switch
                 android:id="@+id/swt_vib"
@@ -117,26 +133,30 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
-            android:background="@android:color/darker_gray" />
+            android:background="@android:color/darker_gray"
+            android:padding="5dp" />
 
         <TextView
             android:id="@+id/mic_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Microphone" />
+            android:padding="5dp"
+            android:text="Microphone:" />
 
         <LinearLayout
             android:id="@+id/mic_box"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <view
                 android:id="@+id/graph_mic"
                 class="com.jjoe64.graphview.GraphView"
                 android:layout_width="match_parent"
-                android:layout_height="200dip" />
+                android:layout_height="200dip"
+                android:padding="5dp" />
         </LinearLayout>
 
         <ImageView
@@ -144,32 +164,37 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
-            android:background="@android:color/darker_gray" />
+            android:background="@android:color/darker_gray"
+            android:padding="5dp" />
 
         <TextView
             android:id="@+id/spk_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Speaker" />
+            android:padding="5dp"
+            android:text="Speaker:" />
 
         <LinearLayout
             android:id="@+id/spk_box"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <SeekBar
                 android:id="@+id/spk_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="20000"
+                android:max="500"
+                android:padding="5dp"
                 android:progress="10" />
 
             <Switch
                 android:id="@+id/spk_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:text="Enable" />
         </LinearLayout>
 

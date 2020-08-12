@@ -3,22 +3,27 @@ package com.unizar.practica.fragment
 import android.content.Context
 import android.os.Vibrator
 import com.unizar.practica.MainActivity
-import com.unizar.practica.tools.setOnProgressChangedListener
+import com.unizar.practica.tools.Fragment
+import com.unizar.practica.tools.onCheckedChange
+import com.unizar.practica.tools.onProgressChange
 import kotlinx.android.synthetic.main.activity_main.*
 
 class Vibrator(
         val cntx: MainActivity
-) {
+) : Fragment {
 
     private lateinit var vibrator: Vibrator
     private val vibconfig = longArrayOf(50, 50)
 
-    fun onCreate() {
+    override fun onCreate() {
         vibrator = cntx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        cntx.swt_vib.setOnCheckedChangeListener { _, c -> toggleVibration(c) }
 
-        cntx.skb_on.setOnProgressChangedListener { value -> updateProgressBar(0, value) }
-        cntx.skb_off.setOnProgressChangedListener { value -> updateProgressBar(1, value) }
+        cntx.swt_vib.onCheckedChange {
+            vibrator.run { if (it) vibrate(vibconfig, 0) else cancel() }
+        }
+
+        cntx.skb_on.onProgressChange { value -> updateProgressBar(0, value) }
+        cntx.skb_off.onProgressChange { value -> updateProgressBar(1, value) }
 
         updateVibrationUI()
 
@@ -29,16 +34,14 @@ class Vibrator(
         updateVibrationUI()
     }
 
-    fun toggleVibration(state: Boolean) = if (state) vibrator.vibrate(vibconfig, 0) else vibrator.cancel()
-
     private fun updateVibrationUI() {
         cntx.swt_vib.text = "off=${vibconfig[0]} - on=${vibconfig[1]}"
     }
 
-    fun onResume() {
-        toggleVibration(false)
-    }
+    override fun onResume() {}
 
-    fun onPause() = Unit
+    override fun onPause() {
+        cntx.swt_vib.isChecked = false
+    }
 }
 

@@ -1,38 +1,35 @@
 package com.unizar.practica.fragment
 
 import com.unizar.practica.MainActivity
+import com.unizar.practica.tools.Fragment
 import com.unizar.practica.tools.Tune
-import com.unizar.practica.tools.setOnProgressChangedListener
+import com.unizar.practica.tools.onCheckedChange
+import com.unizar.practica.tools.onProgressChange
 import kotlinx.android.synthetic.main.activity_main.*
 
 class Speaker(
         val cntx: MainActivity
-) {
+) : Fragment {
 
     val tune = Tune()
 
-    fun onCreate() {
-        cntx.spk_toggle.setOnCheckedChangeListener { _, checked -> setState(checked) }
+    override fun onCreate() {
+        cntx.spk_toggle.onCheckedChange {
+            tune.run { if (it) start() else stop() }
+        }
 
-        cntx.spk_progress.setOnProgressChangedListener {
+        cntx.spk_progress.onProgressChange {
             tune.freq = it.toDouble()
             cntx.spk_toggle.text = "$it Hz"
         }
         cntx.spk_progress.progress = 440
     }
 
-    private fun setState(enabled: Boolean) {
-        if (enabled) {
-            tune.start()
-        } else {
-            tune.stop()
-        }
-    }
+    override fun onResume() {}
 
-    fun onResume() {
-        setState(false)
+    override fun onPause() {
+        cntx.spk_toggle.isChecked = false
     }
-
-    fun onPause() = Unit
 
 }
+
