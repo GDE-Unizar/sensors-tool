@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.unizar.practica"
         minSdkVersion 14
-        targetSdkVersion 29
+        targetSdkVersion 28 // don't change, can't write to external in 29
         versionCode 1
         versionName "1.0"
     }

@@ -8,8 +8,10 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.jjoe64.graphview.series.DataPoint
 import com.unizar.practica.MainActivity
+import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
 import com.unizar.practica.tools.RangeSerie
+import com.unizar.practica.tools.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 
@@ -19,6 +21,7 @@ class Accelerometer(
 
     private lateinit var sensorManager: SensorManager
     private lateinit var accelerometer: Sensor
+    private val file = FileWriter(cntx)
 
 
     private var nextX: Double = 0.0
@@ -35,9 +38,10 @@ class Accelerometer(
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
         // listeners
-        cntx.acc_tog.setOnCheckedChangeListener { _, c -> toggleRangePlot(c) }
+        cntx.acc_tog.onCheckedChange { toggleRangePlot(it) }
         cntx.acc_base.setOnClickListener { series.forEach(RangeSerie::markBase) }
         cntx.acc_clear.setOnClickListener { series.forEach(RangeSerie::clear) }
+        cntx.acc_record.onCheckedChange { record(it) }
 
         // graph acelerometer
         cntx.graph_acc.addSeries(serieX)
@@ -47,19 +51,24 @@ class Accelerometer(
         cntx.graph_acc.gridLabelRenderer.isHorizontalLabelsVisible = false
         //cntx.graph.viewport.isScalable = true // setScalableX
         cntx.graph_acc.viewport.setScalableY(true)
-
-//        1.let { it.toString() } == "1"
-//        1.run { this.toString() } == "1"
-//        1.also { it.toString() } == 1
-//        1.apply { this.toString() } == 1
-//
-//        with(1) { this.toString() } == "1"
-//        run { 1.toString() } == "1"
     }
 
-    override fun onResume() = sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME).run { }
+    fun record(load: Boolean) {
+        if (load) {
+            file.openNew()
+        } else {
+            file.close()
+        }
+    }
 
-    override fun onPause() = sensorManager.unregisterListener(this)
+    override fun onResume() {
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
+    }
+
+    override fun onPause() {
+        sensorManager.unregisterListener(this)
+        cntx.acc_record.isChecked = false
+    }
 
     override fun onSensorChanged(event: SensorEvent) {
 
@@ -79,6 +88,8 @@ class Accelerometer(
                 append("$label={$range} [$min,$max]")
             }
         }
+
+        file.writeLine(event.values.joinToString(" "))
     }
 
     override fun onAccuracyChanged(sensor: Sensor, i: Int) {}

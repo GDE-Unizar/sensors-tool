@@ -1,7 +1,7 @@
 package com.unizar.practica.tools
 
+import android.widget.CompoundButton
 import android.widget.SeekBar
-import android.widget.Switch
 
 inline fun SeekBar.onProgressChange(crossinline listener: (Int) -> Unit) {
     this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -17,6 +17,6 @@ inline fun SeekBar.onProgressChange(crossinline listener: (Int) -> Unit) {
 }
 
 
-inline fun Switch.onCheckedChange(crossinline listener: (Boolean) -> Unit) {
+inline fun CompoundButton.onCheckedChange(crossinline listener: (Boolean) -> Unit) {
     this.setOnCheckedChangeListener { _, checked -> listener(checked) }
 }

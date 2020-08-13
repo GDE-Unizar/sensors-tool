@@ -13,7 +13,7 @@ class Vibrator(
 ) : Fragment {
 
     private lateinit var vibrator: Vibrator
-    private val vibconfig = longArrayOf(50, 50)
+    private val vibconfig = longArrayOf(0, 0)
 
     override fun onCreate() {
         vibrator = cntx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -22,23 +22,28 @@ class Vibrator(
             vibrator.run { if (it) vibrate(vibconfig, 0) else cancel() }
         }
 
-        cntx.skb_on.onProgressChange { value -> updateProgressBar(0, value) }
-        cntx.skb_off.onProgressChange { value -> updateProgressBar(1, value) }
+        cntx.skb_on.run {
+            onProgressChange { value -> updateProgressBar(0, value) }
+            progress = max / 2
+        }
+        cntx.skb_off.run {
+            onProgressChange { value -> updateProgressBar(1, value) }
+            progress = max / 2
+        }
 
-        updateVibrationUI()
+
+        updateUI()
 
     }
 
     fun updateProgressBar(id: Int, progress: Int) {
         vibconfig[id] = (progress + 1).toLong()
-        updateVibrationUI()
+        updateUI()
     }
 
-    private fun updateVibrationUI() {
+    private fun updateUI() {
         cntx.swt_vib.text = "off=${vibconfig[0]} - on=${vibconfig[1]}"
     }
-
-    override fun onResume() {}
 
     override fun onPause() {
         cntx.swt_vib.isChecked = false

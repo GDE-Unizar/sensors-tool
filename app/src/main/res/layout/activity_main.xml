@@ -70,6 +70,15 @@
                     android:textOff="value"
                     android:textOn="range" />
 
+                <ToggleButton
+                    android:id="@+id/acc_record"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textOff="record"
+                    android:textOn="stop" />
+
             </LinearLayout>
 
             <view
@@ -109,16 +118,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="999"
-                android:padding="5dp"
-                android:progress="499" />
+                android:padding="5dp" />
 
             <SeekBar
                 android:id="@+id/skb_off"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="999"
-                android:padding="5dp"
-                android:progress="499" />
+                android:padding="5dp" />
 
             <Switch
                 android:id="@+id/swt_vib"

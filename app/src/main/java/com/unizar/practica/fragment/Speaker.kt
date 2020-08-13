@@ -25,8 +25,6 @@ class Speaker(
         cntx.spk_progress.progress = 440
     }
 
-    override fun onResume() {}
-
     override fun onPause() {
         cntx.spk_toggle.isChecked = false
     }
