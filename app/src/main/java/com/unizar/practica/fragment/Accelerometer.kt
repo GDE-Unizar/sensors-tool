@@ -21,7 +21,7 @@ class Accelerometer(
 
     private lateinit var sensorManager: SensorManager
     private lateinit var accelerometer: Sensor
-    private val file = FileWriter(cntx)
+    private val file = FileWriter(cntx, "acc")
 
 
     private var nextX: Double = 0.0

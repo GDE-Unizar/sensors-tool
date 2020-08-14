@@ -11,6 +11,7 @@ import java.util.*
 
 class FileWriter(
         val cntx: Activity,
+        val suffix: String,
 ) {
 
     var stream: FileOutputStream? = null
@@ -25,14 +26,14 @@ class FileWriter(
                 stream = null
             } else {
                 // folder ready
-                stream = FileOutputStream(File(this, SimpleDateFormat("yyyy_MM_dd_HH_mm_ss'.txt'").format(Date())))
+                stream = FileOutputStream(File(this, SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_'$suffix.txt'").format(Date())))
             }
         }
     }
 
-    fun writeLine(line: String) {
+    fun writeLine(line: Any) {
         stream?.apply {
-            write(line.toByteArray())
+            write(line.toString().toByteArray())
             write("\n".toByteArray())
         }
     }

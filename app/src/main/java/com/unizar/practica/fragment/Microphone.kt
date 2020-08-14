@@ -8,7 +8,9 @@ import android.os.Looper
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import com.unizar.practica.MainActivity
+import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
+import com.unizar.practica.tools.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
@@ -24,6 +26,8 @@ class Microphone(
     val micSerie = LineGraphSeries<DataPoint>()
     var micx = 0.0
 
+    private val file = FileWriter(cntx, "mic")
+
     override fun onCreate() {
         handler = Handler(Looper.getMainLooper())
 
@@ -31,6 +35,14 @@ class Microphone(
         cntx.mic_graph.addSeries(micSerie)
         cntx.mic_graph.viewport.isXAxisBoundsManual = true
         cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
+
+        cntx.mic_rec.onCheckedChange {
+            if (it) {
+                file.openNew()
+            } else {
+                file.close()
+            }
+        }
     }
 
     fun updateSound() {
@@ -39,6 +51,7 @@ class Microphone(
         cntx.mic_graph.viewport.setMaxX(micSerie.highestValueX)
         cntx.mic_graph.viewport.setMinX(micSerie.highestValueX - SAMPLES)
         cntx.mic_txt.text = "${sm.amplitude} Amplitude"
+        file.writeLine(sm.amplitude)
     }
 
     // ---- updater ---------
