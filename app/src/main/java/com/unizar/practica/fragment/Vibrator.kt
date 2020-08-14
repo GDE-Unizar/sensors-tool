@@ -18,15 +18,15 @@ class Vibrator(
     override fun onCreate() {
         vibrator = cntx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-        cntx.swt_vib.onCheckedChange {
+        cntx.vib_tog.onCheckedChange {
             vibrator.run { if (it) vibrate(vibconfig, 0) else cancel() }
         }
 
-        cntx.skb_on.run {
+        cntx.vib_on.run {
             onProgressChange { value -> updateProgressBar(0, value) }
             progress = max / 2
         }
-        cntx.skb_off.run {
+        cntx.vib_off.run {
             onProgressChange { value -> updateProgressBar(1, value) }
             progress = max / 2
         }
@@ -42,11 +42,11 @@ class Vibrator(
     }
 
     private fun updateUI() {
-        cntx.swt_vib.text = "off=${vibconfig[0]} - on=${vibconfig[1]}"
+        cntx.vib_tog.text = "off=${vibconfig[0]} - on=${vibconfig[1]}"
     }
 
     override fun onPause() {
-        cntx.swt_vib.isChecked = false
+        cntx.vib_tog.isChecked = false
     }
 }
 

@@ -18,11 +18,11 @@ class Speaker(
             tune.run { if (it) start() else stop() }
         }
 
-        cntx.spk_progress.onProgressChange {
+        cntx.spk_hz.onProgressChange {
             tune.freq = it.toDouble()
             cntx.spk_toggle.text = "$it Hz"
         }
-        cntx.spk_progress.progress = 440
+        cntx.spk_hz.progress = 440
     }
 
     override fun onPause() {

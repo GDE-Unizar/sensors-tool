@@ -28,16 +28,16 @@ class Microphone(
         handler = Handler(Looper.getMainLooper())
 
         // graph microphone
-        cntx.graph_mic.addSeries(micSerie)
-        cntx.graph_mic.viewport.isXAxisBoundsManual = true
-        cntx.graph_mic.gridLabelRenderer.isHorizontalLabelsVisible = false
+        cntx.mic_graph.addSeries(micSerie)
+        cntx.mic_graph.viewport.isXAxisBoundsManual = true
+        cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
     }
 
     fun updateSound() {
         micSerie.appendData(DataPoint(micx++, sm.amplitude), true, SAMPLES)
-        cntx.graph_mic.onDataChanged(false, false)
-        cntx.graph_mic.viewport.setMaxX(micSerie.highestValueX)
-        cntx.graph_mic.viewport.setMinX(micSerie.highestValueX - SAMPLES)
+        cntx.mic_graph.onDataChanged(false, false)
+        cntx.mic_graph.viewport.setMaxX(micSerie.highestValueX)
+        cntx.mic_graph.viewport.setMinX(micSerie.highestValueX - SAMPLES)
     }
 
     // ---- updater ---------

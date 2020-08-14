@@ -54,7 +54,7 @@
                     android:text="base" />
 
                 <Button
-                    android:id="@+id/acc_clear"
+                    android:id="@+id/acc_clr"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                     android:text="clear" />
 
                 <ToggleButton
-                    android:id="@+id/acc_tog"
+                    android:id="@+id/acc_toggle"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                     android:textOn="range" />
 
                 <ToggleButton
-                    android:id="@+id/acc_record"
+                    android:id="@+id/acc_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
             </LinearLayout>
 
             <view
-                android:id="@+id/graph_acc"
+                android:id="@+id/acc_graph"
                 class="com.jjoe64.graphview.GraphView"
                 android:layout_width="match_parent"
                 android:layout_height="200dip"
@@ -91,7 +91,6 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
@@ -114,21 +113,21 @@
             android:padding="5dp">
 
             <SeekBar
-                android:id="@+id/skb_on"
+                android:id="@+id/vib_on"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="999"
                 android:padding="5dp" />
 
             <SeekBar
-                android:id="@+id/skb_off"
+                android:id="@+id/vib_off"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="999"
                 android:padding="5dp" />
 
             <Switch
-                android:id="@+id/swt_vib"
+                android:id="@+id/vib_tog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -136,7 +135,6 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView2"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
@@ -159,7 +157,7 @@
             android:padding="5dp">
 
             <view
-                android:id="@+id/graph_mic"
+                android:id="@+id/mic_graph"
                 class="com.jjoe64.graphview.GraphView"
                 android:layout_width="match_parent"
                 android:layout_height="200dip"
@@ -167,7 +165,6 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView3"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
@@ -190,7 +187,7 @@
             android:padding="5dp">
 
             <SeekBar
-                android:id="@+id/spk_progress"
+                android:id="@+id/spk_hz"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="500"

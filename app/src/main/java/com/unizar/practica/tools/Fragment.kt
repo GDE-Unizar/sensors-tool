@@ -7,9 +7,8 @@ interface Fragment {
 }
 
 
-
-//        1.let { it.toString() } == "1"
-//        1.run { this.toString() } == "1"
+//        1.let { it.toString() } == "1"    // thing.let{ it.go() } == "gone"
+//        1.run { this.toString() } == "1"  // thing.run{ this.run() } == "running"
 //        1.also { it.toString() } == 1
 //        1.apply { this.toString() } == 1
 //

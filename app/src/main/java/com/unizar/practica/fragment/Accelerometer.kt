@@ -38,19 +38,19 @@ class Accelerometer(
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
         // listeners
-        cntx.acc_tog.onCheckedChange { toggleRangePlot(it) }
+        cntx.acc_toggle.onCheckedChange { toggleRangePlot(it) }
         cntx.acc_base.setOnClickListener { series.forEach(RangeSerie::markBase) }
-        cntx.acc_clear.setOnClickListener { series.forEach(RangeSerie::clear) }
-        cntx.acc_record.onCheckedChange { record(it) }
+        cntx.acc_clr.setOnClickListener { series.forEach(RangeSerie::clear) }
+        cntx.acc_rec.onCheckedChange { record(it) }
 
         // graph acelerometer
-        cntx.graph_acc.addSeries(serieX)
-        cntx.graph_acc.addSeries(serieY)
-        cntx.graph_acc.addSeries(serieZ)
-        cntx.graph_acc.viewport.isXAxisBoundsManual = true
-        cntx.graph_acc.gridLabelRenderer.isHorizontalLabelsVisible = false
+        cntx.acc_graph.addSeries(serieX)
+        cntx.acc_graph.addSeries(serieY)
+        cntx.acc_graph.addSeries(serieZ)
+        cntx.acc_graph.viewport.isXAxisBoundsManual = true
+        cntx.acc_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
         //cntx.graph.viewport.isScalable = true // setScalableX
-        cntx.graph_acc.viewport.setScalableY(true)
+        cntx.acc_graph.viewport.setScalableY(true)
     }
 
     fun record(load: Boolean) {
@@ -67,7 +67,7 @@ class Accelerometer(
 
     override fun onPause() {
         sensorManager.unregisterListener(this)
-        cntx.acc_record.isChecked = false
+        cntx.acc_rec.isChecked = false
     }
 
     override fun onSensorChanged(event: SensorEvent) {
@@ -76,9 +76,9 @@ class Accelerometer(
         for ((i, serie) in sequenceOf(Pair(0, serieX), Pair(1, serieY), Pair(2, serieZ))) {
             serie.addData(DataPoint(x, event.values[i].toDouble()))
         }
-        cntx.graph_acc.onDataChanged(false, false)
-        cntx.graph_acc.viewport.setMaxX(serieX.highestValueX)
-        cntx.graph_acc.viewport.setMinX(serieX.highestValueX - SAMPLES)
+        cntx.acc_graph.onDataChanged(false, false)
+        cntx.acc_graph.viewport.setMaxX(serieX.highestValueX)
+        cntx.acc_graph.viewport.setMinX(serieX.highestValueX - SAMPLES)
 
         cntx.acc_txt.text = StringBuilder().apply {
             for ((label, serie) in sequenceOf(Pair("X", serieX), Pair("\nY", serieY), Pair("\nZ", serieZ))) {
