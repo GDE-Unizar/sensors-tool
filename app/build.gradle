@@ -30,6 +30,7 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.jjoe64:graphview:4.2.2'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.0-rc"
 }
 repositories {
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }

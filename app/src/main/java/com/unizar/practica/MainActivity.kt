@@ -1,6 +1,7 @@
 package com.unizar.practica
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.unizar.practica.fragment.Accelerometer
@@ -26,6 +27,10 @@ class MainActivity : Activity() {
 
         for ((_, _, fragment) in fragments) fragment.onCreate()
         initHideable()
+
+        container.setOnClickListener {
+            startActivity(Intent(this, InfoActivity::class.java))
+        }
     }
 
     override fun onResume() {
