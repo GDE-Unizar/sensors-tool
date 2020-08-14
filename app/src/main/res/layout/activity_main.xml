@@ -156,6 +156,27 @@
             android:orientation="vertical"
             android:padding="5dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mic_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ToggleButton
+                    android:id="@+id/mic_rec"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textOff="record"
+                    android:textOn="stop" />
+            </LinearLayout>
+
             <view
                 android:id="@+id/mic_graph"
                 class="com.jjoe64.graphview.GraphView"

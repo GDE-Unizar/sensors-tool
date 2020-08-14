@@ -38,6 +38,7 @@ class Microphone(
         cntx.mic_graph.onDataChanged(false, false)
         cntx.mic_graph.viewport.setMaxX(micSerie.highestValueX)
         cntx.mic_graph.viewport.setMinX(micSerie.highestValueX - SAMPLES)
+        cntx.mic_txt.text = "${sm.amplitude} Amplitude"
     }
 
     // ---- updater ---------
