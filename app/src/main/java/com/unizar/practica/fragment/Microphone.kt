@@ -6,15 +6,14 @@ import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
 import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import com.unizar.practica.MainActivity
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
+import com.unizar.practica.tools.RangeSerie
 import com.unizar.practica.tools.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
-const val POLLING = 10
 const val HZ = 8000
 
 const val SAMPLES = 100
@@ -24,7 +23,7 @@ class Microphone(
 ) : Fragment {
 
     val sm = SoundMeter()
-    val micSerie = LineGraphSeries<DataPoint>()
+    val micSerie = RangeSerie()
     var micx = 0.0
 
     private val file = FileWriter(cntx, "mic")
@@ -47,13 +46,17 @@ class Microphone(
     }
 
     fun updateSound() {
-        val amp = sm.amplitude
-        micSerie.appendData(DataPoint(micx++, amp), true, SAMPLES)
+        val amp = sm.getAmplitude()
+        micSerie.addData(DataPoint(micx++, amp))
         cntx.mic_graph.onDataChanged(false, false)
         cntx.mic_graph.viewport.setMaxX(micSerie.highestValueX)
         cntx.mic_graph.viewport.setMinX(micSerie.highestValueX - SAMPLES)
         cntx.mic_txt.text = "Amplitude of $amp"
         file.writeLine(amp)
+    }
+
+    fun getAvgAmplitude(): Double {
+        return micSerie.getAverage()
     }
 
     // ---- updater ---------
@@ -63,7 +66,7 @@ class Microphone(
     val updateTask = object : Runnable {
         override fun run() {
             updateSound()
-            handler.postDelayed(this, POLLING.toLong())
+            handler.postDelayed(this, 0)
         }
     }
 
@@ -89,11 +92,10 @@ class SoundMeter {
 
     fun stop() = ar.stop()
 
-    val amplitude: Double
-        get() {
-            val buffer = ShortArray(minSize)
-            ar.read(buffer, 0, minSize)
+    fun getAmplitude(): Double {
+        val buffer = ShortArray(minSize)
+        ar.read(buffer, 0, minSize)
 
-            return buffer.map { abs(it.toDouble()) }.maxOrNull() ?: 0.0
-        }
+        return buffer.map { abs(it.toDouble()) }.maxOrNull() ?: 0.0
+    }
 }

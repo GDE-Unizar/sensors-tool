@@ -27,9 +27,9 @@ class Accelerometer(
     private var nextX: Double = 0.0
         get() = field++
 
-    private val serieX = RangeSerie().apply { color = Color.GREEN }
-    private val serieY = RangeSerie().apply { color = Color.RED }
-    private val serieZ = RangeSerie().apply { color = Color.BLUE }
+    val serieX = RangeSerie().apply { color = Color.GREEN }
+    val serieY = RangeSerie().apply { color = Color.RED }
+    val serieZ = RangeSerie().apply { color = Color.BLUE }
     private val series = sequenceOf(serieX, serieY, serieZ)
 
     override fun onCreate() {
@@ -82,7 +82,7 @@ class Accelerometer(
 
         cntx.acc_txt.text = StringBuilder().apply {
             for ((label, serie) in sequenceOf(Pair("X", serieX), Pair("\nY", serieY), Pair("\nZ", serieZ))) {
-                val range = serie.rangeY.format()
+                val range = serie.lastRange.format()
                 val max = serie.highestValueY.format()
                 val min = serie.lowestValueY.format()
                 append("$label={$range} [$min,$max]")
