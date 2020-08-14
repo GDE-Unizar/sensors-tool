@@ -14,6 +14,7 @@ import com.unizar.practica.tools.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
+const val POLLING = 10
 const val HZ = 8000
 
 const val SAMPLES = 100
@@ -46,12 +47,13 @@ class Microphone(
     }
 
     fun updateSound() {
-        micSerie.appendData(DataPoint(micx++, sm.amplitude), true, SAMPLES)
+        val amp = sm.amplitude
+        micSerie.appendData(DataPoint(micx++, amp), true, SAMPLES)
         cntx.mic_graph.onDataChanged(false, false)
         cntx.mic_graph.viewport.setMaxX(micSerie.highestValueX)
         cntx.mic_graph.viewport.setMinX(micSerie.highestValueX - SAMPLES)
-        cntx.mic_txt.text = "${sm.amplitude} Amplitude"
-        file.writeLine(sm.amplitude)
+        cntx.mic_txt.text = "Amplitude of $amp"
+        file.writeLine(amp)
     }
 
     // ---- updater ---------
@@ -61,7 +63,7 @@ class Microphone(
     val updateTask = object : Runnable {
         override fun run() {
             updateSound()
-            handler.postDelayed(this, 100)
+            handler.postDelayed(this, POLLING.toLong())
         }
     }
 
