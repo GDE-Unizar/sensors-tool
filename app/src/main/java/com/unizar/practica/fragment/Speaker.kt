@@ -15,7 +15,7 @@ class Speaker(
 
     override fun onCreate() {
         cntx.spk_toggle.onCheckedChange {
-            tune.run { if (it) start() else stop() }
+            tune.run { if (it) play() else stop() }
         }
 
         cntx.spk_hz.onProgressChange {

@@ -1,7 +1,3 @@
-/**
- * From https://github.com/karlotoy/perfectTune
- */
-
 package com.unizar.practica.tools
 
 import android.media.AudioManager
@@ -9,39 +5,64 @@ import android.media.AudioTrack
 import kotlin.math.atan
 import kotlin.math.sin
 
+/**
+ * Allows to play a specific frequency
+ * Adapted from https://github.com/karlotoy/perfectTune
+ */
 class Tune {
 
-    var thread: TuneThread? = null
+    private var thread: TuneThread? = null
 
+    /**
+     * The configured frequency that will play (can be modified while it is playing)
+     */
     var freq: Double = 440.0
         set(value) {
             field = value
             thread?.tuneFreq = field
         }
 
-    fun start() {
-        thread = (thread ?: TuneThread()).apply {
-            tuneFreq = freq
-            start()
+    /**
+     * Plays the tune (non-stop)
+     */
+    fun play() {
+        if (thread != null) {
+            // already playing, update
+            thread?.tuneFreq = freq
+        } else {
+            // not playing, start
+            thread = TuneThread().apply {
+                tuneFreq = freq
+                start()
+            }
         }
     }
 
+    /**
+     * Stops the tune
+     */
     fun stop() {
         thread?.stopTune()
         thread = null
     }
 }
 
+/**
+ * The thread that plays the tune
+ */
 class TuneThread : Thread() {
 
-    var isRunning = false
     var tuneFreq = 440.0
 
-    val sr = 44100
+    private var isRunning = false
 
+    /**
+     * When the thread runs, plays the frequency
+     */
     override fun run() {
-        super.run()
+        // init
         isRunning = true
+        val sr = 44100
         val buffsize = AudioTrack.getMinBufferSize(sr, 4, 2)
         val audioTrack = AudioTrack(AudioManager.STREAM_MUSIC, sr, 4, 2, buffsize, 1)
         val samples = ShortArray(buffsize)
@@ -61,6 +82,9 @@ class TuneThread : Thread() {
         audioTrack.release()
     }
 
+    /**
+     * Stops the thread
+     */
     fun stopTune() {
         isRunning = false
         try {

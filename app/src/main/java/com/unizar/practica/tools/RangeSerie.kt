@@ -6,8 +6,14 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Number of samples to keep
+ */
 const val SAMPLES = 100
 
+/**
+ * A LineGraphSeries but with more functionality
+ */
 class RangeSerie : LineGraphSeries<DataPoint>() {
 
     val rawData = LinkedList<DataPoint>()
@@ -77,6 +83,7 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     }
 
     fun update() = super.resetData((if (plotRange) rangeData else rawData.map { DataPoint(it.x, it.y - base) }).toTypedArray())
+    //TODO: save only the y points, autoupdate the x values
 
     val lastRange
         get() = rangeData.last.y
