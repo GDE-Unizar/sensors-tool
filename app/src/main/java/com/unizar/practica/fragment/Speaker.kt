@@ -23,6 +23,9 @@ class Speaker(
             cntx.spk_toggle.text = "$it Hz"
         }
         cntx.spk_hz.progress = 440
+
+        cntx.spk_inc.setOnClickListener { cntx.spk_hz.progress += 10 }
+        cntx.spk_dec.setOnClickListener { cntx.spk_hz.progress -= 10 }
     }
 
     override fun onPause() {

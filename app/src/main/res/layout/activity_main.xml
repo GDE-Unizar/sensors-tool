@@ -170,6 +170,14 @@
                     android:layout_weight="1"
                     android:padding="5dp" />
 
+                <Button
+                    android:id="@+id/mic_clr"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="clear" />
+
                 <ToggleButton
                     android:id="@+id/mic_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
@@ -210,13 +218,37 @@
             android:orientation="vertical"
             android:padding="5dp">
 
-            <SeekBar
-                android:id="@+id/spk_hz"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="500"
-                android:padding="5dp"
-                android:progress="10" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/spk_dec"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="-" />
+
+                <Button
+                    android:id="@+id/spk_inc"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="+" />
+
+                <SeekBar
+                    android:id="@+id/spk_hz"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="5000"
+                    android:padding="5dp"
+                    android:progress="10" />
+            </LinearLayout>
 
             <Switch
                 android:id="@+id/spk_toggle"

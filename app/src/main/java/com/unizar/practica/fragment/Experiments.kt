@@ -34,7 +34,7 @@ class Experiments(
         file.openNew()
         sleep(1000)
         screen { cntx.spk_toggle.isChecked = true }
-        for (hz in 10..500 step 10) {
+        for (hz in 10..2000 step 10) {
             screen { cntx.spk_hz.progress = hz }
             sleep(1000)
             val micVal = mic.getAvgAmplitude()
@@ -44,6 +44,7 @@ class Experiments(
             file.writeLine("$hz $micVal $accXVal $accYVal $accZVal")
         }
         screen { cntx.spk_toggle.isChecked = false }
+        screen { file.close() }
     }
 
     inline fun screen(noinline f: () -> Unit) {

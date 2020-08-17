@@ -35,8 +35,9 @@ class Tune {
 class TuneThread : Thread() {
 
     var isRunning = false
-    val sr = 44100
     var tuneFreq = 440.0
+
+    val sr = 44100
 
     override fun run() {
         super.run()

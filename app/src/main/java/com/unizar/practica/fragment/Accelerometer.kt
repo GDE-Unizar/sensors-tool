@@ -19,6 +19,12 @@ class Accelerometer(
         val cntx: MainActivity
 ) : Fragment, SensorEventListener {
 
+    private var millisec: Long = System.currentTimeMillis()
+        get() {
+            val prev = field
+            field = System.currentTimeMillis()
+            return field - prev
+        }
     private lateinit var sensorManager: SensorManager
     private lateinit var accelerometer: Sensor
     private val file = FileWriter(cntx, "acc")
@@ -62,7 +68,7 @@ class Accelerometer(
     }
 
     override fun onResume() {
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
+        sensorManager.registerListener(this, accelerometer, 10 * 1000)//SensorManager.SENSOR_DELAY_GAME)
     }
 
     override fun onPause() {
@@ -71,14 +77,15 @@ class Accelerometer(
     }
 
     override fun onSensorChanged(event: SensorEvent) {
+        val millis = millisec
 
         val x = nextX
         for ((i, serie) in sequenceOf(Pair(0, serieX), Pair(1, serieY), Pair(2, serieZ))) {
-            serie.addData(DataPoint(x, event.values[i].toDouble()))
+            serie.addData(DataPoint(x, millis.toDouble()))//event.values[i].toDouble()))
         }
         cntx.acc_graph.onDataChanged(false, false)
-        cntx.acc_graph.viewport.setMaxX(serieX.highestValueX)
-        cntx.acc_graph.viewport.setMinX(serieX.highestValueX - SAMPLES)
+        cntx.acc_graph.viewport.setMaxX(serieX.maxX)
+        cntx.acc_graph.viewport.setMinX(serieX.minX)
 
         cntx.acc_txt.text = StringBuilder().apply {
             for ((label, serie) in sequenceOf(Pair("X", serieX), Pair("\nY", serieY), Pair("\nZ", serieZ))) {
@@ -87,6 +94,7 @@ class Accelerometer(
                 val min = serie.lowestValueY.format()
                 append("$label={$range} [$min,$max]")
             }
+            append("\n$millis")
         }
 
         file.writeLine(event.values.joinToString(" "))

@@ -5,7 +5,6 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
-import com.jjoe64.graphview.series.DataPoint
 import com.unizar.practica.MainActivity
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
@@ -15,8 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
 const val HZ = 8000
-
-const val SAMPLES = 100
 
 class Microphone(
         val cntx: MainActivity
@@ -43,14 +40,20 @@ class Microphone(
                 file.close()
             }
         }
+
+        cntx.mic_clr.setOnClickListener { micSerie.clear() }
     }
 
     fun updateSound() {
-        val amp = sm.getAmplitude()
-        micSerie.addData(DataPoint(micx++, amp))
+        micSerie.replaceData(sm.getFullBuffer())
+        val amp = micSerie.getAverage()
+
+//        val amp = sm.getAmplitude()
+//        micSerie.addData(DataPoint(micx++, amp))
+
         cntx.mic_graph.onDataChanged(false, false)
-        cntx.mic_graph.viewport.setMaxX(micSerie.highestValueX)
-        cntx.mic_graph.viewport.setMinX(micSerie.highestValueX - SAMPLES)
+        cntx.mic_graph.viewport.setMaxX(micSerie.maxX)
+        cntx.mic_graph.viewport.setMinX(micSerie.minX)
         cntx.mic_txt.text = "Amplitude of $amp"
         file.writeLine(amp)
     }
@@ -97,5 +100,12 @@ class SoundMeter {
         ar.read(buffer, 0, minSize)
 
         return buffer.map { abs(it.toDouble()) }.maxOrNull() ?: 0.0
+    }
+
+    fun getFullBuffer(): ShortArray {
+        val buffer = ShortArray(minSize)
+        ar.read(buffer, 0, minSize)
+
+        return buffer
     }
 }
