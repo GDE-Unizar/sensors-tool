@@ -56,7 +56,7 @@ class Microphone(
         val amp: Double
         if (show_buffer) {
             micSerie.replaceData(sm.getFullBuffer())
-            amp = micSerie.getAverage()
+            amp = micSerie.average
         } else {
             amp = sm.getAmplitude()
             micSerie.addData(amp)
@@ -68,14 +68,15 @@ class Microphone(
         file.writeLine(amp)
     }
 
-    fun getAvgAmplitude(): Double {
-        return micSerie.getAverage()
-    }
+    val average: Double
+        get() {
+            return micSerie.average
+        }
 
     // ---- updater ---------
 
+    // thread objects
     lateinit var handler: Handler
-
     val updateTask = object : Runnable {
         override fun run() {
             updateSound()
@@ -83,39 +84,55 @@ class Microphone(
         }
     }
 
+    /**
+     * When resumed, start recording
+     */
     override fun onResume() {
         sm.start()
         handler.post(updateTask)
     }
 
+    /**
+     * When paused, stop recording
+     */
     override fun onPause() {
         handler.removeCallbacks(updateTask)
         sm.stop()
     }
 }
 
-
+/**
+ * Record audio and shows its properties
+ */
 class SoundMeter {
 
-    var minSize = AudioRecord.getMinBufferSize(HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
+    // properties
+    var minSize = AudioRecord.getMinBufferSize(HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT).apply { println(this) }
 
+    // utils
     var ar: AudioRecord = AudioRecord(MediaRecorder.AudioSource.MIC, HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, minSize)
 
+    /**
+     * Starts recording
+     */
     fun start() = ar.startRecording()
 
+    /**
+     * Stops recording
+     */
     fun stop() = ar.stop()
 
-    fun getAmplitude(): Double {
-        val buffer = ShortArray(minSize)
-        ar.read(buffer, 0, minSize)
+    /**
+     * Returns the amplitude
+     */
+    fun getAmplitude() = getFullBuffer().map { abs(it.toDouble()) }.maxOrNull() ?: 0.0
 
-        return buffer.map { abs(it.toDouble()) }.maxOrNull() ?: 0.0
-    }
-
+    /**
+     * Returns the full buffer
+     */
     fun getFullBuffer(): ShortArray {
         val buffer = ShortArray(minSize)
         ar.read(buffer, 0, minSize)
-
         return buffer
     }
 }

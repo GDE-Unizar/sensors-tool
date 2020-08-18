@@ -1,5 +1,8 @@
 package com.unizar.practica.tools
 
+/**
+ * Android fragments are deprecated and ugly to use, these are not android fragments, but the idea is the same
+ */
 interface Fragment {
     fun onCreate() {}
     fun onResume() {}

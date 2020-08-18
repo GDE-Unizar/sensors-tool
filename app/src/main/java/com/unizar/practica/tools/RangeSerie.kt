@@ -23,7 +23,6 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
 
     // values
     private var base = 0.0
-    private var baseTicks = -1
     private var flag_clear = false
     private var offsetX = 0.0
 
@@ -50,15 +49,14 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         update()
     }
 
+    /**
+     * Adds a single data to existing ones
+     */
     fun addData(value: Double) {
         // clear if required
         if (flag_clear) {
             _clear()
         }
-
-        // update base
-        if (baseTicks == 0) base = value
-        baseTicks--
 
         // add to raw
         rawData.add(value)
@@ -74,20 +72,32 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         avgData.add(avg)
         while (avgData.size > SAMPLES) avgData.removeFirst()
 
-        offsetX = 20 + (offsetX + 1) % 20
+        // increase offset
+        offsetX = 20 + (offsetX + 1) % 20 // 20 is the distance between vertical bars
 
+        // update internal data
         update()
     }
 
+    /**
+     * Keeps current average value as the base (substracted from the raw data)
+     */
     fun markBase() {
-        baseTicks = 10
+        base = rawData.average()
     }
 
+    /**
+     * Clears all current data
+     */
     fun clear() {
+        // to run in the addData thread, otherwise a concurrent modification exception is thrown
         flag_clear = true
     }
 
-    fun _clear() {
+    /**
+     * Performs the clear operations
+     */
+    private fun _clear() {
         rawData.clear()
         rangeData.clear()
         avgData.clear()
@@ -95,8 +105,10 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         flag_clear = false
     }
 
+    /**
+     * Sets the internal data for the serie
+     */
     fun update() {
-
         val list =
                 if (plotRange) rangeData
                 else rawData.map { it - base }
@@ -105,15 +117,29 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         super.resetData(list.map { DataPoint(x++, it) }.toTypedArray())
     }
 
-    val lastRange
+    /**
+     * The current range of the data
+     */
+    val range
         get() = rangeData.last
 
-    fun getAverage(): Double {
-        return avgData.last
-    }
+    /**
+     * The current average of the data
+     */
+    val average: Double
+        get() {
+            return avgData.last
+        }
 
+    /**
+     * The current max X value of the data
+     */
     val maxX: Double
         get() = super.getHighestValueX()
+
+    /**
+     * The current min X value of the data
+     */
     val minX: Double
         get() = min(super.getLowestValueX(), maxX - SAMPLES)
 
