@@ -81,7 +81,7 @@ class Accelerometer(
 
         val x = nextX
         for ((i, serie) in sequenceOf(Pair(0, serieX), Pair(1, serieY), Pair(2, serieZ))) {
-            serie.addData(DataPoint(x, millis.toDouble()))//event.values[i].toDouble()))
+            serie.addData(DataPoint(x, event.values[i].toDouble())) // millis.toDouble()))
         }
         cntx.acc_graph.onDataChanged(false, false)
         cntx.acc_graph.viewport.setMaxX(serieX.maxX)

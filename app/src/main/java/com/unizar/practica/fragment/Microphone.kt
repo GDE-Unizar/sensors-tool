@@ -5,6 +5,7 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
+import com.jjoe64.graphview.series.DataPoint
 import com.unizar.practica.MainActivity
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
@@ -13,7 +14,7 @@ import com.unizar.practica.tools.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
-const val HZ = 8000
+const val HZ = 40000//8000
 
 class Microphone(
         val cntx: MainActivity
@@ -22,6 +23,7 @@ class Microphone(
     val sm = SoundMeter()
     val micSerie = RangeSerie()
     var micx = 0.0
+    var show_buffer = false
 
     private val file = FileWriter(cntx, "mic")
 
@@ -41,16 +43,27 @@ class Microphone(
             }
         }
 
+        cntx.mic_buff.onCheckedChange {
+            show_buffer = it
+
+            if (!it) {
+                micSerie.clear()
+                micx = 0.0
+            }
+        }
+
         cntx.mic_clr.setOnClickListener { micSerie.clear() }
     }
 
     fun updateSound() {
-        micSerie.replaceData(sm.getFullBuffer())
-        val amp = micSerie.getAverage()
-
-//        val amp = sm.getAmplitude()
-//        micSerie.addData(DataPoint(micx++, amp))
-
+        val amp: Double
+        if (show_buffer) {
+            micSerie.replaceData(sm.getFullBuffer())
+            amp = micSerie.getAverage()
+        } else {
+            amp = sm.getAmplitude()
+            micSerie.addData(DataPoint(micx++, amp))
+        }
         cntx.mic_graph.onDataChanged(false, false)
         cntx.mic_graph.viewport.setMaxX(micSerie.maxX)
         cntx.mic_graph.viewport.setMinX(micSerie.minX)

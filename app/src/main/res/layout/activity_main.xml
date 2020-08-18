@@ -179,6 +179,15 @@
                     android:text="clear" />
 
                 <ToggleButton
+                    android:id="@+id/mic_buff"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:textOff="amp"
+                    android:textOn="buff" />
+
+                <ToggleButton
                     android:id="@+id/mic_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
@@ -186,6 +195,7 @@
                     android:padding="5dp"
                     android:textOff="record"
                     android:textOn="stop" />
+
             </LinearLayout>
 
             <view
@@ -245,7 +255,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:max="5000"
+                    android:max="22050"
                     android:padding="5dp"
                     android:progress="10" />
             </LinearLayout>

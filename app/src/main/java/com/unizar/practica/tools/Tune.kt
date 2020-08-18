@@ -66,14 +66,14 @@ class TuneThread : Thread() {
         val buffsize = AudioTrack.getMinBufferSize(sr, 4, 2)
         val audioTrack = AudioTrack(AudioManager.STREAM_MUSIC, sr, 4, 2, buffsize, 1)
         val samples = ShortArray(buffsize)
-        val amp = 10000
+        val amp = 10000.0
         val twopi = 8.0 * atan(1.0)
         var ph = 0.0
         audioTrack.play()
         while (isRunning) {
             val fr = tuneFreq
             for (i in 0 until buffsize) {
-                samples[i] = (amp.toDouble() * sin(ph)).toShort()
+                samples[i] = (amp * sin(ph)).toInt().toShort()
                 ph += twopi * fr / sr.toDouble()
             }
             audioTrack.write(samples, 0, buffsize)

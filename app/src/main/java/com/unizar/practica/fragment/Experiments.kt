@@ -1,6 +1,5 @@
 package com.unizar.practica.fragment
 
-import android.view.View
 import android.widget.Button
 import com.unizar.practica.MainActivity
 import com.unizar.practica.tools.FileWriter
@@ -27,14 +26,13 @@ class Experiments(
     }
 
     fun experiment() {
-        if (cntx.mic_box.visibility == View.GONE) screen { cntx.mic_head.performClick() }
-        if (cntx.spk_box.visibility == View.GONE) screen { cntx.spk_head.performClick() }
-        if (cntx.acc_box.visibility == View.GONE) screen { cntx.acc_head.performClick() }
+        screen { cntx.showAll() }
 
+        sleep(10000)
         file.openNew()
-        sleep(1000)
         screen { cntx.spk_toggle.isChecked = true }
-        for (hz in 10..2000 step 10) {
+        var hz = 10
+        while (hz <= 22000) {
             screen { cntx.spk_hz.progress = hz }
             sleep(1000)
             val micVal = mic.getAvgAmplitude()
@@ -42,9 +40,12 @@ class Experiments(
             val accYVal = acc.serieY.getAverage()
             val accZVal = acc.serieZ.getAverage()
             file.writeLine("$hz $micVal $accXVal $accYVal $accZVal")
+
+            hz = (hz + 100).toInt()
         }
         screen { cntx.spk_toggle.isChecked = false }
         screen { file.close() }
+        screen { cntx.hideAll() }
     }
 
     inline fun screen(noinline f: () -> Unit) {

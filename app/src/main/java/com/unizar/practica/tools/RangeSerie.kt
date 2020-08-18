@@ -16,14 +16,19 @@ const val SAMPLES = 100
  */
 class RangeSerie : LineGraphSeries<DataPoint>() {
 
+    // data containers
     val rawData = LinkedList<DataPoint>()
     val rangeData = LinkedList<DataPoint>()
     val avgData = LinkedList<DataPoint>()
 
+    // values
     var base = 0.0
     var baseTicks = -1
     var clear = false
 
+    /**
+     * Whether to plot range (true) or just data (false)
+     */
     var plotRange = false
         set(value) {
             field = value
@@ -31,6 +36,9 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         }
 
 
+    /**
+     * Replaces all the data with the new array
+     */
     fun replaceData(data: ShortArray) {
         rawData.clear()
         rangeData.clear()

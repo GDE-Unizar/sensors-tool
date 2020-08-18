@@ -92,6 +92,9 @@ class MainActivity : Activity() {
         }
     }
 
+    fun showAll() = fragments.forEach { (head, box, _) -> if (box.visibility != View.VISIBLE) head.performClick() }
+    fun hideAll() = fragments.forEach { (head, box, _) -> if (box.visibility == View.VISIBLE) head.performClick() }
+
 }
 
 
