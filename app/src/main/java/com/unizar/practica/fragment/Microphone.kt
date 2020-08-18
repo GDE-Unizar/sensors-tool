@@ -5,7 +5,6 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
-import com.jjoe64.graphview.series.DataPoint
 import com.unizar.practica.MainActivity
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
@@ -22,7 +21,6 @@ class Microphone(
 
     val sm = SoundMeter()
     val micSerie = RangeSerie()
-    var micx = 0.0
     var show_buffer = false
 
     private val file = FileWriter(cntx, "mic")
@@ -48,7 +46,6 @@ class Microphone(
 
             if (!it) {
                 micSerie.clear()
-                micx = 0.0
             }
         }
 
@@ -62,7 +59,7 @@ class Microphone(
             amp = micSerie.getAverage()
         } else {
             amp = sm.getAmplitude()
-            micSerie.addData(DataPoint(micx++, amp))
+            micSerie.addData(amp)
         }
         cntx.mic_graph.onDataChanged(false, false)
         cntx.mic_graph.viewport.setMaxX(micSerie.maxX)

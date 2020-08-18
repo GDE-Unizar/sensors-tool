@@ -6,7 +6,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import com.jjoe64.graphview.series.DataPoint
 import com.unizar.practica.MainActivity
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
@@ -79,9 +78,8 @@ class Accelerometer(
     override fun onSensorChanged(event: SensorEvent) {
         val millis = millisec
 
-        val x = nextX
         for ((i, serie) in sequenceOf(Pair(0, serieX), Pair(1, serieY), Pair(2, serieZ))) {
-            serie.addData(DataPoint(x, event.values[i].toDouble())) // millis.toDouble()))
+            serie.addData(event.values[i].toDouble()) // millis.toDouble()))
         }
         cntx.acc_graph.onDataChanged(false, false)
         cntx.acc_graph.viewport.setMaxX(serieX.maxX)

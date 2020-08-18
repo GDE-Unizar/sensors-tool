@@ -17,14 +17,15 @@ const val SAMPLES = 100
 class RangeSerie : LineGraphSeries<DataPoint>() {
 
     // data containers
-    val rawData = LinkedList<DataPoint>()
-    val rangeData = LinkedList<DataPoint>()
-    val avgData = LinkedList<DataPoint>()
+    val rawData = LinkedList<Double>()
+    val rangeData = LinkedList<Double>()
+    val avgData = LinkedList<Double>()
 
     // values
-    var base = 0.0
-    var baseTicks = -1
-    var clear = false
+    private var base = 0.0
+    private var baseTicks = -1
+    private var flag_clear = false
+    private var offsetX = 0.0
 
     /**
      * Whether to plot range (true) or just data (false)
@@ -40,44 +41,40 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
      * Replaces all the data with the new array
      */
     fun replaceData(data: ShortArray) {
-        rawData.clear()
-        rangeData.clear()
+        _clear()
 
-        rawData.addAll(data.mapIndexed { i, x -> DataPoint(i.toDouble(), x.toDouble()) })
-        rangeData.add(DataPoint(0.0,
-                (data.maxOrNull()?.toDouble() ?: 0.0) - (data.minOrNull()?.toDouble() ?: 0.0)
-        ))
-        avgData.add(DataPoint(0.0, data.average()))
+        rawData.addAll(data.map { it.toDouble() })
+        rangeData.add((data.maxOrNull()?.toDouble() ?: 0.0) - (data.minOrNull()?.toDouble() ?: 0.0))
+        avgData.add(data.average())
 
         update()
     }
 
-    fun addData(dataPoint: DataPoint?) {
+    fun addData(value: Double) {
         // clear if required
-        if (clear) {
-            rawData.clear()
-            rangeData.clear()
-            avgData.clear()
-            clear = false
+        if (flag_clear) {
+            _clear()
         }
 
+        // update base
+        if (baseTicks == 0) base = value
+        baseTicks--
+
         // add to raw
-        dataPoint?.let { rawData.add(it) }
+        rawData.add(value)
         while (rawData.size > SAMPLES) rawData.removeFirst()
 
         // update range
-        val range = rawData.map { it.y }.run { (maxOrNull() ?: 0.0) - (minOrNull() ?: 0.0) }
-        rangeData.add(DataPoint(dataPoint?.x ?: 0.0, range))
+        val range = rawData.run { (maxOrNull() ?: 0.0) - (minOrNull() ?: 0.0) }
+        rangeData.add(range)
         while (rangeData.size > SAMPLES) rangeData.removeFirst()
 
         // update average
-        val avg = rawData.listIterator(max(0, rawData.size - 10)).asSequence().map { it.y }.average()
-        avgData.add(DataPoint(dataPoint?.x ?: 0.0, avg))
+        val avg = rawData.listIterator(max(0, rawData.size - 10)).asSequence().average()
+        avgData.add(avg)
         while (avgData.size > SAMPLES) avgData.removeFirst()
 
-        // update base
-        if (baseTicks == 0) base = rawData.last.y
-        baseTicks--
+        offsetX = 20 + (offsetX + 1) % 20
 
         update()
     }
@@ -87,17 +84,32 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     }
 
     fun clear() {
-        clear = true
+        flag_clear = true
     }
 
-    fun update() = super.resetData((if (plotRange) rangeData else rawData.map { DataPoint(it.x, it.y - base) }).toTypedArray())
-    //TODO: save only the y points, autoupdate the x values
+    fun _clear() {
+        rawData.clear()
+        rangeData.clear()
+        avgData.clear()
+        offsetX = 0.0
+        flag_clear = false
+    }
+
+    fun update() {
+
+        val list =
+                if (plotRange) rangeData
+                else rawData.map { it - base }
+
+        var x = if (list.size < SAMPLES) 0.0 else offsetX
+        super.resetData(list.map { DataPoint(x++, it) }.toTypedArray())
+    }
 
     val lastRange
-        get() = rangeData.last.y
+        get() = rangeData.last
 
     fun getAverage(): Double {
-        return avgData.last.y
+        return avgData.last
     }
 
     val maxX: Double
