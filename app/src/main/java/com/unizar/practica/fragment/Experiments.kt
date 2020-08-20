@@ -79,6 +79,9 @@ class Experiments(
         }
     }
 
+    /**
+     * Another experiment
+     */
     fun volumeGraph() {
         val volume = Volume(cntx)
         screen { cntx.spk_toggle.isChecked = true }

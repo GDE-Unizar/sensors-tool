@@ -3,7 +3,10 @@ package com.unizar.practica.tools
 import org.jtransforms.fft.DoubleFFT_1D
 import java.lang.Math.sqrt
 
-
+/**
+ * Performs a FFT (Fast Fourier Transform) over an array of values generate at Hz Hertz
+ * @return a pair (values,frecuencies) ready to be plotted
+ */
 fun ShortArray.FFT(Hz: Int): Pair<DoubleArray, DoubleArray> {
 
     val T = 1 / Hz

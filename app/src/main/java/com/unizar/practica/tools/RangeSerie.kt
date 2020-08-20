@@ -36,7 +36,6 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
             update()
         }
 
-
     /**
      * Replaces all the data with the new array
      */
@@ -131,26 +130,24 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
      * The current range of the data
      */
     val range
-        get() = rangeData.last
+        get() = rangeData.lastOrNull() ?: 0.0
 
     /**
      * The current average of the data
      */
-    val average: Double
-        get() {
-            return avgData.last
-        }
+    val average
+        get() = avgData.lastOrNull() ?: 0.0
 
     /**
      * The current max X value of the data
      */
-    val maxX: Double
+    val maxX
         get() = super.getHighestValueX()
 
     /**
      * The current min X value of the data
      */
-    val minX: Double
+    val minX
         get() = min(super.getLowestValueX(), maxX - SAMPLES)
 
 }
