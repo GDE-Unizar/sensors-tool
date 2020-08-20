@@ -13,7 +13,7 @@ import java.util.*
  */
 class FileWriter(
         val cntx: Activity,
-        val suffix: String,
+        val suffix: String = "",
 ) {
 
     // utils
@@ -22,7 +22,7 @@ class FileWriter(
     /**
      * Opens a new file to start recording
      */
-    fun openNew() {
+    fun openNew(subsuffix: String = "") {
         // close previous if any
         close()
 
@@ -33,7 +33,8 @@ class FileWriter(
                 Toast.makeText(cntx, "Can't create folder", Toast.LENGTH_SHORT).show()
             } else {
                 // folder ready. open file
-                stream = FileOutputStream(File(this, SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_'$suffix.txt'").format(Date())))
+                var filesuffix = (if (suffix.isEmpty()) "" else "_$suffix") + (if (subsuffix.isEmpty()) "" else "_$subsuffix") + ".txt"
+                stream = FileOutputStream(File(this, SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date()) + filesuffix))
             }
         }
     }

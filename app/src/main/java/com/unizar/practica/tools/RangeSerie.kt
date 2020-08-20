@@ -2,6 +2,7 @@ package com.unizar.practica.tools
 
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
+import com.unizar.practica.fragment.HZ
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -42,11 +43,13 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     fun replaceData(data: ShortArray) {
         _clear()
 
-        rawData.addAll(data.map { it.toDouble() })
+        val (fftX, fftY) = data.FFT(HZ)
+
+        rawData.addAll(fftX.asIterable()/*.map { it.toDouble() }*/)
         rangeData.add((data.maxOrNull()?.toDouble() ?: 0.0) - (data.minOrNull()?.toDouble() ?: 0.0))
         avgData.add(data.average())
 
-        update()
+        update(fftY)
     }
 
     /**
@@ -108,13 +111,20 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     /**
      * Sets the internal data for the serie
      */
-    fun update() {
+    fun update(xArray: DoubleArray? = null) {
         val list =
                 if (plotRange) rangeData
                 else rawData.map { it - base }
 
-        var x = if (list.size < SAMPLES) 0.0 else offsetX
-        super.resetData(list.map { DataPoint(x++, it) }.toTypedArray())
+        val data: List<DataPoint>
+        if (xArray == null) {
+            var x = if (list.size < SAMPLES) 0.0 else offsetX
+            data = list.map { DataPoint(x++, it) }
+        } else {
+            data = list.mapIndexed { i, l -> DataPoint(xArray[i], l) }
+        }
+
+        super.resetData(data.toTypedArray())
     }
 
     /**

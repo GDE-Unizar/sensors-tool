@@ -18,8 +18,6 @@ class MainActivity : Activity() {
     val spk by lazy { Speaker(this) }
     val vib by lazy { Vibrator(this) }
 
-    val exp by lazy { Experiments(acc, mic, spk, vib, this) }
-
     val fragments by lazy {
         sequenceOf(
                 Triple(acc_head, acc_box, acc),
@@ -28,6 +26,8 @@ class MainActivity : Activity() {
                 Triple(vib_head, vib_box, vib)
         )
     }
+
+    val exp by lazy { Experiments(acc, mic, spk, vib, this) }
 
     /**
      * When the activity is created

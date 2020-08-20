@@ -98,43 +98,6 @@
             android:background="@android:color/darker_gray"
             android:padding="5dp" />
 
-        <TextView
-            android:id="@+id/vib_head"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Vibrator:" />
-
-        <LinearLayout
-            android:id="@+id/vib_box"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:padding="5dp">
-
-            <SeekBar
-                android:id="@+id/vib_on"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="999"
-                android:padding="5dp" />
-
-            <SeekBar
-                android:id="@+id/vib_off"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="999"
-                android:padding="5dp" />
-
-            <Switch
-                android:id="@+id/vib_tog"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="-" />
-        </LinearLayout>
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -276,6 +239,43 @@
             android:layout_weight="1"
             android:background="@android:color/darker_gray"
             android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/vib_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Vibrator:" />
+
+        <LinearLayout
+            android:id="@+id/vib_box"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <SeekBar
+                android:id="@+id/vib_on"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="999"
+                android:padding="5dp" />
+
+            <SeekBar
+                android:id="@+id/vib_off"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="999"
+                android:padding="5dp" />
+
+            <Switch
+                android:id="@+id/vib_tog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="-" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/container"

@@ -15,16 +15,25 @@ import kotlin.math.abs
 
 const val HZ = 40000//8000
 
+/**
+ * Shows input recorded by the microphone
+ */
 class Microphone(
         val cntx: MainActivity
 ) : Fragment {
 
+    // utils
     val sm = SoundMeter()
     val micSerie = RangeSerie()
-    var show_buffer = false
-
     private val file = FileWriter(cntx, "mic")
 
+    // if true, show buffer, if false show amplitude
+    //TODO: replace with an enum
+    var show_buffer = false
+
+    /**
+     * Initialize
+     */
     override fun onCreate() {
         handler = Handler(Looper.getMainLooper())
 
@@ -33,6 +42,7 @@ class Microphone(
         cntx.mic_graph.viewport.isXAxisBoundsManual = true
         cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
 
+        // press rec button to start/stop recording
         cntx.mic_rec.onCheckedChange {
             if (it) {
                 file.openNew()
@@ -41,26 +51,35 @@ class Microphone(
             }
         }
 
+        // toggle show_buffer
         cntx.mic_buff.onCheckedChange {
             show_buffer = it
-
+            cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = it
             if (!it) {
                 micSerie.clear()
             }
         }
 
+        // clear button
         cntx.mic_clr.setOnClickListener { micSerie.clear() }
     }
 
+    /**
+     * Gets the new data and plots it
+     */
     fun updateSound() {
         val amp: Double
         if (show_buffer) {
+            // plot buffer
             micSerie.replaceData(sm.getFullBuffer())
             amp = micSerie.average
         } else {
+            // add amplitude
             amp = sm.getAmplitude()
             micSerie.addData(amp)
         }
+
+        // update graph
         cntx.mic_graph.onDataChanged(false, false)
         cntx.mic_graph.viewport.setMaxX(micSerie.maxX)
         cntx.mic_graph.viewport.setMinX(micSerie.minX)
@@ -68,6 +87,9 @@ class Microphone(
         file.writeLine(amp)
     }
 
+    /**
+     * Gets the current average value
+     */
     val average: Double
         get() {
             return micSerie.average
