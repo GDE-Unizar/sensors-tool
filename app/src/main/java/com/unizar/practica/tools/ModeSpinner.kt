@@ -22,19 +22,41 @@ enum class MODE(val label: String) {
 }
 
 class ModeSpinner(cntx: Context, attr: AttributeSet) : Spinner(cntx, attr) {
+    private val customAdapter = ModeAdapter(cntx)
+
     init {
-        adapter = ArrayAdapter(cntx, android.R.layout.simple_list_item_1, MODE.values())
+        adapter = customAdapter
     }
+
+    fun disableMode(mode: MODE) = customAdapter.removeMode(mode)
+
 
     fun setOnModeChanged(l: (MODE) -> Unit) {
         onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                l(MODE.values()[position])
+                l(customAdapter.getItem(position))
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 l(MODE.RAW)
             }
         }
+    }
+}
+
+class ModeAdapter(cntx: Context) : ArrayAdapter<MODE>(cntx, android.R.layout.simple_list_item_1, emptyArray()) {
+
+    val modes = MODE.values().toMutableList()
+
+    override fun getCount(): Int {
+        return modes.size
+    }
+
+    override fun getItem(position: Int): MODE {
+        return modes.get(position)
+    }
+
+    fun removeMode(mode: MODE) {
+        modes.remove(mode)
     }
 }

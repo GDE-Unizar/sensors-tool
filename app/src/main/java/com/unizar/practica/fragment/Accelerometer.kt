@@ -53,6 +53,9 @@ class Accelerometer(
         cntx.acc_rec.onCheckedChange { record(it) }
         cntx.acc_mode.setOnModeChanged { mode -> series.forEach { it.mode = mode } }
 
+        // other config
+        cntx.acc_mode.disableMode(MODE.BUFFER)
+
         // graph acelerometer
         cntx.acc_graph.addSeries(serieX)
         cntx.acc_graph.addSeries(serieY)
