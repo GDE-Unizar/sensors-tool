@@ -236,26 +236,12 @@
             android:orientation="vertical"
             android:padding="5dp">
 
-            <SeekBar
-                android:id="@+id/vib_on"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="1000"
-                android:padding="5dp" />
-
-            <SeekBar
-                android:id="@+id/vib_off"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="1000"
-                android:padding="5dp" />
-
             <Switch
                 android:id="@+id/vib_tog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="-" />
+                android:text="on/off" />
         </LinearLayout>
 
         <View
