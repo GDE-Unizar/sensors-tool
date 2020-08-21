@@ -7,10 +7,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.unizar.practica.MainActivity
-import com.unizar.practica.tools.FileWriter
-import com.unizar.practica.tools.Fragment
-import com.unizar.practica.tools.RangeSerie
-import com.unizar.practica.tools.onCheckedChange
+import com.unizar.practica.tools.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 
@@ -18,7 +15,7 @@ import java.text.NumberFormat
  * Shows the accelerometer values
  */
 class Accelerometer(
-        val cntx: MainActivity
+        val cntx: MainActivity,
 ) : Fragment, SensorEventListener {
 
     // utils
@@ -61,9 +58,10 @@ class Accelerometer(
         cntx.acc_graph.addSeries(serieY)
         cntx.acc_graph.addSeries(serieZ)
         cntx.acc_graph.viewport.isXAxisBoundsManual = true
+        cntx.acc_graph.viewport.isYAxisBoundsManual = true
         cntx.acc_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
-        //cntx.graph.viewport.isScalable = true // setScalableX
-        cntx.acc_graph.viewport.setScalableY(true)
+//        cntx.graph.viewport.isScalable = true // setScalableX
+//        cntx.acc_graph.viewport.setScalableY(true)
     }
 
     /**
@@ -104,9 +102,11 @@ class Accelerometer(
         }
 
         // update graph
-        cntx.acc_graph.onDataChanged(false, false)
         cntx.acc_graph.viewport.setMaxX(serieX.maxX)
         cntx.acc_graph.viewport.setMinX(serieX.minX)
+        cntx.acc_graph.viewport.setMaxY(series.map { it.maxY }.maxOrNull() ?: 0.0)
+        cntx.acc_graph.viewport.setMinY(series.map { it.minY }.minOrNull() ?: 0.0)
+        series.forEach { it.labelVerticalWidth = cntx.acc_graph.gridLabelRenderer.labelVerticalWidth * 2 }
 
         // update text info
         cntx.acc_txt.text = StringBuilder().apply {

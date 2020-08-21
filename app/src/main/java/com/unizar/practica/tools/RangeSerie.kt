@@ -10,7 +10,7 @@ import kotlin.math.min
 /**
  * Number of samples to keep
  */
-const val SAMPLES = 100
+var SAMPLES = 200 // TODO: allow 'slow device' mode that reduces this to 200
 
 /**
  * A LineGraphSeries but with more functionality
@@ -24,6 +24,7 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
             clear()
             field = value
         }
+    var labelVerticalWidth = 20
 
     // data containers
     private val rawData = LinkedList<Double>()
@@ -55,6 +56,8 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         // clear if required
         if (flag_clear) {
             _clear()
+            maxY = 0.0
+            minY = 0.0
         }
 
         // add to raw
@@ -72,7 +75,7 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         while (avgData.size > SAMPLES) avgData.removeFirst()
 
         // increase offset
-        offsetX = 20 + (offsetX + 1) % 20 // 20 is the distance between vertical bars
+        offsetX = labelVerticalWidth + (offsetX + 1) % labelVerticalWidth // 20 is the distance between vertical bars
 
         // update internal data
         update()
@@ -128,9 +131,13 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
             var x = if (list.size < SAMPLES) 0.0 else offsetX
             data = list.map { DataPoint(x++, it) }
         } else {
-            data = list.mapIndexed { i, l -> DataPoint(xArray[i], l) }
+            data = list.mapIndexed { i, it -> DataPoint(xArray[i], it) }
         }
 
+        val _maxY = list.maxOrNull() ?: 0.0
+        maxY = if (_maxY > maxY) _maxY else maxY * 0.99 + _maxY * 0.01
+        val _minY = list.minOrNull() ?: 0.0
+        minY = if (_minY < minY) _minY else minY * 0.99 + _minY * 0.01
         super.resetData(data.toTypedArray())
     }
 
@@ -157,5 +164,10 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
      */
     val minX
         get() = min(super.getLowestValueX(), maxX - SAMPLES)
+
+    var maxY = 0.0
+        private set
+    var minY = 0.0
+        private set
 
 }

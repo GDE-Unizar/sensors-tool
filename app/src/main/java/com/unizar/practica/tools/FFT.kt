@@ -38,7 +38,7 @@ fun List<Double>.FFT(Hz: Int): Pair<List<Double>, List<Double>> {
     val P1 = DoubleArray(L / 2) // single-sided: the second half of P2 has the same values as the first half
     System.arraycopy(P2, 0, P1, 0, L / 2)
     // P1(2:end-1) = 2*P1(2:end-1);
-    if (L >= 2) { // error when P1.size < 1
+    if (L >= 4) { // error when P1.size < 1
         System.arraycopy(P1, 1, P1, 1, L / 2 - 2)
         for (i in 1 until P1.size - 1) {
             P1[i] = 2 * P1[i]

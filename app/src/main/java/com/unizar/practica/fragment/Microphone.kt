@@ -17,7 +17,7 @@ const val HZ = 40000//8000
  * Shows input recorded by the microphone
  */
 class Microphone(
-        val cntx: MainActivity
+        val cntx: MainActivity,
 ) : Fragment {
 
     // utils
@@ -70,9 +70,11 @@ class Microphone(
         }
 
         // update graph
-        cntx.mic_graph.onDataChanged(false, false)
         cntx.mic_graph.viewport.setMaxX(micSerie.maxX)
         cntx.mic_graph.viewport.setMinX(micSerie.minX)
+        cntx.mic_graph.viewport.setMaxY(micSerie.maxY)
+        cntx.mic_graph.viewport.setMinY(micSerie.minY)
+        micSerie.labelVerticalWidth = cntx.mic_graph.gridLabelRenderer.labelVerticalWidth * 2
         cntx.mic_txt.text = "Amplitude of $amp"
         file.writeLine(amp)
     }
