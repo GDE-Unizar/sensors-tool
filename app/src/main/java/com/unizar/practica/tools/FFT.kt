@@ -7,7 +7,7 @@ import java.lang.Math.sqrt
  * Performs a FFT (Fast Fourier Transform) over an array of values generate at Hz Hertz
  * @return a pair (values,frecuencies) ready to be plotted
  */
-fun DoubleArray.FFT(Hz: Int): Pair<DoubleArray, DoubleArray> {
+fun List<Double>.FFT(Hz: Int): Pair<List<Double>, List<Double>> {
 
     val T = 1 / Hz
     val L = this.size
@@ -43,7 +43,7 @@ fun DoubleArray.FFT(Hz: Int): Pair<DoubleArray, DoubleArray> {
         P1[i] = 2 * P1[i]
     }
 
-
+    // extra: logarithmic Y scale
     for (i in 1 until P1.size - 1) {
         P1[i] = 20 * kotlin.math.log(P1[i], 10.0)
     }
@@ -55,5 +55,5 @@ fun DoubleArray.FFT(Hz: Int): Pair<DoubleArray, DoubleArray> {
         f[i] = Hz * i.toDouble() / L
     }
 
-    return P1.to(f)
+    return P1.toList() to f.toList()
 }

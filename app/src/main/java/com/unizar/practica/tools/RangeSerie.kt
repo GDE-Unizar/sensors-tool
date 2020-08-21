@@ -17,42 +17,35 @@ const val SAMPLES = 100
  */
 class RangeSerie : LineGraphSeries<DataPoint>() {
 
+    // config
+    var mode = MODE.RAW
+        set(value) {
+            if (value == MODE.BASE) markBase()
+            clear()
+            field = value
+        }
+
     // data containers
-    val rawData = LinkedList<Double>()
-    val rangeData = LinkedList<Double>()
-    val avgData = LinkedList<Double>()
+    private val rawData = LinkedList<Double>()
+    private val rangeData = LinkedList<Double>()
+    private val avgData = LinkedList<Double>()
 
     // values
     private var base = 0.0
     private var flag_clear = false
     private var offsetX = 0.0
 
-    /**
-     * Whether to plot range (true) or just data (false)
-     */
-    var plotRange = false
-        set(value) {
-            field = value
-            update()
-        }
 
     /**
      * Replaces all the data with the new array
      */
     fun replaceData(input: DoubleArray) {
         _clear()
-
-        val (outputX, output) = if (false) { //TODO: toggle
-            input.FFT(HZ)
-        } else {
-            Pair(null, input)
-        }
-
-        rawData.addAll(output.asIterable())
+        rawData.addAll(input.asIterable())
         rangeData.add((input.maxOrNull() ?: 0.0) - (input.minOrNull() ?: 0.0))
         avgData.add(input.average())
 
-        update(outputX)
+        update()
     }
 
     /**
@@ -114,10 +107,21 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     /**
      * Sets the internal data for the serie
      */
-    fun update(xArray: DoubleArray? = null) {
-        val list =
-                if (plotRange) rangeData
-                else rawData.map { it - base }
+    fun update() {
+        var xArray: List<Double>? = null
+
+        val list = when (mode) {
+            MODE.RAW -> rawData
+            MODE.BASE -> rawData.map { it - base }
+            MODE.AVERAGE -> avgData
+            MODE.RANGE -> rangeData
+            MODE.BUFFER -> rawData
+            MODE.FFT -> {
+                val result = rawData.FFT(HZ)
+                xArray = result.second
+                result.first
+            }
+        }
 
         val data: List<DataPoint>
         if (xArray == null) {

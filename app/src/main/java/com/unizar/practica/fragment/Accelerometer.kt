@@ -32,7 +32,7 @@ class Accelerometer(
     val serieZ = RangeSerie().apply { color = Color.BLUE }
     private val series = sequenceOf(serieX, serieY, serieZ)
 
-    // to measuer update
+    // to measure update
     private var millisec: Long = System.currentTimeMillis()
         get() {
             val prev = field
@@ -49,10 +49,9 @@ class Accelerometer(
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
         // listeners
-        cntx.acc_toggle.onCheckedChange { toggleRangePlot(it) }
-        cntx.acc_base.setOnClickListener { series.forEach(RangeSerie::markBase) }
         cntx.acc_clr.setOnClickListener { series.forEach(RangeSerie::clear) }
         cntx.acc_rec.onCheckedChange { record(it) }
+        cntx.acc_mode.setOnModeChanged { mode -> series.forEach { it.mode = mode } }
 
         // graph acelerometer
         cntx.acc_graph.addSeries(serieX)
@@ -97,7 +96,7 @@ class Accelerometer(
         val millis = millisec
 
         // add value to the series
-        for ((i, serie) in sequenceOf(Pair(0, serieX), Pair(1, serieY), Pair(2, serieZ))) {
+        for ((i, serie) in sequenceOf(0 to serieX, 1 to serieY, 2 to serieZ)) {
             serie.addData(event.values[i].toDouble()) // millis.toDouble()))
         }
 
@@ -108,13 +107,13 @@ class Accelerometer(
 
         // update text info
         cntx.acc_txt.text = StringBuilder().apply {
-            for ((label, serie) in sequenceOf(Pair("X", serieX), Pair("\nY", serieY), Pair("\nZ", serieZ))) {
+            for ((label, serie) in sequenceOf("X" to serieX, " Y" to serieY, " Z" to serieZ)) {
                 val range = serie.range.format()
                 val max = serie.highestValueY.format()
                 val min = serie.lowestValueY.format()
                 append("$label={$range} [$min,$max]")
             }
-            append("\n$millis")
+            append(" $millis")
         }
 
         // save to file (if recording)
@@ -123,10 +122,6 @@ class Accelerometer(
 
     override fun onAccuracyChanged(sensor: Sensor, i: Int) {}
 
-    /**
-     * toggles the range/raw data plot
-     */
-    fun toggleRangePlot(state: Boolean) = series.forEach { it.plotRange = state }
 }
 
 /**

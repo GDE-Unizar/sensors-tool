@@ -33,49 +33,39 @@
             android:orientation="vertical"
             android:padding="5dp">
 
+            <TextView
+                android:id="@+id/acc_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/acc_txt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="5dp" />
-
-                <Button
-                    android:id="@+id/acc_base"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                <view
+                    android:id="@+id/acc_mode"
+                    class="com.unizar.practica.tools.ModeSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="base" />
+                    android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/acc_clr"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:padding="5dp"
                     android:text="clear" />
-
-                <ToggleButton
-                    android:id="@+id/acc_toggle"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textOff="value"
-                    android:textOn="range" />
 
                 <ToggleButton
                     android:id="@+id/acc_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:padding="5dp"
                     android:textOff="record"
                     android:textOn="stop" />
@@ -91,11 +81,11 @@
 
         </LinearLayout>
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
-            android:background="@android:color/darker_gray"
+            android:background="?android:attr/listDivider"
             android:padding="5dp" />
 
         <TextView
@@ -113,41 +103,39 @@
             android:orientation="vertical"
             android:padding="5dp">
 
+            <TextView
+                android:id="@+id/mic_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/mic_txt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="5dp" />
+                <view
+                    android:id="@+id/mic_mode"
+                    class="com.unizar.practica.tools.ModeSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <Button
                     android:id="@+id/mic_clr"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:padding="5dp"
                     android:text="clear" />
-
-                <ToggleButton
-                    android:id="@+id/mic_buff"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textOff="amp"
-                    android:textOn="buff" />
 
                 <ToggleButton
                     android:id="@+id/mic_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:padding="5dp"
                     android:textOff="record"
                     android:textOn="stop" />
@@ -162,11 +150,12 @@
                 android:padding="5dp" />
         </LinearLayout>
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
-            android:background="@android:color/darker_gray"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider"
             android:padding="5dp" />
 
         <TextView
@@ -224,13 +213,12 @@
                 android:text="Enable" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView"
+        <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray"
+            android:background="?android:attr/listDivider"
             android:padding="5dp" />
 
         <TextView
@@ -270,11 +258,12 @@
                 android:text="-" />
         </LinearLayout>
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_margin="5dp"
-            android:background="@android:color/darker_gray"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider"
             android:padding="5dp" />
 
         <Button

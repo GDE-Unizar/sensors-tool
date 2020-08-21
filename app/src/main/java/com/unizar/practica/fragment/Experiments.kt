@@ -23,8 +23,8 @@ class Experiments(
     val file = FileWriter(cntx, "exp")
 
     val experiments = sequenceOf(
-            Pair("Frequency", ::freqGraph),
-            Pair("Volume", ::volumeGraph),
+            "Frequency" to ::freqGraph,
+            "Volume" to ::volumeGraph,
     )
 
     /**

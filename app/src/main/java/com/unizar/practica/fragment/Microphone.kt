@@ -7,10 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.unizar.practica.MainActivity
-import com.unizar.practica.tools.FileWriter
-import com.unizar.practica.tools.Fragment
-import com.unizar.practica.tools.RangeSerie
-import com.unizar.practica.tools.onCheckedChange
+import com.unizar.practica.tools.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
@@ -27,10 +24,6 @@ class Microphone(
     val sm = SoundMeter()
     val micSerie = RangeSerie()
     private val file = FileWriter(cntx, "mic")
-
-    // if true, show buffer, if false show amplitude
-    //TODO: replace with an enum
-    var show_buffer = false
 
     /**
      * Initialize
@@ -52,14 +45,8 @@ class Microphone(
             }
         }
 
-        // toggle show_buffer
-        cntx.mic_buff.onCheckedChange {
-            show_buffer = it
-            cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = it
-            if (!it) {
-                micSerie.clear()
-            }
-        }
+        // set mode
+        cntx.mic_mode.setOnModeChanged { micSerie.mode = it }
 
         // clear button
         cntx.mic_clr.setOnClickListener { micSerie.clear() }
@@ -70,14 +57,16 @@ class Microphone(
      */
     fun updateSound() {
         val amp: Double
-        if (show_buffer) {
+        if (micSerie.mode == MODE.BUFFER || micSerie.mode == MODE.FFT) {
             // plot buffer
             micSerie.replaceData(sm.getFullBuffer())
             amp = micSerie.average
+            cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = true
         } else {
             // add amplitude
             amp = sm.getAmplitude()
             micSerie.addData(amp)
+            cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
         }
 
         // update graph
