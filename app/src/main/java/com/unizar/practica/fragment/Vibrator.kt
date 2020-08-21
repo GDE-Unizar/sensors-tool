@@ -27,9 +27,7 @@ class Vibrator(
         vibrator = cntx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // toggle to start/stop
-        cntx.vib_tog.onCheckedChange {
-            vibrator.run { if (it) vibrate(vibconfig, 0) else cancel() }
-        }
+        cntx.vib_tog.onCheckedChange { update() }
 
         // on time
         cntx.vib_on.run {
@@ -44,23 +42,32 @@ class Vibrator(
         }
 
         // init update
-        updateUI()
+        update()
     }
 
     /**
      * When a progress bar changes, update the array value
      */
     fun updateProgressBar(id: Int, progress: Int) {
-        vibconfig[id] = (progress + 1).toLong()
-        updateUI()
+        vibconfig[id] = progress.toLong()
+        update()
     }
 
     /**
      * Update ui (text)
      */
-    private fun updateUI() {
+    private fun update() {
+        // set label
         cntx.vib_tog.text = "off=${vibconfig[0]} - on=${vibconfig[1]}"
+
+        // check 0,0
+        if (cntx.vib_tog.isChecked && vibconfig.maxOrNull() ?: 0 <= 0) cntx.vib_tog.isChecked = false
+
+        // start/stop
+        if (cntx.vib_tog.isChecked) vibrator.vibrate(vibconfig, 0)
+        else vibrator.cancel()
     }
+
 
     /**
      * On pause, stop

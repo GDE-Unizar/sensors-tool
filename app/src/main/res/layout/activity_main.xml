@@ -240,14 +240,14 @@
                 android:id="@+id/vib_on"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="999"
+                android:max="1000"
                 android:padding="5dp" />
 
             <SeekBar
                 android:id="@+id/vib_off"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="999"
+                android:max="1000"
                 android:padding="5dp" />
 
             <Switch
