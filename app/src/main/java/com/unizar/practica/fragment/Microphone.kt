@@ -5,6 +5,7 @@ import android.media.AudioRecord
 import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.unizar.practica.MainActivity
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
@@ -128,11 +129,15 @@ class Microphone(
  */
 class SoundMeter {
 
+    private val FORMAT = AudioFormat.CHANNEL_IN_MONO
+
+    private val ENCODING = AudioFormat.ENCODING_PCM_8BIT
+
     // properties
-    var minSize = AudioRecord.getMinBufferSize(HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT).apply { println(this) }
+    var minSize = AudioRecord.getMinBufferSize(HZ, FORMAT, ENCODING).apply { Log.d("MINSIZE", this.toString()) }
 
     // utils
-    var ar: AudioRecord = AudioRecord(MediaRecorder.AudioSource.MIC, HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, minSize)
+    var ar: AudioRecord = AudioRecord(MediaRecorder.AudioSource.MIC, HZ, FORMAT, ENCODING, minSize)
 
     /**
      * Starts recording
@@ -147,14 +152,14 @@ class SoundMeter {
     /**
      * Returns the amplitude
      */
-    fun getAmplitude() = getFullBuffer().map { abs(it.toDouble()) }.maxOrNull() ?: 0.0
+    fun getAmplitude() = getFullBuffer().map { abs(it) }.maxOrNull() ?: 0.0
 
     /**
      * Returns the full buffer
      */
-    fun getFullBuffer(): ShortArray {
-        val buffer = ShortArray(minSize)
+    fun getFullBuffer(): DoubleArray {
+        val buffer = ByteArray(minSize)
         ar.read(buffer, 0, minSize)
-        return buffer
+        return buffer.map { it.toDouble() + 128 }.toDoubleArray()
     }
 }

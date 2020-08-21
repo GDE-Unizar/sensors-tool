@@ -98,13 +98,6 @@
             android:background="@android:color/darker_gray"
             android:padding="5dp" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_margin="5dp"
-            android:background="@android:color/darker_gray"
-            android:padding="5dp" />
-
         <TextView
             android:id="@+id/mic_head"
             android:layout_width="match_parent"
@@ -276,6 +269,13 @@
                 android:padding="5dp"
                 android:text="-" />
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="5dp"
+            android:background="@android:color/darker_gray"
+            android:padding="5dp" />
 
         <Button
             android:id="@+id/container"

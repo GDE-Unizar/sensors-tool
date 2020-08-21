@@ -39,16 +39,20 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     /**
      * Replaces all the data with the new array
      */
-    fun replaceData(data: ShortArray) {
+    fun replaceData(input: DoubleArray) {
         _clear()
 
-        val (fftX, fftY) = data.FFT(HZ)
+        val (outputX, output) = if (false) { //TODO: toggle
+            input.FFT(HZ)
+        } else {
+            Pair(null, input)
+        }
 
-        rawData.addAll(fftX.asIterable()/*.map { it.toDouble() }*/)
-        rangeData.add((data.maxOrNull()?.toDouble() ?: 0.0) - (data.minOrNull()?.toDouble() ?: 0.0))
-        avgData.add(data.average())
+        rawData.addAll(output.asIterable())
+        rangeData.add((input.maxOrNull() ?: 0.0) - (input.minOrNull() ?: 0.0))
+        avgData.add(input.average())
 
-        update(fftY)
+        update(outputX)
     }
 
     /**

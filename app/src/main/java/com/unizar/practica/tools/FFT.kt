@@ -7,7 +7,7 @@ import java.lang.Math.sqrt
  * Performs a FFT (Fast Fourier Transform) over an array of values generate at Hz Hertz
  * @return a pair (values,frecuencies) ready to be plotted
  */
-fun ShortArray.FFT(Hz: Int): Pair<DoubleArray, DoubleArray> {
+fun DoubleArray.FFT(Hz: Int): Pair<DoubleArray, DoubleArray> {
 
     val T = 1 / Hz
     val L = this.size
@@ -15,7 +15,7 @@ fun ShortArray.FFT(Hz: Int): Pair<DoubleArray, DoubleArray> {
     val sinValue_re_im = DoubleArray(L * 2) // because FFT takes an array where its positions alternate between real and imaginary
 
     for (i in 0 until L) {
-        sinValue_re_im[2 * i] = this[i].toDouble() // real part
+        sinValue_re_im[2 * i] = this[i] // real part
         sinValue_re_im[2 * i + 1] = 0.0 //imaginary part
     }
 
