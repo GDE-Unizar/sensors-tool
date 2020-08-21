@@ -131,7 +131,7 @@ class SoundMeter {
 
     private val FORMAT = AudioFormat.CHANNEL_IN_MONO
 
-    private val ENCODING = AudioFormat.ENCODING_PCM_8BIT
+    private val ENCODING = AudioFormat.ENCODING_PCM_16BIT
 
     // properties
     var minSize = AudioRecord.getMinBufferSize(HZ, FORMAT, ENCODING).apply { Log.d("MINSIZE", this.toString()) }
@@ -158,8 +158,8 @@ class SoundMeter {
      * Returns the full buffer
      */
     fun getFullBuffer(): DoubleArray {
-        val buffer = ByteArray(minSize)
+        val buffer = ShortArray(minSize)
         ar.read(buffer, 0, minSize)
-        return buffer.map { it.toDouble() + 128 }.toDoubleArray()
+        return buffer.map { it.toDouble() }.toDoubleArray()
     }
 }
