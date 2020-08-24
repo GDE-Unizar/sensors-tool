@@ -1,4 +1,4 @@
-package com.unizar.practica.tools
+package com.unizar.practica.utilities
 
 /**
  * Android fragments are deprecated and ugly to use, these are not android fragments, but the idea is the same

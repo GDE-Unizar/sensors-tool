@@ -1,4 +1,4 @@
-package com.unizar.practica.tools
+package com.unizar.practica.utilities
 
 import android.widget.CompoundButton
 import android.widget.SeekBar

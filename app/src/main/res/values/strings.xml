@@ -30,4 +30,8 @@
     <string name="mode_range">range</string>
     <string name="mode_buff">buff</string>
     <string name="mode_fft">fft</string>
+
+    <string name="desc_clr">clear</string>
+    <string name="desc_rec">record raw</string>
+    <string name="desc_snap">snapshot</string>
 </resources>

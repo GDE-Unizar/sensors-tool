@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.unizar.practica.fragment.*
+import com.unizar.practica.utilities.initLongTap
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -44,6 +45,8 @@ class MainActivity : Activity() {
         container.setOnClickListener {
             startActivity(Intent(this, InfoActivity::class.java))
         }
+
+        initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
     }
 
     /**

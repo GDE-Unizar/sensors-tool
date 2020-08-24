@@ -3,8 +3,8 @@ package com.unizar.practica.fragment
 import android.content.Context
 import android.os.Vibrator
 import com.unizar.practica.MainActivity
-import com.unizar.practica.tools.Fragment
-import com.unizar.practica.tools.onCheckedChange
+import com.unizar.practica.utilities.Fragment
+import com.unizar.practica.utilities.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**

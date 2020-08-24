@@ -3,9 +3,9 @@ package com.unizar.practica.fragment
 import android.media.AudioManager
 import android.media.AudioTrack
 import com.unizar.practica.MainActivity
-import com.unizar.practica.tools.Fragment
-import com.unizar.practica.tools.onCheckedChange
-import com.unizar.practica.tools.onProgressChange
+import com.unizar.practica.utilities.Fragment
+import com.unizar.practica.utilities.onCheckedChange
+import com.unizar.practica.utilities.onProgressChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.atan
 import kotlin.math.sin

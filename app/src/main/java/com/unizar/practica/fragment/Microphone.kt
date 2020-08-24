@@ -9,8 +9,8 @@ import android.util.Log
 import com.unizar.practica.MainActivity
 import com.unizar.practica.R
 import com.unizar.practica.tools.FileWriter
-import com.unizar.practica.tools.Fragment
 import com.unizar.practica.tools.RangeSerie
+import com.unizar.practica.utilities.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 

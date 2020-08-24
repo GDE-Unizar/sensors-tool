@@ -58,14 +58,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:src="@drawable/ic_delete" />
+                    android:src="@drawable/ic_delete"
+                    android:contentDescription="@string/desc_clr" />
 
                 <com.unizar.practica.tools.ToggleImageButton
                     android:id="@+id/acc_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp" />
+                    android:padding="5dp"
+                    android:contentDescription="@string/desc_rec" />
 
                 <ImageButton
                     android:id="@+id/acc_snap"
@@ -73,7 +75,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:src="@android:drawable/ic_menu_camera" />
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:contentDescription="@string/desc_snap" />
 
             </LinearLayout>
 
@@ -133,14 +136,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:src="@drawable/ic_delete" />
+                    android:src="@drawable/ic_delete"
+                    android:contentDescription="@string/desc_clr" />
 
                 <com.unizar.practica.tools.ToggleImageButton
                     android:id="@+id/mic_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp" />
+                    android:padding="5dp"
+                    android:contentDescription="@string/desc_rec" />
 
                 <ImageButton
                     android:id="@+id/mic_snap"
@@ -148,7 +153,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:src="@android:drawable/ic_menu_camera" />
+                    android:src="@android:drawable/ic_menu_camera"
+                    android:contentDescription="@string/desc_snap" />
 
             </LinearLayout>
 
