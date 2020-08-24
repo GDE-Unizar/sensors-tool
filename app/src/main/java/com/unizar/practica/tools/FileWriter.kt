@@ -3,6 +3,7 @@ package com.unizar.practica.tools
 import android.app.Activity
 import android.os.Environment
 import android.widget.Toast
+import com.unizar.practica.R
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -30,7 +31,7 @@ class FileWriter(
         with(File(Environment.getExternalStorageDirectory(), "PracFis")) {
             if (!exists() && !mkdirs()) {
                 // folder error
-                Toast.makeText(cntx, "Can't create folder", Toast.LENGTH_SHORT).show()
+                Toast.makeText(cntx, R.string.toast_nofolder, Toast.LENGTH_SHORT).show()
             } else {
                 // folder ready. open file
                 var filesuffix = (if (suffix.isEmpty()) "" else "_$suffix") + (if (subsuffix.isEmpty()) "" else "_$subsuffix") + ".txt"
@@ -55,7 +56,7 @@ class FileWriter(
     fun close() {
         stream?.run {
             close()
-            Toast.makeText(cntx, "File saved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(cntx, R.string.toast_saved, Toast.LENGTH_SHORT).show()
         }
         stream = null
     }

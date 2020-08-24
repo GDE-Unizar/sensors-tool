@@ -3,6 +3,7 @@ package com.unizar.practica.fragment
 import android.widget.Button
 import android.widget.Toast
 import com.unizar.practica.MainActivity
+import com.unizar.practica.R
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Volume
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,8 +24,8 @@ class Experiments(
     // utils
     val file = FileWriter(cntx, "exp")
     val experiments = sequenceOf(
-            "Frequency" to ::freqGraph,
-            "Volume" to ::volumeGraph,
+            cntx.getString(R.string.exp_freq) to ::freqGraph,
+            cntx.getString(R.string.exp_vol) to ::volumeGraph,
     )
 
     // variables
@@ -42,17 +43,17 @@ class Experiments(
      */
     fun onCreate() {
 
-        // add a button foreach experiment
+        // add a button for each experiment
         experiments.forEach { (name, function) ->
             Button(cntx).apply {
-                text = "Experiment:\n$name"
+                text = cntx.getString(R.string.exp_title) + name
                 setOnClickListener {
                     current?.interrupt()
                     current = thread {
                         screen { cntx.hideAll() }
                         try {
                             // wait before
-                            screen { Toast.makeText(cntx, "Initiating experiment in 5 seconds...", Toast.LENGTH_SHORT).show() }
+                            screen { Toast.makeText(cntx, R.string.exp_start, Toast.LENGTH_SHORT).show() }
                             sleep(5_000)
                             // initialize
                             screen { cntx.showAll() }
@@ -73,7 +74,7 @@ class Experiments(
 
         // add stop button
         btn_stop = Button(cntx).apply {
-            text = "Stop experiment"
+            text = context.getString(R.string.exp_stop)
             isEnabled = false
             setOnClickListener {
                 current?.interrupt()

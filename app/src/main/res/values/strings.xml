@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Practica</string>
+
+    <string name="acc_head">Accelerometer:</string>
+    <string name="mic_head">Microphone:</string>
+    <string name="spk_head">Speaker:</string>
+    <string name="vib_head">Vibrator:</string>
+
+    <string name="amp_desc">\"Amplitude of \"</string>
+
+    <string name="reduce">-</string>
+    <string name="increase">+</string>
+
+    <string name="on_off">on/off</string>
+
+    <string name="btn_info">Info</string>
+
+    <string name="toast_saved">File saved</string>
+    <string name="toast_nofolder">Can\'t create folder</string>
+
+    <string name="exp_title">Experiment:\n</string>
+    <string name="exp_freq">frequency</string>
+    <string name="exp_vol">volume</string>
+    <string name="exp_start">Initiating experiment in 5 seconds…</string>
+    <string name="exp_stop">Stop experiment</string>
+
+    <string name="mode_raw">raw</string>
+    <string name="mode_base">base</string>
+    <string name="mode_avg">avg</string>
+    <string name="mode_range">range</string>
+    <string name="mode_buff">buff</string>
+    <string name="mode_fft">fft</string>
 </resources>

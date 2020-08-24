@@ -7,7 +7,10 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import com.unizar.practica.MainActivity
-import com.unizar.practica.tools.*
+import com.unizar.practica.tools.FileWriter
+import com.unizar.practica.tools.Fragment
+import com.unizar.practica.tools.MODE
+import com.unizar.practica.tools.RangeSerie
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 
@@ -68,7 +71,7 @@ class Accelerometer(
      */
     fun record(load: Boolean) {
         if (load) {
-            file.openNew()
+            file.openNew("rec")
         } else {
             file.close()
         }
@@ -78,7 +81,7 @@ class Accelerometer(
      * Saves the currently displayed data to a file
      */
     fun snapshot() {
-        file.openNew("graph")
+        file.openNew("snap")
         val itX = serieX.getValues(serieX.lowestValueX, serieX.highestValueX)
         val itY = serieY.getValues(serieY.lowestValueX, serieY.highestValueX)
         val itZ = serieZ.getValues(serieZ.lowestValueX, serieZ.highestValueX)

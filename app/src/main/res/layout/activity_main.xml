@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="5dp"
-            android:text="Accelerometer:" />
+            android:text="@string/acc_head" />
 
         <LinearLayout
             android:id="@+id/acc_box"
@@ -48,7 +48,7 @@
                 <view
                     android:id="@+id/acc_mode"
                     class="com.unizar.practica.tools.ModeSpinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Microphone:" />
+            android:text="@string/mic_head" />
 
         <LinearLayout
             android:id="@+id/mic_box"
@@ -123,7 +123,7 @@
                 <view
                     android:id="@+id/mic_mode"
                     class="com.unizar.practica.tools.ModeSpinner"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
@@ -140,9 +140,7 @@
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textOff="rec"
-                    android:textOn="stop" />
+                    android:padding="5dp" />
 
                 <ImageButton
                     android:id="@+id/mic_snap"
@@ -175,7 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Speaker:" />
+            android:text="@string/spk_head" />
 
         <LinearLayout
             android:id="@+id/spk_box"
@@ -197,7 +195,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="-" />
+                    android:text="@string/reduce" />
 
                 <Button
                     android:id="@+id/spk_inc"
@@ -205,7 +203,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="+" />
+                    android:text="@string/increase" />
 
                 <SeekBar
                     android:id="@+id/spk_hz"
@@ -221,8 +219,7 @@
                 android:id="@+id/spk_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Enable" />
+                android:padding="5dp" />
         </LinearLayout>
 
         <View
@@ -238,7 +235,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="Vibrator:" />
+            android:text="@string/vib_head" />
 
         <LinearLayout
             android:id="@+id/vib_box"
@@ -253,7 +250,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="on/off" />
+                android:text="@string/on_off" />
         </LinearLayout>
 
         <View
@@ -269,7 +266,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Info" />
+            android:text="@string/btn_info" />
 
     </LinearLayout>
 

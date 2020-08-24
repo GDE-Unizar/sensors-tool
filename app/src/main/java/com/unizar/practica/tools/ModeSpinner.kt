@@ -6,14 +6,15 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.unizar.practica.R
 
-enum class MODE(val label: String) {
-    RAW("raw"),
-    BASE("base"),
-    AVERAGE("avg"),
-    RANGE("range"),
-    BUFFER("buff"),
-    FFT("fft"),
+enum class MODE(val id: Int) {
+    RAW(R.string.mode_raw),
+    BASE(R.string.mode_base),
+    AVERAGE(R.string.mode_avg),
+    RANGE(R.string.mode_range),
+    BUFFER(R.string.mode_buff),
+    FFT(R.string.mode_fft),
     ;
 
     /**
@@ -23,8 +24,14 @@ enum class MODE(val label: String) {
         return this == FFT || this == BUFFER
     }
 
+    var label: String? = null
+
+    fun localizate(cntx: Context) {
+        label = cntx.getString(id)
+    }
+
     override fun toString(): String {
-        return label
+        return label ?: "¿?"
     }
 }
 
@@ -36,7 +43,6 @@ class ModeSpinner(cntx: Context, attr: AttributeSet) : Spinner(cntx, attr) {
     }
 
     fun disableMode(mode: MODE) = customAdapter.removeMode(mode)
-
 
     fun setOnModeChanged(l: (MODE) -> Unit) {
         onItemSelectedListener = object : OnItemSelectedListener {
@@ -53,7 +59,7 @@ class ModeSpinner(cntx: Context, attr: AttributeSet) : Spinner(cntx, attr) {
 
 class ModeAdapter(cntx: Context) : ArrayAdapter<MODE>(cntx, android.R.layout.simple_list_item_1, emptyArray()) {
 
-    val modes = MODE.values().toMutableList()
+    val modes = MODE.values().toMutableList().apply { forEach { it.localizate(cntx) } }
 
     override fun getCount(): Int {
         return modes.size

@@ -7,10 +7,10 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.unizar.practica.MainActivity
+import com.unizar.practica.R
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Fragment
 import com.unizar.practica.tools.RangeSerie
-import com.unizar.practica.tools.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
@@ -41,7 +41,7 @@ class Microphone(
         // press rec button to start/stop recording
         cntx.mic_rec.onCheckedChange {
             if (it) {
-                file.openNew()
+                file.openNew("rec")
             } else {
                 file.close()
             }
@@ -58,7 +58,7 @@ class Microphone(
     }
 
     fun snapshot() {
-        file.openNew("graph")
+        file.openNew("snap")
         micSerie.getValues(micSerie.lowestValueX, micSerie.highestValueX).forEach {
             var line = ""
             if (micSerie.mode.isBuff()) {
@@ -90,7 +90,7 @@ class Microphone(
         cntx.mic_graph.viewport.setMaxY(micSerie.maxY + 1.0)
         cntx.mic_graph.viewport.setMinY(micSerie.minY - 1.0)
         micSerie.labelVerticalWidth = cntx.mic_graph.gridLabelRenderer.labelVerticalWidth * 2
-        cntx.mic_txt.text = "Amplitude of $amp"
+        cntx.mic_txt.text = cntx.getString(R.string.amp_desc) + amp
         file.writeLine(amp)
     }
 

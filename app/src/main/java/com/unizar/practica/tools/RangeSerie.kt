@@ -10,7 +10,7 @@ import kotlin.math.min
 /**
  * Number of samples to keep
  */
-var SAMPLES = 200 // TODO: allow 'slow device' mode that reduces this to 200
+var SAMPLES = 200
 
 /**
  * A LineGraphSeries but with more functionality
