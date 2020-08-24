@@ -52,27 +52,27 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/acc_clr"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="clear" />
+                    android:src="@drawable/ic_delete" />
 
-                <ToggleButton
+                <com.unizar.practica.tools.ToggleImageButton
                     android:id="@+id/acc_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textOff="rec"
-                    android:textOn="stop" />
+                    android:padding="5dp" />
 
                 <ImageButton
                     android:id="@+id/acc_snap"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:src="@android:drawable/ic_menu_camera" />
 
             </LinearLayout>
@@ -127,15 +127,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/mic_clr"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="clear" />
+                    android:src="@drawable/ic_delete" />
 
-                <ToggleButton
+                <com.unizar.practica.tools.ToggleImageButton
                     android:id="@+id/mic_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
@@ -146,8 +146,10 @@
 
                 <ImageButton
                     android:id="@+id/mic_snap"
+                    style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
                     android:src="@android:drawable/ic_menu_camera" />
 
             </LinearLayout>
