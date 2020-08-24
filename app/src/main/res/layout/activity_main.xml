@@ -49,14 +49,14 @@
                     android:id="@+id/acc_mode"
                     class="com.unizar.practica.tools.ModeSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/acc_clr"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:padding="5dp"
                     android:text="clear" />
 
@@ -65,10 +65,15 @@
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:padding="5dp"
-                    android:textOff="record"
+                    android:textOff="rec"
                     android:textOn="stop" />
+
+                <ImageButton
+                    android:id="@+id/acc_snap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_camera" />
 
             </LinearLayout>
 
@@ -119,14 +124,14 @@
                     android:id="@+id/mic_mode"
                     class="com.unizar.practica.tools.ModeSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/mic_clr"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:padding="5dp"
                     android:text="clear" />
 
@@ -135,10 +140,15 @@
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:padding="5dp"
-                    android:textOff="record"
+                    android:textOff="rec"
                     android:textOn="stop" />
+
+                <ImageButton
+                    android:id="@+id/mic_snap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_camera" />
 
             </LinearLayout>
 

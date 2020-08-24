@@ -1,8 +1,8 @@
 package com.unizar.practica.tools
 
+import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import com.unizar.practica.fragment.HZ
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -25,6 +25,7 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
             field = value
         }
     var labelVerticalWidth = 20
+    var hz = 1.0
 
     // data containers
     private val rawData = LinkedList<Double>()
@@ -35,13 +36,26 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     private var base = 0.0
     private var flag_clear = false
     private var offsetX = 0.0
+    private var graph: GraphView? = null
 
+    fun initializeGraph(graph: GraphView) {
+        this.graph = graph
+
+        // initial configuration
+        with(graph) {
+            viewport.isXAxisBoundsManual = true
+            viewport.isYAxisBoundsManual = true
+            gridLabelRenderer.isHorizontalLabelsVisible = false
+//            viewport.isScalable = true // setScalableX
+//            viewport.setScalableY(true)
+        }
+    }
 
     /**
      * Replaces all the data with the new array
      */
     fun replaceData(input: DoubleArray) {
-        _clear()
+        _clear(flag_clear)
         rawData.addAll(input.asIterable())
         rangeData.add((input.maxOrNull() ?: 0.0) - (input.minOrNull() ?: 0.0))
         avgData.add(input.average())
@@ -55,9 +69,7 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     fun addData(value: Double) {
         // clear if required
         if (flag_clear) {
-            _clear()
-            maxY = 0.0
-            minY = 0.0
+            _clear(true)
         }
 
         // add to raw
@@ -74,10 +86,8 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         avgData.add(avg)
         while (avgData.size > SAMPLES) avgData.removeFirst()
 
-        // increase offset
-        offsetX = labelVerticalWidth + (offsetX + 1) % labelVerticalWidth // 20 is the distance between vertical bars
-
         // update internal data
+        offsetX++
         update()
     }
 
@@ -99,12 +109,16 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
     /**
      * Performs the clear operations
      */
-    private fun _clear() {
+    private fun _clear(all: Boolean) {
         rawData.clear()
         rangeData.clear()
         avgData.clear()
         offsetX = 0.0
         flag_clear = false
+        if (all) {
+            maxY = 0.0
+            minY = 0.0
+        }
     }
 
     /**
@@ -120,7 +134,7 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
             MODE.RANGE -> rangeData
             MODE.BUFFER -> rawData
             MODE.FFT -> {
-                val result = rawData.FFT(HZ)
+                val result = rawData.FFT(hz)
                 xArray = result.second
                 result.first
             }
@@ -128,7 +142,7 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
 
         val data: List<DataPoint>
         if (xArray == null) {
-            var x = if (list.size < SAMPLES) 0.0 else offsetX
+            var x = offsetX - list.size
             data = list.map { DataPoint(x++, it) }
         } else {
             data = list.mapIndexed { i, it -> DataPoint(xArray[i], it) }
@@ -139,6 +153,15 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         val _minY = list.minOrNull() ?: 0.0
         minY = if (_minY < minY) _minY else minY * 0.99 + _minY * 0.01
         super.resetData(data.toTypedArray())
+
+        // update graph if present
+        graph?.run {
+            viewport.setMaxX(maxX)
+            viewport.setMinX(minX)
+//            viewport.setMaxY(series.map { it.maxY }.maxOrNull() ?: 0.0)
+//            viewport.setMinY(series.map { it.minY }.minOrNull() ?: 0.0)
+            gridLabelRenderer.isHorizontalLabelsVisible = mode.isBuff()
+        }
     }
 
     /**
@@ -163,10 +186,17 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
      * The current min X value of the data
      */
     val minX
-        get() = min(super.getLowestValueX(), maxX - SAMPLES)
+        get() = if (mode.isBuff()) super.getLowestValueX() else min(super.getLowestValueX(), maxX - SAMPLES)
 
+    /**
+     * The smoother max Y value of the data
+     */
     var maxY = 0.0
         private set
+
+    /**
+     * The smoother min Y value of the data
+     */
     var minY = 0.0
         private set
 

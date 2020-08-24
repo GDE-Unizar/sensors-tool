@@ -11,6 +11,8 @@ import com.unizar.practica.tools.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 
+private val DELAY = 10 // in milliseconds
+
 /**
  * Shows the accelerometer values
  */
@@ -24,9 +26,9 @@ class Accelerometer(
     private val file = FileWriter(cntx, "acc")
 
     // series
-    val serieX = RangeSerie().apply { color = Color.GREEN }
-    val serieY = RangeSerie().apply { color = Color.RED }
-    val serieZ = RangeSerie().apply { color = Color.BLUE }
+    val serieX = RangeSerie().apply { color = Color.GREEN }.apply { hz = 1000.0 / DELAY }
+    val serieY = RangeSerie().apply { color = Color.RED }.apply { hz = 1000.0 / DELAY }
+    val serieZ = RangeSerie().apply { color = Color.BLUE }.apply { hz = 1000.0 / DELAY }
     private val series = sequenceOf(serieX, serieY, serieZ)
 
     // to measure update
@@ -48,6 +50,7 @@ class Accelerometer(
         // listeners
         cntx.acc_clr.setOnClickListener { series.forEach(RangeSerie::clear) }
         cntx.acc_rec.onCheckedChange { record(it) }
+        cntx.acc_snap.setOnClickListener { snapshot() }
         cntx.acc_mode.setOnModeChanged { mode -> series.forEach { it.mode = mode } }
 
         // other config
@@ -57,11 +60,7 @@ class Accelerometer(
         cntx.acc_graph.addSeries(serieX)
         cntx.acc_graph.addSeries(serieY)
         cntx.acc_graph.addSeries(serieZ)
-        cntx.acc_graph.viewport.isXAxisBoundsManual = true
-        cntx.acc_graph.viewport.isYAxisBoundsManual = true
-        cntx.acc_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
-//        cntx.graph.viewport.isScalable = true // setScalableX
-//        cntx.acc_graph.viewport.setScalableY(true)
+        serieX.initializeGraph(cntx.acc_graph)
     }
 
     /**
@@ -76,10 +75,33 @@ class Accelerometer(
     }
 
     /**
+     * Saves the currently displayed data to a file
+     */
+    fun snapshot() {
+        file.openNew("graph")
+        val itX = serieX.getValues(serieX.lowestValueX, serieX.highestValueX)
+        val itY = serieY.getValues(serieY.lowestValueX, serieY.highestValueX)
+        val itZ = serieZ.getValues(serieZ.lowestValueX, serieZ.highestValueX)
+
+        while (itX.hasNext() && itY.hasNext() && itZ.hasNext()) {
+            val nextX = itX.next()
+            var line = ""
+            if (serieX.mode.isBuff()) {
+                line += nextX.x.toString() + " "
+            }
+            line += nextX.y.toString() + " "
+            line += itY.next().y.toString() + " "
+            line += itZ.next().y.toString()
+            file.writeLine(line)
+        }
+        file.close()
+    }
+
+    /**
      * When resuming, register the listener
      */
     override fun onResume() {
-        sensorManager.registerListener(this, accelerometer, 10 * 1000)//SensorManager.SENSOR_DELAY_GAME)
+        sensorManager.registerListener(this, accelerometer, DELAY * 1000)//SensorManager.SENSOR_DELAY_GAME)
     }
 
     /**
@@ -102,10 +124,9 @@ class Accelerometer(
         }
 
         // update graph
-        cntx.acc_graph.viewport.setMaxX(serieX.maxX)
-        cntx.acc_graph.viewport.setMinX(serieX.minX)
-        cntx.acc_graph.viewport.setMaxY(series.map { it.maxY }.maxOrNull() ?: 0.0)
-        cntx.acc_graph.viewport.setMinY(series.map { it.minY }.minOrNull() ?: 0.0)
+        cntx.acc_graph.onDataChanged(false, false)
+        cntx.acc_graph.viewport.setMaxY((series.map { it.maxY }.maxOrNull() ?: 0.0) + 1.0)
+        cntx.acc_graph.viewport.setMinY((series.map { it.minY }.minOrNull() ?: 0.0) - 1.0)
         series.forEach { it.labelVerticalWidth = cntx.acc_graph.gridLabelRenderer.labelVerticalWidth * 2 }
 
         // update text info

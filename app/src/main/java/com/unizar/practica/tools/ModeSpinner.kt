@@ -16,6 +16,13 @@ enum class MODE(val label: String) {
     FFT("fft"),
     ;
 
+    /**
+     * @return true iff it is FFT or BUFFER
+     */
+    fun isBuff(): Boolean {
+        return this == FFT || this == BUFFER
+    }
+
     override fun toString(): String {
         return label
     }

@@ -7,7 +7,10 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.unizar.practica.MainActivity
-import com.unizar.practica.tools.*
+import com.unizar.practica.tools.FileWriter
+import com.unizar.practica.tools.Fragment
+import com.unizar.practica.tools.RangeSerie
+import com.unizar.practica.tools.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
@@ -22,7 +25,7 @@ class Microphone(
 
     // utils
     val sm = SoundMeter()
-    val micSerie = RangeSerie()
+    val micSerie = RangeSerie().apply { hz = HZ.toDouble() }
     private val file = FileWriter(cntx, "mic")
 
     /**
@@ -33,8 +36,7 @@ class Microphone(
 
         // graph microphone
         cntx.mic_graph.addSeries(micSerie)
-        cntx.mic_graph.viewport.isXAxisBoundsManual = true
-        cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
+        micSerie.initializeGraph(cntx.mic_graph)
 
         // press rec button to start/stop recording
         cntx.mic_rec.onCheckedChange {
@@ -44,6 +46,9 @@ class Microphone(
                 file.close()
             }
         }
+        cntx.mic_snap.setOnClickListener {
+            snapshot()
+        }
 
         // set mode
         cntx.mic_mode.setOnModeChanged { micSerie.mode = it }
@@ -52,28 +57,38 @@ class Microphone(
         cntx.mic_clr.setOnClickListener { micSerie.clear() }
     }
 
+    fun snapshot() {
+        file.openNew("graph")
+        micSerie.getValues(micSerie.lowestValueX, micSerie.highestValueX).forEach {
+            var line = ""
+            if (micSerie.mode.isBuff()) {
+                line += it.x.toString() + " "
+            }
+            line += it.y.toString()
+            file.writeLine(line)
+        }
+        file.close()
+    }
+
     /**
      * Gets the new data and plots it
      */
     fun updateSound() {
         val amp: Double
-        if (micSerie.mode == MODE.BUFFER || micSerie.mode == MODE.FFT) {
+        if (micSerie.mode.isBuff()) {
             // plot buffer
             micSerie.replaceData(sm.getFullBuffer())
             amp = micSerie.average
-            cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = true
         } else {
             // add amplitude
             amp = sm.getAmplitude()
             micSerie.addData(amp)
-            cntx.mic_graph.gridLabelRenderer.isHorizontalLabelsVisible = false
         }
 
         // update graph
-        cntx.mic_graph.viewport.setMaxX(micSerie.maxX)
-        cntx.mic_graph.viewport.setMinX(micSerie.minX)
-        cntx.mic_graph.viewport.setMaxY(micSerie.maxY)
-        cntx.mic_graph.viewport.setMinY(micSerie.minY)
+        cntx.mic_graph.onDataChanged(false, false)
+        cntx.mic_graph.viewport.setMaxY(micSerie.maxY + 1.0)
+        cntx.mic_graph.viewport.setMinY(micSerie.minY - 1.0)
         micSerie.labelVerticalWidth = cntx.mic_graph.gridLabelRenderer.labelVerticalWidth * 2
         cntx.mic_txt.text = "Amplitude of $amp"
         file.writeLine(amp)
