@@ -34,4 +34,6 @@
     <string name="desc_clr">clear</string>
     <string name="desc_rec">record raw</string>
     <string name="desc_snap">snapshot</string>
+
+    <string name="no_permission">Permission denied</string>
 </resources>

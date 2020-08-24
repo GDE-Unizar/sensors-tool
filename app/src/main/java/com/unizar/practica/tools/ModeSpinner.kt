@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.unizar.practica.R
 
+/**
+ * Mode of a graph
+ */
 enum class MODE(val id: Int) {
     RAW(R.string.mode_raw),
     BASE(R.string.mode_base),
@@ -24,17 +27,23 @@ enum class MODE(val id: Int) {
         return this == FFT || this == BUFFER
     }
 
-    var label: String? = null
+    var label: String = "?"
 
+    /**
+     * Call this before toString to get a localizated string
+     */
     fun localizate(cntx: Context) {
         label = cntx.getString(id)
     }
 
     override fun toString(): String {
-        return label ?: "¿?"
+        return label
     }
 }
 
+/**
+ * Spinner to choose a mode
+ */
 class ModeSpinner(cntx: Context, attr: AttributeSet) : Spinner(cntx, attr) {
     private val customAdapter = ModeAdapter(cntx)
 
@@ -42,8 +51,14 @@ class ModeSpinner(cntx: Context, attr: AttributeSet) : Spinner(cntx, attr) {
         adapter = customAdapter
     }
 
+    /**
+     * Removes a mode from the list of available modes
+     */
     fun disableMode(mode: MODE) = customAdapter.removeMode(mode)
 
+    /**
+     * listener for when the mode changes
+     */
     fun setOnModeChanged(l: (MODE) -> Unit) {
         onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -57,8 +72,12 @@ class ModeSpinner(cntx: Context, attr: AttributeSet) : Spinner(cntx, attr) {
     }
 }
 
+/**
+ * for ModeSpinner, adapter for the items
+ */
 class ModeAdapter(cntx: Context) : ArrayAdapter<MODE>(cntx, android.R.layout.simple_list_item_1, emptyArray()) {
 
+    // perform localization here
     val modes = MODE.values().toMutableList().apply { forEach { it.localizate(cntx) } }
 
     override fun getCount(): Int {

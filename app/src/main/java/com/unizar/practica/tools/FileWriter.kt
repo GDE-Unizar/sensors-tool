@@ -1,6 +1,8 @@
 package com.unizar.practica.tools
 
 import android.app.Activity
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Environment
 import android.widget.Toast
 import com.unizar.practica.R
@@ -24,9 +26,13 @@ class FileWriter(
      * Opens a new file to start recording
      */
     fun openNew(subsuffix: String = "") {
+        if (!hasPermission) {
+            Toast.makeText(cntx, R.string.no_permission, Toast.LENGTH_SHORT).show()
+            return
+        }
+
         // close previous if any
         close()
-
         // opens the file by creating the parent folder (if required)
         with(File(Environment.getExternalStorageDirectory(), "PracFis")) {
             if (!exists() && !mkdirs()) {
@@ -60,5 +66,20 @@ class FileWriter(
         }
         stream = null
     }
+
+}
+
+// --------- permision ------------
+
+var hasPermission = false
+
+/**
+ * Checks if the permission is granted, if it isn't asks for it
+ */
+fun testPermission(cntx: Activity) {
+    hasPermission =
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) true // old android version
+            else if (cntx.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) true // already granted
+            else false.also { cntx.requestPermissions(arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 0) } // not granted, ask
 
 }

@@ -2,9 +2,11 @@ package com.unizar.practica
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import com.unizar.practica.fragment.*
+import com.unizar.practica.tools.testPermission
 import com.unizar.practica.utilities.initLongTap
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -47,6 +49,7 @@ class MainActivity : Activity() {
         }
 
         initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
+        testPermission(this)
     }
 
     /**
@@ -72,7 +75,15 @@ class MainActivity : Activity() {
     }
 
     /**
-     * Initialize the Hideable parts
+     * Request for permissions
+     */
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if (grantResults.any { it != PackageManager.PERMISSION_DENIED })
+            testPermission(this)
+    }
+
+    /**
+     * Initialize the hideable parts
      */
     private fun initHideable() {
         for ((head, box, fragment) in fragments) {
