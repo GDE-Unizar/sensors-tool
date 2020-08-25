@@ -10,6 +10,7 @@ import com.unizar.practica.MainActivity
 import com.unizar.practica.R
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.RangeSerie
+import com.unizar.practica.tools.hasRecordPermission
 import com.unizar.practica.utilities.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
@@ -143,17 +144,25 @@ class SoundMeter {
     var minSize = AudioRecord.getMinBufferSize(HZ, FORMAT, ENCODING).apply { Log.d("MINSIZE", this.toString()) }
 
     // utils
-    var ar: AudioRecord = AudioRecord(MediaRecorder.AudioSource.MIC, HZ, FORMAT, ENCODING, minSize)
+    val ar: AudioRecord by lazy { AudioRecord(MediaRecorder.AudioSource.MIC, HZ, FORMAT, ENCODING, minSize) }
 
     /**
      * Starts recording
      */
-    fun start() = ar.startRecording()
+    fun start() {
+        if (!hasRecordPermission) return
+
+        ar.startRecording()
+    }
 
     /**
      * Stops recording
      */
-    fun stop() = ar.stop()
+    fun stop() {
+        if (!hasRecordPermission) return
+
+        ar.stop()
+    }
 
     /**
      * Returns the amplitude
@@ -164,6 +173,8 @@ class SoundMeter {
      * Returns the full buffer
      */
     fun getFullBuffer(): DoubleArray {
+        if (!hasRecordPermission) return DoubleArray(0)
+
         val buffer = ShortArray(minSize)
         ar.read(buffer, 0, minSize)
         return buffer.map { it.toDouble() }.toDoubleArray()

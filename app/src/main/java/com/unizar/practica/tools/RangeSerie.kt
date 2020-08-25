@@ -116,8 +116,8 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         offsetX = 0.0
         flag_clear = false
         if (all) {
-            maxY = 0.0
-            minY = 0.0
+            maxY = Double.MIN_VALUE
+            minY = Double.MAX_VALUE
         }
     }
 
@@ -160,7 +160,7 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
             viewport.setMinX(minX)
 //            viewport.setMaxY(series.map { it.maxY }.maxOrNull() ?: 0.0)
 //            viewport.setMinY(series.map { it.minY }.minOrNull() ?: 0.0)
-            gridLabelRenderer.isHorizontalLabelsVisible = mode.isBuff()
+            gridLabelRenderer.isHorizontalLabelsVisible = mode == MODE.FFT
         }
     }
 
