@@ -6,7 +6,7 @@
     <string name="spk_head">Speaker:</string>
     <string name="vib_head">Vibrator:</string>
 
-    <string name="amp_desc">\"Amplitude of \"</string>
+    <string name="amp_desc">Amplitude of %1$f</string>
 
     <string name="reduce">-</string>
     <string name="increase">+</string>

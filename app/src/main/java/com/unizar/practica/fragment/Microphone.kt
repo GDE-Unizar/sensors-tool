@@ -90,7 +90,7 @@ class Microphone(
         cntx.mic_graph.viewport.setMaxY(micSerie.maxY + 1.0)
         cntx.mic_graph.viewport.setMinY(micSerie.minY - 1.0)
         micSerie.labelVerticalWidth = cntx.mic_graph.gridLabelRenderer.labelVerticalWidth * 2
-        cntx.mic_txt.text = cntx.getString(R.string.amp_desc) + amp
+        cntx.mic_txt.text = cntx.getString(R.string.amp_desc, amp)
         file.writeLine(amp)
     }
 

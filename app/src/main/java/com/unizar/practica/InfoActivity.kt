@@ -56,12 +56,12 @@ class InfoActivity : Activity() {
                             || method.genericParameterTypes.isNotEmpty() // has type parameters
                     ) continue
 
-                    // append function and result
-                    append("${method.name}() ")
+                    // append name and result
+                    append(method.name.run { if (startsWith("get")) substring(3) else if (startsWith("is")) substring(2) else this })
                     try {
-                        append("=> ${method.invoke(sensor)}")
+                        append(" = ${method.invoke(sensor)}")
                     } catch (a: Throwable) {
-                        append("[$a]")
+                        append(" [$a]")
                     }
                     append("\n")
                 }
