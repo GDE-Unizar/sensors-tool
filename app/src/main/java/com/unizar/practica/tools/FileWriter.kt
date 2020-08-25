@@ -25,7 +25,7 @@ class FileWriter(
      */
     fun openNew(subsuffix: String = "") {
         if (!hasWritePermission) {
-            Toast.makeText(cntx, R.string.no_permission, Toast.LENGTH_SHORT).show()
+            Toast.makeText(cntx, R.string.toast_nopermission, Toast.LENGTH_SHORT).show()
             return
         }
 

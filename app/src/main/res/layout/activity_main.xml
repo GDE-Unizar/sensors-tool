@@ -22,8 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="@string/acc_head" />
+            android:text="@string/acc_head"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/acc_box"
@@ -100,8 +102,10 @@
             android:id="@+id/mic_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="@string/mic_head" />
+            android:text="@string/mic_head"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/mic_box"
@@ -178,8 +182,10 @@
             android:id="@+id/spk_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="@string/spk_head" />
+            android:text="@string/spk_head"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/spk_box"
@@ -240,8 +246,10 @@
             android:id="@+id/vib_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:padding="5dp"
-            android:text="@string/vib_head" />
+            android:text="@string/vib_head"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/vib_box"

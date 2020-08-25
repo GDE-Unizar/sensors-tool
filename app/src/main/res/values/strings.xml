@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Practica</string>
+    <string name="app_name">Practice</string>
 
-    <string name="acc_head">Accelerometer:</string>
-    <string name="mic_head">Microphone:</string>
-    <string name="spk_head">Speaker:</string>
-    <string name="vib_head">Vibrator:</string>
+    <string name="acc_head">Accelerometer</string>
+    <string name="mic_head">Microphone</string>
+    <string name="spk_head">Speaker</string>
+    <string name="vib_head">Vibrator</string>
 
     <string name="amp_desc">Amplitude of %1$f</string>
 
@@ -13,10 +13,11 @@
 
     <string name="on_off">on/off</string>
 
-    <string name="btn_info">Info</string>
+    <string name="btn_info">Sensors Info</string>
 
     <string name="toast_saved">File saved</string>
     <string name="toast_nofolder">Can\'t create folder</string>
+    <string name="toast_nopermission">Permission denied</string>
 
     <string name="exp_title">Experiment:\n</string>
     <string name="exp_freq">frequency</string>
@@ -24,16 +25,15 @@
     <string name="exp_start">Initiating experiment in 5 seconds…</string>
     <string name="exp_stop">Stop experiment</string>
 
-    <string name="mode_raw">raw</string>
-    <string name="mode_base">base</string>
-    <string name="mode_avg">avg</string>
-    <string name="mode_range">range</string>
-    <string name="mode_buff">buff</string>
-    <string name="mode_fft">fft</string>
+    <string name="mode_raw">Raw</string>
+    <string name="mode_base">Base</string>
+    <string name="mode_avg">Average</string>
+    <string name="mode_range">Range</string>
+    <string name="mode_buff">Buffer</string>
+    <string name="mode_fft">FFT</string>
 
     <string name="desc_clr">clear</string>
     <string name="desc_rec">record raw</string>
     <string name="desc_snap">snapshot</string>
 
-    <string name="no_permission">Permission denied</string>
 </resources>
