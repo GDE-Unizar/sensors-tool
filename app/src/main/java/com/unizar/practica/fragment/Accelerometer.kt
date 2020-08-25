@@ -6,6 +6,10 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.widget.TextView
 import com.unizar.practica.MainActivity
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.MODE
@@ -34,13 +38,6 @@ class Accelerometer(
     val serieZ = RangeSerie().apply { color = Color.BLUE }.apply { hz = 1000.0 / DELAY }
     private val series = sequenceOf(serieX, serieY, serieZ)
 
-    // to measure update
-    private var millisec: Long = System.currentTimeMillis()
-        get() {
-            val prev = field
-            field = System.currentTimeMillis()
-            return field - prev
-        }
 
     /**
      * Initialize elements
@@ -119,7 +116,6 @@ class Accelerometer(
      * A new value! lets use it
      */
     override fun onSensorChanged(event: SensorEvent) {
-        val millis = millisec
 
         // add value to the series
         for ((i, serie) in sequenceOf(0 to serieX, 1 to serieY, 2 to serieZ)) {
@@ -133,15 +129,15 @@ class Accelerometer(
         series.forEach { it.labelVerticalWidth = cntx.acc_graph.gridLabelRenderer.labelVerticalWidth * 2 }
 
         // update text info
-        cntx.acc_txt.text = StringBuilder().apply {
-            for ((label, serie) in sequenceOf("X" to serieX, " Y" to serieY, " Z" to serieZ)) {
+        SpannableStringBuilder().apply {
+            for ((label, serie) in sequenceOf(X_pref to serieX, Y_pref to serieY, Z_pref to serieZ)) {
                 val range = serie.range.format()
                 val max = serie.highestValueY.format()
                 val min = serie.lowestValueY.format()
-                append("$label={$range} [$min,$max]")
+                append(label)
+                append("={$range} [$min,$max]")
             }
-            append(" $millis")
-        }
+        }.let { cntx.acc_txt.setText(it, TextView.BufferType.SPANNABLE) }
 
         // save to file (if recording)
         file.writeLine(event.values.joinToString(" "))
@@ -154,7 +150,7 @@ class Accelerometer(
 /**
  * Number formatting object
  */
-val num2str = NumberFormat.getInstance().apply { maximumFractionDigits = 4 }
+val num2str = NumberFormat.getInstance().apply { maximumFractionDigits = 3 }
 
 /**
  * Number formatting extension
@@ -162,3 +158,8 @@ val num2str = NumberFormat.getInstance().apply { maximumFractionDigits = 4 }
 private fun Double.format(): String {
     return num2str.format(this)
 }
+
+// colored strings
+val X_pref = SpannableString("X").apply { setSpan(ForegroundColorSpan(Color.RED), 0, 1, 0) }
+val Y_pref = SpannableString(" Y").apply { setSpan(ForegroundColorSpan(Color.GREEN), 1, 2, 0) }
+val Z_pref = SpannableString(" Z").apply { setSpan(ForegroundColorSpan(Color.BLUE), 1, 2, 0) }
