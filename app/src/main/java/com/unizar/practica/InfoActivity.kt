@@ -39,7 +39,7 @@ class InfoActivity : Activity() {
                 setPadding(0, PADDING, 0, 0)
 
                 // add
-                container.addView(this)
+                s_info.addView(this)
             }
 
             // add body with the sensor data
@@ -71,7 +71,7 @@ class InfoActivity : Activity() {
                 setPadding(PADDING, 0, PADDING, 0)
 
                 // add
-                container.addView(this)
+                s_info.addView(this)
             }
 
             // toggle functionality

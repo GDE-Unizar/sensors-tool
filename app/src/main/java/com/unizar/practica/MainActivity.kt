@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import com.unizar.practica.fragment.*
 import com.unizar.practica.tools.testPermission
@@ -44,7 +45,7 @@ class MainActivity : Activity() {
 
         exp.onCreate()
 
-        container.setOnClickListener {
+        s_info.setOnClickListener {
             startActivity(Intent(this, InfoActivity::class.java))
         }
 
@@ -82,6 +83,34 @@ class MainActivity : Activity() {
             testPermission(this)
     }
 
+
+    /**
+     * A key was pressed:
+     * - Pressing the back button will close all fragment modules and cancel close
+     * - Pressing the back button will stop running experiments and cancel close
+     */
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // back key
+            var done = false
+
+            // when at least a fragment is shown, close and don't exit
+            if (fragments.any { it.second.visibility == View.VISIBLE }) {
+                hideAll()
+                done = true
+            }
+
+            // if an experiment is running, stop and don't close
+            if (exp.isRunning()) {
+                exp.stop()
+                done = true
+            }
+
+            if (done) return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     /**
      * Initialize the hideable parts
      */
@@ -108,7 +137,6 @@ class MainActivity : Activity() {
 
     fun showAll() = fragments.forEach { (head, box, _) -> if (box.visibility != View.VISIBLE) head.performClick() }
     fun hideAll() = fragments.forEach { (head, box, _) -> if (box.visibility == View.VISIBLE) head.performClick() }
-
 }
 
 

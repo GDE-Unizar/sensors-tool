@@ -25,6 +25,7 @@
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="@string/acc_head"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -105,6 +106,7 @@
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="@string/mic_head"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -185,6 +187,7 @@
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="@string/spk_head"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -249,6 +252,7 @@
             android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="@string/vib_head"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -276,11 +280,21 @@
             android:padding="5dp" />
 
         <Button
-            android:id="@+id/container"
-            android:layout_width="match_parent"
+            android:id="@+id/s_info"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:text="@string/btn_info" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider"
+            android:padding="5dp" />
 
     </LinearLayout>
 

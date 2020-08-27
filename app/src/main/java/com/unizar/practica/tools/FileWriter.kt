@@ -40,6 +40,7 @@ class FileWriter(
                 // folder ready. open file
                 var filesuffix = (if (suffix.isEmpty()) "" else "_$suffix") + (if (subsuffix.isEmpty()) "" else "_$subsuffix") + ".txt"
                 stream = FileOutputStream(File(this, SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date()) + filesuffix))
+                Toast.makeText(cntx, "Writing file...", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -31,6 +31,7 @@ class Experiments(
     // variables
     var current: Thread? = null
         set(value) {
+            field?.interrupt()
             field = value
             btn_stop.isEnabled = value != null
             btn_exps.forEach { it.isEnabled = value == null }
@@ -48,7 +49,6 @@ class Experiments(
             Button(cntx).apply {
                 text = cntx.getString(R.string.exp_title) + name
                 setOnClickListener {
-                    current?.interrupt()
                     current = thread {
                         screen { cntx.hideAll() }
                         try {
@@ -57,7 +57,7 @@ class Experiments(
                             sleep(5_000)
                             // initialize
                             screen { cntx.showAll() }
-                            file.openNew(name)
+                            screen { file.openNew(name) }
                             // run
                             function()
                         } catch (ignored: InterruptedException) {
@@ -76,12 +76,21 @@ class Experiments(
         btn_stop = Button(cntx).apply {
             text = context.getString(R.string.exp_stop)
             isEnabled = false
-            setOnClickListener {
-                current?.interrupt()
-                current = null
-            }
+            setOnClickListener { stop() }
             cntx.main.addView(this)
         }
+    }
+
+    /**
+     * @return true is there is an experiment running
+     */
+    fun isRunning() = current != null
+
+    /**
+     * Stops the current experiment (or does nothing if none active)
+     */
+    fun stop() {
+        current = null
     }
 
     /**
