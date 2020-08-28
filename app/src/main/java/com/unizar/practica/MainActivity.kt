@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.unizar.practica.fragment.*
 import com.unizar.practica.tools.testPermission
@@ -51,6 +53,18 @@ class MainActivity : Activity() {
 
         initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
         testPermission(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menu?.add("Help")?.setIcon(android.R.drawable.ic_menu_help)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        super.onOptionsItemSelected(item)
+        startActivity(Intent(this, HelpActivity::class.java))
+        return false
     }
 
     /**
