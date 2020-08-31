@@ -4,6 +4,7 @@ import android.widget.Button
 import android.widget.Toast
 import com.unizar.practica.MainActivity
 import com.unizar.practica.R
+import com.unizar.practica.helpOnLongTap
 import com.unizar.practica.tools.FileWriter
 import com.unizar.practica.tools.Volume
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,8 +25,8 @@ class Experiments(
     // utils
     val file = FileWriter(cntx, "exp")
     val experiments = sequenceOf(
-            cntx.getString(R.string.exp_freq) to ::freqGraph,
-            cntx.getString(R.string.exp_vol) to ::volumeGraph,
+            cntx.getString(R.string.exp_freq) to ::freqExperiment,
+            cntx.getString(R.string.exp_vol) to ::volumeExperiment,
     )
 
     // variables
@@ -67,6 +68,7 @@ class Experiments(
                         screen { cntx.hideAll() }
                     }
                 }
+                tag = "exp_$name"
                 cntx.main.addView(this)
                 btn_exps.add(this)
             }
@@ -77,8 +79,13 @@ class Experiments(
             text = context.getString(R.string.exp_stop)
             isEnabled = false
             setOnClickListener { stop() }
+            tag = "exp_stop"
             cntx.main.addView(this)
         }
+
+
+        cntx.helpOnLongTap(*btn_exps.toTypedArray(), btn_stop)
+
     }
 
     /**
@@ -96,12 +103,12 @@ class Experiments(
     /**
      * An experiment
      */
-    fun freqGraph() {
+    fun freqExperiment() {
         // initialize
         screen { cntx.spk_toggle.isChecked = true }
 
         // for each frequency
-        for (hz in 10..22000 step 100) {
+        for (hz in 10..22010 step 100) {
 
             // play requency and wait
             screen { cntx.spk_hz.progress = hz }
@@ -121,7 +128,7 @@ class Experiments(
     /**
      * Another experiment
      */
-    fun volumeGraph() {
+    fun volumeExperiment() {
         val volume = Volume(cntx)
         screen { cntx.spk_toggle.isChecked = true }
 
@@ -133,7 +140,10 @@ class Experiments(
                 screen { cntx.mic_clr.performClick() }
                 sleep(1000)
                 val micVal = mic.average
-                file.writeLine("$hz $vol $micVal")
+                val accXVal = acc.serieX.average
+                val accYVal = acc.serieY.average
+                val accZVal = acc.serieZ.average
+                file.writeLine("$hz $vol $micVal $accXVal $accYVal $accZVal")
             }
         }
     }

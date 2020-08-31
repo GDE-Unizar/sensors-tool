@@ -36,4 +36,6 @@
     <string name="desc_rec">record raw</string>
     <string name="desc_snap">snapshot</string>
 
+    <string name="menu_help">Help</string>
+
 </resources>

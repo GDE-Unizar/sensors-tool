@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import com.unizar.practica.fragment.*
 import com.unizar.practica.tools.testPermission
-import com.unizar.practica.utilities.initLongTap
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -51,20 +50,26 @@ class MainActivity : Activity() {
             startActivity(Intent(this, InfoActivity::class.java))
         }
 
-        initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
+//        initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
         testPermission(this)
+
+        helpOnLongTap(acc_head, acc_txt, acc_mode, acc_clr, acc_rec, acc_snap, acc_graph, mic_head, mic_txt, mic_mode, mic_clr, mic_rec, mic_snap, mic_graph, spk_head, spk_dec, spk_inc, spk_hz, spk_toggle, vib_head, vib_tog, s_info)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
-        menu?.add("Help")?.setIcon(android.R.drawable.ic_menu_help)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        super.onOptionsItemSelected(item)
-        startActivity(Intent(this, HelpActivity::class.java))
-        return false
+        return when (item.itemId) {
+            R.id.help -> {
+                showGeneralHelp()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     /**

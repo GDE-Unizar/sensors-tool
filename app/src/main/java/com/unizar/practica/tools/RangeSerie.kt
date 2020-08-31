@@ -13,6 +13,11 @@ import kotlin.math.min
 var SAMPLES = 200
 
 /**
+ * Number of samples for window operation (average and range)
+ */
+val WINDOW = 10
+
+/**
  * A LineGraphSeries but with more functionality
  */
 class RangeSerie : LineGraphSeries<DataPoint>() {
@@ -77,12 +82,12 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         while (rawData.size > SAMPLES) rawData.removeFirst()
 
         // update range
-        val range = rawData.run { (maxOrNull() ?: 0.0) - (minOrNull() ?: 0.0) }
+        val range = rawData.listIterator(max(0, rawData.size - WINDOW)).asSequence().toList().run { (maxOrNull() ?: 0.0) - (minOrNull() ?: 0.0) }
         rangeData.add(range)
         while (rangeData.size > SAMPLES) rangeData.removeFirst()
 
         // update average
-        val avg = rawData.listIterator(max(0, rawData.size - 10)).asSequence().average()
+        val avg = rawData.listIterator(max(0, rawData.size - WINDOW)).asSequence().average()
         avgData.add(avg)
         while (avgData.size > SAMPLES) avgData.removeFirst()
 
