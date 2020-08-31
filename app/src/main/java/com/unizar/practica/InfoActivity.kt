@@ -80,4 +80,6 @@ class InfoActivity : Activity() {
             info.setOnClickListener(listener)
         }
     }
+
+    //TODO: menu with the help dialog
 }

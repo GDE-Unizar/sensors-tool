@@ -53,7 +53,7 @@ class MainActivity : Activity() {
 //        initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
         testPermission(this)
 
-        helpOnLongTap(acc_head, acc_txt, acc_mode, acc_clr, acc_rec, acc_snap, acc_graph, mic_head, mic_txt, mic_mode, mic_clr, mic_rec, mic_snap, mic_graph, spk_head, spk_dec, spk_inc, spk_hz, spk_toggle, vib_head, vib_tog, s_info)
+        helpOnLongTap(acc_head, acc_txt, acc_mode, acc_clr, acc_rec, acc_snap, acc_graph, mic_head, mic_txt, mic_mode, mic_clr, mic_rec, mic_snap, mic_graph, spk_head, spk_toggle, vib_head, vib_tog, s_info)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -66,6 +66,10 @@ class MainActivity : Activity() {
         return when (item.itemId) {
             R.id.help -> {
                 showGeneralHelp()
+                true
+            }
+            R.id.folder -> {
+                showFolder()
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -2,9 +2,15 @@ package com.unizar.practica
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
+import android.net.Uri
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import com.unizar.practica.tools.EXTERNAL_FOLDER
+import com.unizar.practica.tools.FOLDER_NAME
+
 
 /**
  * Displays a dialog with help for the long-tap feature
@@ -14,6 +20,30 @@ fun Context.showGeneralHelp() {
             .setTitle(R.string.menu_help)
             .setMessage(R.string.h_general)
             .show()
+}
+
+fun Context.showFolder() {
+    AlertDialog.Builder(this)
+            .setTitle(R.string.menu_folder)
+            .setMessage(getString(R.string.folder, FOLDER_NAME))
+            .setPositiveButton(R.string.open) { _, _ ->
+                openFolder()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+}
+
+fun Context.openFolder() {
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.setDataAndType(Uri.fromFile(EXTERNAL_FOLDER), "resource/folder")
+
+    if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
+        startActivity(intent)
+    } else {
+        // if you reach this place, it means there is no any file
+        // explorer app installed on your device
+        Toast.makeText(this, "Your device doesn't have any file explorer app.", Toast.LENGTH_SHORT).show()
+    }
 }
 
 /**

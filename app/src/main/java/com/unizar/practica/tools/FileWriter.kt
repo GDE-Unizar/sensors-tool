@@ -9,6 +9,10 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+val FOLDER_NAME = "PracFis"
+
+val EXTERNAL_FOLDER = File(Environment.getExternalStorageDirectory(), FOLDER_NAME)
+
 /**
  * Manages writting to a file
  */
@@ -32,7 +36,7 @@ class FileWriter(
         // close previous if any
         close()
         // opens the file by creating the parent folder (if required)
-        with(File(Environment.getExternalStorageDirectory(), "PracFis")) {
+        with(EXTERNAL_FOLDER) {
             if (!exists() && !mkdirs()) {
                 // folder error
                 Toast.makeText(cntx, R.string.toast_nofolder, Toast.LENGTH_SHORT).show()
