@@ -106,6 +106,7 @@ class Experiments(
     fun freqExperiment() {
         // initialize
         screen { cntx.spk_toggle.isChecked = true }
+        file.writeLine("hz mic_amp acc_x_raw acc_y_raw acc_z_raw")
 
         // for each frequency
         for (hz in 10..22010 step 100) {
@@ -129,9 +130,12 @@ class Experiments(
      * Another experiment
      */
     fun volumeExperiment() {
+        // initialize
+        file.writeLine("hz vol mic_amp acc_x_raw acc_y_raw acc_z_raw")
         val volume = Volume(cntx)
         screen { cntx.spk_toggle.isChecked = true }
 
+        // perform
         for (hz in sequenceOf(100, 1000, 10000)) {
             screen { cntx.spk_hz.progress = hz }
 

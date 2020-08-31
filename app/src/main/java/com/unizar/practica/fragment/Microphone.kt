@@ -9,6 +9,7 @@ import android.util.Log
 import com.unizar.practica.MainActivity
 import com.unizar.practica.R
 import com.unizar.practica.tools.FileWriter
+import com.unizar.practica.tools.MODE
 import com.unizar.practica.tools.RangeSerie
 import com.unizar.practica.tools.hasRecordPermission
 import com.unizar.practica.utilities.Fragment
@@ -43,6 +44,7 @@ class Microphone(
         cntx.mic_rec.onCheckedChange {
             if (it) {
                 file.openNew("rec")
+                file.writeLine("amp")
             } else {
                 file.close()
             }
@@ -60,6 +62,15 @@ class Microphone(
 
     fun snapshot() {
         file.openNew("snap")
+        file.writeLine(when (micSerie.mode) {
+            MODE.RAW -> "amp_raw"
+            MODE.BASE -> "amp_base"
+            MODE.AVERAGE -> "amp_avg"
+            MODE.RANGE -> "amp_rang"
+            MODE.BUFFER -> "buff_x buff_y"
+            MODE.FFT -> "hz buff_val"
+        })
+
         micSerie.getValues(micSerie.lowestValueX, micSerie.highestValueX).forEach {
             var line = ""
             if (micSerie.mode.isBuff()) {

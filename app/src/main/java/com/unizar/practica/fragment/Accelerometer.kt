@@ -69,6 +69,7 @@ class Accelerometer(
     fun record(load: Boolean) {
         if (load) {
             file.openNew("rec")
+            file.writeLine("x_raw y_raw z_raw")
         } else {
             file.close()
         }
@@ -79,6 +80,16 @@ class Accelerometer(
      */
     fun snapshot() {
         file.openNew("snap")
+        file.writeLine(when (serieX.mode) {
+            MODE.RAW -> "x_raw y_raw z_raw"
+            MODE.BASE -> "x_base y_base z_base"
+            MODE.AVERAGE -> "x_avg y_avg z_avg"
+            MODE.RANGE -> "x_rang y_rang z_rang"
+            MODE.BUFFER -> "secret!" // this is impossible
+            MODE.FFT -> "hz x y z"
+        })
+
+
         val itX = serieX.getValues(serieX.lowestValueX, serieX.highestValueX)
         val itY = serieY.getValues(serieY.lowestValueX, serieY.highestValueX)
         val itZ = serieZ.getValues(serieZ.lowestValueX, serieZ.highestValueX)
