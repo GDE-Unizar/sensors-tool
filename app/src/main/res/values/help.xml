@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="h_nohelp">No info for this item</string>
-    <string name="h_general">Long tap any item to see a description of it.</string>
+    <string name="h_general">"
+        Long tap any item to see a description of it.
+
+        Exceptions:
+        * Long tap on dropdown individual items is not supported, long tap the dropdown element instead.
+        * Long tap on the speaker -/+ buttons allows to increase/decrease the frequency faster instead.
+        * Long tap on the speaker scrollbar isn't supported. Simply changes the frequency.
+        "</string>
 
     <string name="h_acc_head">"
         The accelerometer sensor contains three axis (X, Y and Z) which measure acceleration.

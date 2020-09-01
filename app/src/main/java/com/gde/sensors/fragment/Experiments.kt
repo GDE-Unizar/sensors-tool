@@ -1,12 +1,12 @@
-package com.unizar.practica.fragment
+package com.gde.sensors.fragment
 
 import android.widget.Button
 import android.widget.Toast
-import com.unizar.practica.MainActivity
-import com.unizar.practica.R
-import com.unizar.practica.helpOnLongTap
-import com.unizar.practica.tools.FileWriter
-import com.unizar.practica.tools.Volume
+import com.gde.sensors.MainActivity
+import com.gde.sensors.R
+import com.gde.sensors.helpOnLongTap
+import com.gde.sensors.tools.FileWriter
+import com.gde.sensors.tools.Volume
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread

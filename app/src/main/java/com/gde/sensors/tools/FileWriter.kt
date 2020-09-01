@@ -1,9 +1,9 @@
-package com.unizar.practica.tools
+package com.gde.sensors.tools
 
 import android.app.Activity
 import android.os.Environment
 import android.widget.Toast
-import com.unizar.practica.R
+import com.gde.sensors.R
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat

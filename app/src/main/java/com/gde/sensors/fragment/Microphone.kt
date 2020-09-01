@@ -1,4 +1,4 @@
-package com.unizar.practica.fragment
+package com.gde.sensors.fragment
 
 import android.media.AudioFormat
 import android.media.AudioRecord
@@ -6,13 +6,13 @@ import android.media.MediaRecorder
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import com.unizar.practica.MainActivity
-import com.unizar.practica.R
-import com.unizar.practica.tools.FileWriter
-import com.unizar.practica.tools.MODE
-import com.unizar.practica.tools.RangeSerie
-import com.unizar.practica.tools.hasRecordPermission
-import com.unizar.practica.utilities.Fragment
+import com.gde.sensors.MainActivity
+import com.gde.sensors.R
+import com.gde.sensors.tools.FileWriter
+import com.gde.sensors.tools.MODE
+import com.gde.sensors.tools.RangeSerie
+import com.gde.sensors.tools.hasRecordPermission
+import com.gde.sensors.utilities.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 

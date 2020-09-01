@@ -1,15 +1,11 @@
-package com.unizar.practica
+package com.gde.sensors
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.content.res.Resources
-import android.net.Uri
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import com.unizar.practica.tools.EXTERNAL_FOLDER
-import com.unizar.practica.tools.FOLDER_NAME
+import com.gde.sensors.tools.FOLDER_NAME
 
 
 /**
@@ -18,33 +14,40 @@ import com.unizar.practica.tools.FOLDER_NAME
 fun Context.showGeneralHelp() {
     AlertDialog.Builder(this)
             .setTitle(R.string.menu_help)
-            .setMessage(R.string.h_general)
+            .setMessage(getString(R.string.h_general).trimIndent())
             .show()
 }
 
+/**
+ * Displays a dialog explaining where to find the folder
+ */
 fun Context.showFolder() {
     AlertDialog.Builder(this)
             .setTitle(R.string.menu_folder)
             .setMessage(getString(R.string.folder, FOLDER_NAME))
-            .setPositiveButton(R.string.open) { _, _ ->
-                openFolder()
-            }
-            .setNegativeButton(android.R.string.cancel, null)
+//            .setPositiveButton(R.string.open) { _, _ ->
+//                openFolder()
+//            }
+//            .setNegativeButton(android.R.string.cancel, null)
             .show()
 }
 
-fun Context.openFolder() {
-    val intent = Intent(Intent.ACTION_VIEW)
-    intent.setDataAndType(Uri.fromFile(EXTERNAL_FOLDER), "resource/folder")
-
-    if (intent.resolveActivityInfo(getPackageManager(), 0) != null) {
-        startActivity(intent)
-    } else {
-        // if you reach this place, it means there is no any file
-        // explorer app installed on your device
-        Toast.makeText(this, "Your device doesn't have any file explorer app.", Toast.LENGTH_SHORT).show()
-    }
-}
+///**
+// * Tries to open the folder on a file explorer app. But fails miserably (thanks android)
+// */
+//fun Context.openFolder() {
+//    val intent = Intent(Intent.ACTION_VIEW)
+//    intent.addCategory(Intent.CATEGORY_OPENABLE)
+//    intent.setDataAndType(Uri.parse(EXTERNAL_FOLDER.path + File.separator), "*/*")
+//
+//    if (intent.resolveActivityInfo(packageManager, 0) != null) {
+//        startActivity(intent)
+//    } else {
+//        // if you reach this place, it means there is no any file
+//        // explorer app installed on your device
+//        Toast.makeText(this, getString(R.string.toast_noexplorer), Toast.LENGTH_SHORT).show()
+//    }
+//}
 
 /**
  * Prepares the views for the show-help-on-long-tap feature

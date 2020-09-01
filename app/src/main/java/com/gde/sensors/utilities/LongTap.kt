@@ -1,4 +1,4 @@
-//package com.unizar.practica.utilities
+//package com.gde.sensors.utilities
 //
 //import android.view.View
 //import android.widget.Toast

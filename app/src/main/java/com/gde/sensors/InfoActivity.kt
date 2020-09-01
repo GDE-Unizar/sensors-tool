@@ -1,4 +1,4 @@
-package com.unizar.practica
+package com.gde.sensors
 
 import android.app.Activity
 import android.content.Context

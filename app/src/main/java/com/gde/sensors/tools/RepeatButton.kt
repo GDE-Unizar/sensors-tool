@@ -1,4 +1,4 @@
-package com.unizar.practica.tools
+package com.gde.sensors.tools
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,7 +15,7 @@ class RepeatButton(context: Context?, attrs: AttributeSet?) : Button(context, at
     /**
      * Delay between repeated clicks
      */
-    private val DELAY = 100L
+    private val DELAY = 10L
 
     init {
         setOnLongClickListener {

@@ -1,4 +1,4 @@
-package com.unizar.practica.tools
+package com.gde.sensors.tools
 
 import android.content.Context
 import android.media.AudioManager

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Practice</string>
+    <string name="app_name">Sensors tool</string>
 
     <string name="acc_head">Accelerometer</string>
     <string name="mic_head">Microphone</string>

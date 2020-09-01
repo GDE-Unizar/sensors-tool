@@ -1,11 +1,11 @@
-package com.unizar.practica.fragment
+package com.gde.sensors.fragment
 
 import android.media.AudioManager
 import android.media.AudioTrack
-import com.unizar.practica.MainActivity
-import com.unizar.practica.utilities.Fragment
-import com.unizar.practica.utilities.onCheckedChange
-import com.unizar.practica.utilities.onProgressChange
+import com.gde.sensors.MainActivity
+import com.gde.sensors.utilities.Fragment
+import com.gde.sensors.utilities.onCheckedChange
+import com.gde.sensors.utilities.onProgressChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.atan
 import kotlin.math.sin
@@ -38,8 +38,8 @@ class Speaker(
         cntx.spk_hz.progress = 440 // initial value
 
         // increase/decrease buttons
-        cntx.spk_inc.setOnClickListener { cntx.spk_hz.progress += 10 }
-        cntx.spk_dec.setOnClickListener { cntx.spk_hz.progress -= 10 }
+        cntx.spk_inc.setOnClickListener { cntx.spk_hz.progress += 1 }
+        cntx.spk_dec.setOnClickListener { cntx.spk_hz.progress -= 1 }
     }
 
     /**

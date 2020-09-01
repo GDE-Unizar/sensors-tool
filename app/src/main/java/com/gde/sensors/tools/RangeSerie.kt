@@ -1,4 +1,4 @@
-package com.unizar.practica.tools
+package com.gde.sensors.tools
 
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
