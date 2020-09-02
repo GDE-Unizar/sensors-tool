@@ -1,4 +1,4 @@
-package com.gde.sensors.utilities
+package es.unizar.gde.sensors.utilities
 
 import android.widget.CompoundButton
 import android.widget.SeekBar

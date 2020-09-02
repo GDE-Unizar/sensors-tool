@@ -1,4 +1,4 @@
-package com.gde.sensors.tools
+package es.unizar.gde.sensors.tools
 
 import android.annotation.SuppressLint
 import android.content.Context

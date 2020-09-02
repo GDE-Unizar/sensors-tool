@@ -1,9 +1,9 @@
-package com.gde.sensors.tools
+package es.unizar.gde.sensors.tools
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageButton
-import com.gde.sensors.R
+import es.unizar.gde.sensors.R
 
 /**
  * There is ToggleButton, and ImageButton, but no ToggleImageButton.

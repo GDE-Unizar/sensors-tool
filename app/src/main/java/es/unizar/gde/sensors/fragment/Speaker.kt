@@ -1,11 +1,11 @@
-package com.gde.sensors.fragment
+package es.unizar.gde.sensors.fragment
 
 import android.media.AudioManager
 import android.media.AudioTrack
-import com.gde.sensors.MainActivity
-import com.gde.sensors.utilities.Fragment
-import com.gde.sensors.utilities.onCheckedChange
-import com.gde.sensors.utilities.onProgressChange
+import es.unizar.gde.sensors.MainActivity
+import es.unizar.gde.sensors.utilities.Fragment
+import es.unizar.gde.sensors.utilities.onCheckedChange
+import es.unizar.gde.sensors.utilities.onProgressChange
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.atan
 import kotlin.math.sin
@@ -14,7 +14,7 @@ import kotlin.math.sin
  * Allows to play a tune of any frequency from the speaker
  */
 class Speaker(
-        val cntx: MainActivity
+        val cntx: MainActivity,
 ) : Fragment {
 
     // util

@@ -1,4 +1,4 @@
-package com.gde.sensors
+package es.unizar.gde.sensors
 
 import android.app.Activity
 import android.content.Intent
@@ -8,8 +8,8 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.gde.sensors.fragment.*
-import com.gde.sensors.tools.testPermission
+import es.unizar.gde.sensors.fragment.*
+import es.unizar.gde.sensors.tools.testPermission
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**

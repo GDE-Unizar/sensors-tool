@@ -6,7 +6,7 @@
     android:animateLayoutChanges="false"
     android:keepScreenOn="true"
     android:padding="5dp"
-    tools:context=".MainActivity">
+    tools:context="es.unizar.gde.sensors.MainActivity">
 
     <LinearLayout
         android:id="@+id/main"
@@ -50,7 +50,7 @@
 
                 <view
                     android:id="@+id/acc_mode"
-                    class="com.gde.sensors.tools.ModeSpinner"
+                    class="es.unizar.gde.sensors.tools.ModeSpinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -64,7 +64,7 @@
                     android:src="@drawable/ic_delete"
                     android:contentDescription="@string/desc_clr" />
 
-                <com.gde.sensors.tools.ToggleImageButton
+                <es.unizar.gde.sensors.tools.ToggleImageButton
                     android:id="@+id/acc_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
 
                 <view
                     android:id="@+id/mic_mode"
-                    class="com.gde.sensors.tools.ModeSpinner"
+                    class="es.unizar.gde.sensors.tools.ModeSpinner"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -145,7 +145,7 @@
                     android:src="@drawable/ic_delete"
                     android:contentDescription="@string/desc_clr" />
 
-                <com.gde.sensors.tools.ToggleImageButton
+                <es.unizar.gde.sensors.tools.ToggleImageButton
                     android:id="@+id/mic_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
@@ -204,7 +204,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.gde.sensors.tools.RepeatButton
+                <es.unizar.gde.sensors.tools.RepeatButton
                     android:id="@+id/spk_dec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
@@ -212,7 +212,7 @@
                     android:padding="5dp"
                     android:text="@string/reduce" />
 
-                <com.gde.sensors.tools.RepeatButton
+                <es.unizar.gde.sensors.tools.RepeatButton
                     android:id="@+id/spk_inc"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"

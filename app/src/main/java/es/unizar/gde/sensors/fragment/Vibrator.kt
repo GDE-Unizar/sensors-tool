@@ -1,10 +1,10 @@
-package com.gde.sensors.fragment
+package es.unizar.gde.sensors.fragment
 
 import android.content.Context
 import android.os.Vibrator
-import com.gde.sensors.MainActivity
-import com.gde.sensors.utilities.Fragment
-import com.gde.sensors.utilities.onCheckedChange
+import es.unizar.gde.sensors.MainActivity
+import es.unizar.gde.sensors.utilities.Fragment
+import es.unizar.gde.sensors.utilities.onCheckedChange
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**

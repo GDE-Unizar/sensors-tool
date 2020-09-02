@@ -1,12 +1,12 @@
-package com.gde.sensors.fragment
+package es.unizar.gde.sensors.fragment
 
 import android.widget.Button
 import android.widget.Toast
-import com.gde.sensors.MainActivity
-import com.gde.sensors.R
-import com.gde.sensors.helpOnLongTap
-import com.gde.sensors.tools.FileWriter
-import com.gde.sensors.tools.Volume
+import es.unizar.gde.sensors.MainActivity
+import es.unizar.gde.sensors.R
+import es.unizar.gde.sensors.helpOnLongTap
+import es.unizar.gde.sensors.tools.FileWriter
+import es.unizar.gde.sensors.tools.Volume
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread

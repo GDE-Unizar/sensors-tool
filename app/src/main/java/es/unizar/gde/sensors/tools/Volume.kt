@@ -1,4 +1,4 @@
-package com.gde.sensors.tools
+package es.unizar.gde.sensors.tools
 
 import android.content.Context
 import android.media.AudioManager

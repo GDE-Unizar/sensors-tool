@@ -1,4 +1,4 @@
-package com.gde.sensors.fragment
+package es.unizar.gde.sensors.fragment
 
 import android.content.Context
 import android.graphics.Color
@@ -10,11 +10,11 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
-import com.gde.sensors.MainActivity
-import com.gde.sensors.tools.FileWriter
-import com.gde.sensors.tools.MODE
-import com.gde.sensors.tools.RangeSerie
-import com.gde.sensors.utilities.Fragment
+import es.unizar.gde.sensors.MainActivity
+import es.unizar.gde.sensors.tools.FileWriter
+import es.unizar.gde.sensors.tools.MODE
+import es.unizar.gde.sensors.tools.RangeSerie
+import es.unizar.gde.sensors.utilities.Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 

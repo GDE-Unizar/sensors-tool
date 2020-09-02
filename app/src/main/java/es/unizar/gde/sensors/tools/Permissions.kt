@@ -1,4 +1,4 @@
-package com.gde.sensors.tools
+package es.unizar.gde.sensors.tools
 
 import android.app.Activity
 import android.content.pm.PackageManager

@@ -1,4 +1,4 @@
-package com.gde.sensors.utilities
+package es.unizar.gde.sensors.utilities
 
 /**
  * Android fragments are deprecated and ugly to use, these are not android fragments, but the idea is the same

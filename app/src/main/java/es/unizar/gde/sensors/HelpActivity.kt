@@ -1,11 +1,11 @@
-package com.gde.sensors
+package es.unizar.gde.sensors
 
 import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Resources
 import android.util.Log
 import android.view.View
-import com.gde.sensors.tools.FOLDER_NAME
+import es.unizar.gde.sensors.tools.FOLDER_NAME
 
 
 /**
