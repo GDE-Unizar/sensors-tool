@@ -15,7 +15,7 @@
 
     <string name="btn_info">Sensors Info</string>
 
-    <string name="toast_saved">File saved</string>
+    <string name="toast_saved">File saved: %s</string>
     <string name="toast_nofolder">Can\'t create folder</string>
     <string name="toast_nopermission">Permission denied</string>
 

@@ -61,7 +61,7 @@ class Microphone(
     }
 
     fun snapshot() {
-        file.openNew("snap")
+        file.openNew("snap", false)
         file.writeLine(when (micSerie.mode) {
             MODE.RAW -> "amp_raw"
             MODE.BASE -> "amp_base"

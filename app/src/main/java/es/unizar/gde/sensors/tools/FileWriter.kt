@@ -21,13 +21,14 @@ class FileWriter(
         val suffix: String = "",
 ) {
 
-    // utils
+    // data
     var stream: FileOutputStream? = null
+    var filename: String? = null
 
     /**
      * Opens a new file to start recording
      */
-    fun openNew(subsuffix: String = "") {
+    fun openNew(subsuffix: String = "", toast: Boolean = true) {
         if (!hasWritePermission) {
             Toast.makeText(cntx, R.string.toast_nopermission, Toast.LENGTH_SHORT).show()
             return
@@ -42,9 +43,13 @@ class FileWriter(
                 Toast.makeText(cntx, R.string.toast_nofolder, Toast.LENGTH_SHORT).show()
             } else {
                 // folder ready. open file
-                var filesuffix = (if (suffix.isEmpty()) "" else "_$suffix") + (if (subsuffix.isEmpty()) "" else "_$subsuffix") + ".txt"
-                stream = FileOutputStream(File(this, SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date()) + filesuffix))
-                Toast.makeText(cntx, "Writing file...", Toast.LENGTH_SHORT).show()
+                val filesuffix = (if (suffix.isEmpty()) "" else "_$suffix") + (if (subsuffix.isEmpty()) "" else "_$subsuffix") + ".txt"
+                val name = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date()) + filesuffix
+                stream = FileOutputStream(File(this, name))
+                filename = "~/$FOLDER_NAME/$name"
+
+                if (toast)
+                    Toast.makeText(cntx, "Writing file...", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -65,9 +70,10 @@ class FileWriter(
     fun close() {
         stream?.run {
             close()
-            Toast.makeText(cntx, R.string.toast_saved, Toast.LENGTH_SHORT).show()
+            Toast.makeText(cntx, cntx.getString(R.string.toast_saved, filename), Toast.LENGTH_LONG).show()
         }
         stream = null
+        filename = null
     }
 
 }

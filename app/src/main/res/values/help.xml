@@ -27,8 +27,8 @@
         - FFT: Performs a Fast Fourier Transform of the last 200 samples.
         "</string>
     <string name="h_acc_clr">Clears the accelerometer graph. Usually not needed and performed automatically.</string>
-    <string name="h_acc_rec">Starts recording the raw accelerometer values. While recording, press again to stop. Recorded values are saved on a new file in the format "x_raw y_raw z_raw" (number of lines proportional to recorded time).</string>
-    <string name="h_acc_snap">Saves the currently displayed graph values (raw, range, fft…) on a new file in the format "x_val y_val z_val" (or "hz x_val y_val z_val" for FFT).</string>
+    <string name="h_acc_rec">Starts recording the raw accelerometer values. While recording, press again to stop. Recorded values are saved on a new file in the format \"x_raw y_raw z_raw\" (number of lines proportional to recorded time).</string>
+    <string name="h_acc_snap">Saves the currently displayed graph values (raw, range, fft…) on a new file in the format \"x_val y_val z_val\" (or \"hz x_val y_val z_val\" for FFT).</string>
     <string name="h_acc_graph">Graph with the values of the accelerometer. Check the selected mode (the dropdown menu above) for more information.</string>
 
     <string name="h_mic_head">"
@@ -46,8 +46,8 @@
         - FFT: Performs a Fast Fourier Transform of the buffer values. In this mode the graph also updates each frame (not a scrolling graph).
         "</string>
     <string name="h_mic_clr">Clears the microphone graph. Usually not needed and performed automatically.</string>
-    <string name="h_mic_rec">Starts recording the raw amplitude values. While recording, press again to stop. Recorded values are saved on a new file in the format "amp" (number of lines proportional to recorded time).</string>
-    <string name="h_mic_snap">Saves the currently displayed graph values (raw, range, fft…) on a new file in the format "amp" (or "x amp" for Buffer; or "hz amp" for FFT).</string>
+    <string name="h_mic_rec">Starts recording the raw amplitude values. While recording, press again to stop. Recorded values are saved on a new file in the format \"amp\" (number of lines proportional to recorded time).</string>
+    <string name="h_mic_snap">Saves the currently displayed graph values (raw, range, fft…) on a new file in the format \"amp\" (or \"x amp\" for Buffer; or \"hz amp\" for FFT).</string>
     <string name="h_mic_graph">Graph with the values of the microphone. Check the selected mode (the dropdown menu above) for more information.</string>
 
     <string name="h_spk_head">"
@@ -64,12 +64,12 @@
 
     <string name="h_exp_frequency">"
         Runs the frequency experiment:
-        For each frequency in the range [10,22010] Hz (step 100), plays it for a second and records the amplitude of the microphone, and the raw value of the three accelerometer axis. Then saves it to a file in the format "hz amp x_val y_val z_val".
+        For each frequency in the range [10,22010] Hz (step 100), plays it for a second and records the amplitude of the microphone, and the raw value of the three accelerometer axis. Then saves it to a file in the format \"hz amp x_val y_val z_val\".
         Remember to leave the device in a static surface and silent room. Expected duration: 3min 40sec.
         "</string>
     <string name="h_exp_volume">"
         Runs the volume experiment:
-        For frequencies 100Hz, 1000Hz, 10000Hz and for each of the different volumes your device allows (usually from 0=mute to 15=full), plays it for a second and records the amplitude of the microphone, and the raw value of the three accelerometer axis. Then saves it to a file in the format "hz vol amp x_val y_val z_val".
+        For frequencies 100Hz, 1000Hz, 10000Hz and for each of the different volumes your device allows (usually from 0=mute to 15=full), plays it for a second and records the amplitude of the microphone, and the raw value of the three accelerometer axis. Then saves it to a file in the format \"hz vol amp x_val y_val z_val\".
         Remember to leave the device in a static surface and silent room. Expected duration: 48sec.
         "</string>
     <string name="h_exp_stop">Stops the currently executing experiment.</string>

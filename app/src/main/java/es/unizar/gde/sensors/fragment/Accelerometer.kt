@@ -79,7 +79,7 @@ class Accelerometer(
      * Saves the currently displayed data to a file
      */
     fun snapshot() {
-        file.openNew("snap")
+        file.openNew("snap", false)
         file.writeLine(when (serieX.mode) {
             MODE.RAW -> "x_raw y_raw z_raw"
             MODE.BASE -> "x_base y_base z_base"
