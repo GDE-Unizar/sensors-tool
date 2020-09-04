@@ -27,7 +27,7 @@ class Microphone(
 
     // utils
     val sm = SoundMeter()
-    val micSerie = RangeSerie().apply { hz = HZ.toDouble() }
+    val micSerie = RangeSerie().apply { hz = HZ.toDouble() }.apply { SMOOTHNESS = 0.75 }
     private val file = FileWriter(cntx, "mic")
 
     /**

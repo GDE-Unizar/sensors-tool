@@ -30,7 +30,8 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
             field = value
         }
     var labelVerticalWidth = 20
-    var hz = 1.0
+    var hz = 1.0 // how fast samples are generated
+    var SMOOTHNESS = 0.99 // how fast yscale should adapt
 
     // data containers
     private val rawData = LinkedList<Double>()
@@ -154,9 +155,9 @@ class RangeSerie : LineGraphSeries<DataPoint>() {
         }
 
         val _maxY = list.maxOrNull() ?: 0.0
-        maxY = if (_maxY > maxY) _maxY else maxY * 0.99 + _maxY * 0.01
+        maxY = if (_maxY > maxY) _maxY else maxY * SMOOTHNESS + _maxY * (1 - SMOOTHNESS)
         val _minY = list.minOrNull() ?: 0.0
-        minY = if (_minY < minY) _minY else minY * 0.99 + _minY * 0.01
+        minY = if (_minY < minY) _minY else minY * SMOOTHNESS + _minY * (1 - SMOOTHNESS)
         super.resetData(data.toTypedArray())
 
         // update graph if present
