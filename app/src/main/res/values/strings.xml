@@ -41,4 +41,13 @@
     <string name="folder">All the files generated (by recording, snapshot, or experiments) are saved in the folder ~/%s/ in your device (sd card, or internal memory if no card is present).</string>
     <string name="open">open</string>
 
+    <string name="title_permissions">Permissions</string>
+    <string name="text_permissions">"
+        This app requires two permissions:
+        - External storage: used to save files in your device with the graphs data for other analysis. If rejected you won't be able to save files.
+        - Record audio: used to display microphone data in a graph. If rejected the microphone tab won't work.
+
+        Note: files nor audio are saved/sent/shared anywhere else. If you reject a permission press the warning button at the top to ask again.
+        "</string>
+
 </resources>

@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import es.unizar.gde.sensors.fragment.*
+import es.unizar.gde.sensors.tools.permissionsMenu
 import es.unizar.gde.sensors.tools.testPermission
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -51,10 +52,12 @@ class MainActivity : Activity() {
         }
 
 //        initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
-        testPermission(this)
+        testPermission()
 
         helpOnLongTap(acc_head, acc_txt, acc_mode, acc_clr, acc_rec, acc_snap, acc_graph, mic_head, mic_txt, mic_mode, mic_clr, mic_rec, mic_snap, mic_graph, spk_head, spk_toggle, vib_head, vib_tog, s_info)
     }
+
+    // --- menu ------
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
@@ -62,14 +65,26 @@ class MainActivity : Activity() {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        permissionsMenu = menu?.findItem(R.id.permissions)
+        return super.onPrepareOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.help -> {
+                // show help
                 showMainActivityHelp()
                 true
             }
             R.id.folder -> {
+                // show folder info
                 showFolder()
+                true
+            }
+            R.id.permissions -> {
+                // recheck permissions
+                testPermission()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -103,7 +118,7 @@ class MainActivity : Activity() {
      */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (grantResults.any { it != PackageManager.PERMISSION_DENIED })
-            testPermission(this)
+            testPermission()
     }
 
 
