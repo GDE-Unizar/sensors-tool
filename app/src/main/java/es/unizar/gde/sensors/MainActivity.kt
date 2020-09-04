@@ -2,7 +2,6 @@ package es.unizar.gde.sensors
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.Menu
@@ -52,7 +51,7 @@ class MainActivity : Activity() {
         }
 
 //        initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
-        testPermission()
+        testPermission(true)
 
         helpOnLongTap(acc_head, acc_txt, acc_mode, acc_clr, acc_rec, acc_snap, acc_graph, mic_head, mic_txt, mic_mode, mic_clr, mic_rec, mic_snap, mic_graph, spk_head, spk_toggle, vib_head, vib_tog, s_info)
     }
@@ -67,6 +66,7 @@ class MainActivity : Activity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         permissionsMenu = menu?.findItem(R.id.permissions)
+        testPermission()
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -84,7 +84,7 @@ class MainActivity : Activity() {
             }
             R.id.permissions -> {
                 // recheck permissions
-                testPermission()
+                testPermission(true)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -117,8 +117,7 @@ class MainActivity : Activity() {
      * Request for permissions
      */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (grantResults.any { it != PackageManager.PERMISSION_DENIED })
-            testPermission()
+        testPermission()
     }
 
 

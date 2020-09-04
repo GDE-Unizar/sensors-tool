@@ -22,7 +22,7 @@ var permissionsMenu: MenuItem? = null
 /**
  * Checks if the permission is granted, if it isn't asks for it
  */
-fun Activity.testPermission() {
+fun Activity.testPermission(ask: Boolean = false) {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
         hasWritePermission = true
         hasRecordPermission = true
@@ -39,7 +39,7 @@ fun Activity.testPermission() {
     val needed = arrayOf(hasWritePermission to android.Manifest.permission.WRITE_EXTERNAL_STORAGE, hasRecordPermission to android.Manifest.permission.RECORD_AUDIO).filter { !it.first }.map { it.second }
 
 
-    if (needed.isNotEmpty()) {
+    if (needed.isNotEmpty() && ask) {
         AlertDialog.Builder(this)
                 .setTitle(R.string.title_permissions)
                 .setMessage(getString(R.string.text_permissions).trimIndent())
