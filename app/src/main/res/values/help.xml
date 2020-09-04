@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="h_nohelp">No info for this item</string>
-    <string name="h_general">"
+    <string name="h_main">"
         Long tap any item to see a description of it.
 
         Exceptions:
         * Long tap on dropdown individual items is not supported, long tap the dropdown element instead.
         * Long tap on the speaker -/+ buttons allows to increase/decrease the frequency faster instead.
         * Long tap on the speaker scrollbar isn't supported. Simply changes the frequency.
+        "</string>
+    <string name="h_info">"
+        List of sensors in your device, and its properties.
+
+        Information is generated directly from Android's code (internal details: the header is the toString result, the elements are all values returned using reflection).
         "</string>
 
     <string name="h_acc_head">"

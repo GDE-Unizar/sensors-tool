@@ -65,7 +65,7 @@ class MainActivity : Activity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.help -> {
-                showGeneralHelp()
+                showMainActivityHelp()
                 true
             }
             R.id.folder -> {

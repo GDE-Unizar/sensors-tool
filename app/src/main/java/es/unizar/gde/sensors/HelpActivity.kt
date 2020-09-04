@@ -9,28 +9,23 @@ import es.unizar.gde.sensors.tools.FOLDER_NAME
 
 
 /**
- * Displays a dialog with help for the long-tap feature
+ * Displays a dialog with help for the long-tap feature for the main activity
  */
-fun Context.showGeneralHelp() {
-    AlertDialog.Builder(this)
-            .setTitle(R.string.menu_help)
-            .setMessage(getString(R.string.h_general).trimIndent())
-            .show()
-}
+fun Context.showMainActivityHelp() = showDialog(R.string.menu_help, getString(R.string.h_main).trimIndent())
+
+/**
+ * Displays a dialog with help for the info sensors activity
+ */
+fun Context.showInfoActivityHelp() = showDialog(R.string.menu_help, getString(R.string.h_info).trimIndent())
 
 /**
  * Displays a dialog explaining where to find the folder
  */
-fun Context.showFolder() {
-    AlertDialog.Builder(this)
-            .setTitle(R.string.menu_folder)
-            .setMessage(getString(R.string.folder, FOLDER_NAME))
+fun Context.showFolder() = showDialog(R.string.menu_folder, getString(R.string.folder, FOLDER_NAME))
 //            .setPositiveButton(R.string.open) { _, _ ->
 //                openFolder()
 //            }
 //            .setNegativeButton(android.R.string.cancel, null)
-            .show()
-}
 
 ///**
 // * Tries to open the folder on a file explorer app. But fails miserably (thanks android)
@@ -62,10 +57,7 @@ fun Context.helpOnLongTap(vararg views: View) {
             getString(R.string.h_nohelp)
         }.trimIndent()
 
-        AlertDialog.Builder(this)
-                .setTitle("Help")
-                .setMessage(text)
-                .show()
+        showDialog(R.string.menu_help, text)
 
         true
     }
@@ -84,6 +76,21 @@ fun View.getStringId() =
             id == View.NO_ID -> throw Resources.NotFoundException()
             else -> resources.getResourceEntryName(id)
         }
+
+/**
+ * Wrapper for the dialog creation
+ */
+fun Context.showDialog(title: Int, message: String) {
+    AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .show()
+            .apply {
+                // close when clicking the text
+                findViewById<View>(android.R.id.message)
+                        .setOnClickListener { dismiss() }
+            }
+}
 
 
 //private val PADDING = 15
