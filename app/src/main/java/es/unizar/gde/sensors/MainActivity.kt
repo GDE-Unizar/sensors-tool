@@ -145,16 +145,18 @@ class MainActivity : Activity() {
                 box.visibility = if (box.visibility == View.VISIBLE) {
                     // hide
                     fragment.onPause()
+                    head.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_collapsed, 0, R.drawable.ic_collapsed_r, 0)
                     View.GONE
                 } else {
                     // show
                     fragment.onResume()
+                    head.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_expanded, 0, R.drawable.ic_expanded, 0)
                     View.VISIBLE
                 }
             }
 
             // start hided
-            box.visibility = View.GONE
+            head.performClick()
         }
     }
 
