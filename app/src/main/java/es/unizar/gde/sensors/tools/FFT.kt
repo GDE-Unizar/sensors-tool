@@ -11,6 +11,8 @@ fun List<Double>.FFT(Hz: Double): Pair<List<Double>, List<Double>> {
 
     val L = this.size
 
+    if (L == 0) return this to this // no data, return empty ('this' is empty)
+
     val sinValue_re_im = DoubleArray(L * 2) // because FFT takes an array where its positions alternate between real and imaginary
 
     for (i in 0 until L) {
