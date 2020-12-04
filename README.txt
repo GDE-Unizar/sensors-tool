@@ -1,0 +1,7 @@
+¿Qué hay en esta carpeta?
+
+Este es el proyecto de Android studio que contiene la aplicación 'GDE Sensors tool', realizada para prácticas de física.
+La aplicación fue subida al Play Store (https://play.google.com/store/apps/details?id=es.unizar.gde.sensors) para lo cual fue firmada con la clave ./PlayStore/key.jks (la contraseña está indicada en el fichero password.txt). También se dejan las imagenes que se usaron para la ficha del Play Store.
+Es una aplicación desarrollada en Kotlin, utiliza pocas librerías (una para las graficas y poco más) y se ha programado con idea de modificaciones a futuro.
+
+Casi todas las clases y funciones están comentadas, no debería ser muy complicado de entender, pero una visión general es: La pantalla principal está formada por 'fragmentos', uno por sensor/actuador, que funcionan independientemente (acelerometro, microfono, altavoz y vibrador). También hay unos experimentos para automatizar algunos procesos (la idea es añadir los que se necesiten para la practica). El botón de arriba indica como acceder a la ayuda, que es mediante una pulsación prolongada en cualquier elemento de la aplicación. También tiene una actividad extra que carga de forma automática todos los sensores del dispositivo y sus propiedades.
