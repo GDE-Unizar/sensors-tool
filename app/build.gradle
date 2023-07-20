@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "30.0.1"
 
     defaultConfig {
         applicationId "es.unizar.gde.sensors"
@@ -22,9 +21,14 @@ android {
         }
     }
     packagingOptions {
-        exclude "/META-INF/*.kotlin_module"
-        exclude "**/kotlin/**"
+        jniLibs {
+            excludes += ['**/kotlin/**']
+        }
+        resources {
+            excludes += ['/META-INF/*.kotlin_module', '**/kotlin/**']
+        }
     }
+    namespace 'es.unizar.gde.sensors'
 }
 
 dependencies {
