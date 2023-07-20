@@ -6,16 +6,26 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.os.Build
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import es.unizar.gde.sensors.MainActivity
+import es.unizar.gde.sensors.R
 import es.unizar.gde.sensors.tools.FileWriter
 import es.unizar.gde.sensors.tools.MODE
 import es.unizar.gde.sensors.tools.RangeSerie
 import es.unizar.gde.sensors.utilities.Fragment
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.acc_clr
+import kotlinx.android.synthetic.main.activity_main.acc_graph
+import kotlinx.android.synthetic.main.activity_main.acc_mode
+import kotlinx.android.synthetic.main.activity_main.acc_nocal
+import kotlinx.android.synthetic.main.activity_main.acc_rec
+import kotlinx.android.synthetic.main.activity_main.acc_snap
+import kotlinx.android.synthetic.main.activity_main.acc_txt
 import java.text.NumberFormat
 
 private val DELAY = 10 // in milliseconds
@@ -24,12 +34,11 @@ private val DELAY = 10 // in milliseconds
  * Shows the accelerometer values
  */
 class Accelerometer(
-        val cntx: MainActivity,
+    val cntx: MainActivity,
 ) : Fragment, SensorEventListener {
 
     // utils
     private lateinit var sensorManager: SensorManager
-    private lateinit var accelerometer: Sensor
     private val file = FileWriter(cntx, "acc")
 
     // series
@@ -45,13 +54,17 @@ class Accelerometer(
     override fun onCreate() {
         // sensor
         sensorManager = cntx.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+
 
         // listeners
         cntx.acc_clr.setOnClickListener { series.forEach(RangeSerie::clear) }
         cntx.acc_rec.onCheckedChange { record(it) }
         cntx.acc_snap.setOnClickListener { snapshot() }
         cntx.acc_mode.setOnModeChanged { mode -> series.forEach { it.mode = mode } }
+        cntx.acc_nocal.apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setOnCheckedChangeListener { _, _ -> recreateAccelerometer() }
+            else visibility = View.GONE
+        }
 
         // other config
         cntx.acc_mode.disableMode(MODE.BUFFER)
@@ -61,6 +74,11 @@ class Accelerometer(
         cntx.acc_graph.addSeries(serieY)
         cntx.acc_graph.addSeries(serieZ)
         serieX.initializeGraph(cntx.acc_graph)
+    }
+
+    fun recreateAccelerometer() {
+        onPause()
+        onResume()
     }
 
     /**
@@ -80,14 +98,16 @@ class Accelerometer(
      */
     fun snapshot() {
         file.openNew("snap", false)
-        file.writeLine(when (serieX.mode) {
-            MODE.RAW -> "x_raw y_raw z_raw"
-            MODE.BASE -> "x_base y_base z_base"
-            MODE.AVERAGE -> "x_avg y_avg z_avg"
-            MODE.RANGE -> "x_rang y_rang z_rang"
-            MODE.BUFFER -> "secret!" // this is impossible
-            MODE.FFT -> "hz x y z"
-        })
+        file.writeLine(
+            when (serieX.mode) {
+                MODE.RAW -> "x_raw y_raw z_raw"
+                MODE.BASE -> "x_base y_base z_base"
+                MODE.AVERAGE -> "x_avg y_avg z_avg"
+                MODE.RANGE -> "x_rang y_rang z_rang"
+                MODE.BUFFER -> "secret!" // this is impossible
+                MODE.FFT -> "hz x y z"
+            }
+        )
 
 
         val itX = serieX.getValues(serieX.lowestValueX, serieX.highestValueX)
@@ -109,10 +129,19 @@ class Accelerometer(
     }
 
     /**
+     * Returns the sensor type to use based on the device and checkbox
+     */
+    private fun getSensorType() = if (cntx.acc_nocal.isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Sensor.TYPE_ACCELEROMETER_UNCALIBRATED else Sensor.TYPE_ACCELEROMETER
+
+    /**
      * When resuming, register the listener
      */
     override fun onResume() {
-        sensorManager.registerListener(this, accelerometer, DELAY * 1000)//SensorManager.SENSOR_DELAY_GAME)
+        val sensor = sensorManager.getDefaultSensor(getSensorType()) ?: run {
+            Toast.makeText(cntx, R.string.no_sensor, Toast.LENGTH_SHORT).show()
+            return
+        }
+        sensorManager.registerListener(this, sensor, DELAY * 1000)//SensorManager.SENSOR_DELAY_GAME)
     }
 
     /**

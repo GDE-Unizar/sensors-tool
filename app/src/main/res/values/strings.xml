@@ -32,6 +32,9 @@
     <string name="mode_buff">Buffer</string>
     <string name="mode_fft">FFT</string>
 
+    <string name="uncal">Uncalibrated</string>
+    <string name="no_sensor">Sensor not available</string>
+
     <string name="desc_clr">clear</string>
     <string name="desc_rec">record raw</string>
     <string name="desc_snap">snapshot</string>

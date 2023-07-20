@@ -45,41 +45,55 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
-                <view
-                    android:id="@+id/acc_mode"
-                    class="es.unizar.gde.sensors.tools.ModeSpinner"
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <view
+                        android:id="@+id/acc_mode"
+                        class="es.unizar.gde.sensors.tools.ModeSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Switch
+                        android:id="@+id/acc_nocal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/uncal" />
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/acc_clr"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc_clr"
                     android:padding="5dp"
-                    android:src="@drawable/ic_delete"
-                    android:contentDescription="@string/desc_clr" />
+                    android:src="@drawable/ic_delete" />
 
                 <es.unizar.gde.sensors.tools.ToggleImageButton
                     android:id="@+id/acc_rec"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:contentDescription="@string/desc_rec" />
+                    android:contentDescription="@string/desc_rec"
+                    android:padding="5dp" />
 
                 <ImageButton
                     android:id="@+id/acc_snap"
                     style="@android:style/Widget.DeviceDefault.Button.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/desc_snap"
                     android:padding="5dp"
-                    android:src="@android:drawable/ic_menu_camera"
-                    android:contentDescription="@string/desc_snap" />
+                    android:src="@android:drawable/ic_menu_camera" />
 
             </LinearLayout>
 

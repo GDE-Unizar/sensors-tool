@@ -31,6 +31,7 @@
         - Range: Displays the range value of the last 10 raw samples. Similar to a raw graph, but smoother.
         - FFT: Performs a Fast Fourier Transform of the last 200 samples.
         "</string>
+    <string name="h_acc_nocal">"If enabled uses the 'uncalibrated' sensor. Disable to use the default calibrated one."</string>
     <string name="h_acc_clr">Clears the accelerometer graph. Usually not needed and performed automatically.</string>
     <string name="h_acc_rec">Starts recording the raw accelerometer values. While recording, press again to stop. Recorded values are saved on a new file in the format \"x_raw y_raw z_raw\" (number of lines proportional to recorded time).</string>
     <string name="h_acc_snap">Saves the currently displayed graph values (raw, range, fft…) on a new file in the format \"x_val y_val z_val\" (or \"hz x_val y_val z_val\" for FFT).</string>

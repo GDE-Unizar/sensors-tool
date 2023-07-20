@@ -7,10 +7,37 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import es.unizar.gde.sensors.fragment.*
+import es.unizar.gde.sensors.fragment.Accelerometer
+import es.unizar.gde.sensors.fragment.Experiments
+import es.unizar.gde.sensors.fragment.Microphone
+import es.unizar.gde.sensors.fragment.Speaker
+import es.unizar.gde.sensors.fragment.Vibrator
 import es.unizar.gde.sensors.tools.permissionsMenu
 import es.unizar.gde.sensors.tools.testPermission
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.acc_box
+import kotlinx.android.synthetic.main.activity_main.acc_clr
+import kotlinx.android.synthetic.main.activity_main.acc_graph
+import kotlinx.android.synthetic.main.activity_main.acc_head
+import kotlinx.android.synthetic.main.activity_main.acc_mode
+import kotlinx.android.synthetic.main.activity_main.acc_nocal
+import kotlinx.android.synthetic.main.activity_main.acc_rec
+import kotlinx.android.synthetic.main.activity_main.acc_snap
+import kotlinx.android.synthetic.main.activity_main.acc_txt
+import kotlinx.android.synthetic.main.activity_main.mic_box
+import kotlinx.android.synthetic.main.activity_main.mic_clr
+import kotlinx.android.synthetic.main.activity_main.mic_graph
+import kotlinx.android.synthetic.main.activity_main.mic_head
+import kotlinx.android.synthetic.main.activity_main.mic_mode
+import kotlinx.android.synthetic.main.activity_main.mic_rec
+import kotlinx.android.synthetic.main.activity_main.mic_snap
+import kotlinx.android.synthetic.main.activity_main.mic_txt
+import kotlinx.android.synthetic.main.activity_main.s_info
+import kotlinx.android.synthetic.main.activity_main.spk_box
+import kotlinx.android.synthetic.main.activity_main.spk_head
+import kotlinx.android.synthetic.main.activity_main.spk_toggle
+import kotlinx.android.synthetic.main.activity_main.vib_box
+import kotlinx.android.synthetic.main.activity_main.vib_head
+import kotlinx.android.synthetic.main.activity_main.vib_tog
 
 /**
  * Main activity
@@ -53,7 +80,7 @@ class MainActivity : Activity() {
 //        initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
         testPermission(true)
 
-        helpOnLongTap(acc_head, acc_txt, acc_mode, acc_clr, acc_rec, acc_snap, acc_graph, mic_head, mic_txt, mic_mode, mic_clr, mic_rec, mic_snap, mic_graph, spk_head, spk_toggle, vib_head, vib_tog, s_info)
+        helpOnLongTap(acc_head, acc_txt, acc_mode, acc_nocal, acc_clr, acc_rec, acc_snap, acc_graph, mic_head, mic_txt, mic_mode, mic_clr, mic_rec, mic_snap, mic_graph, spk_head, spk_toggle, vib_head, vib_tog, s_info)
     }
 
     // --- menu ------
