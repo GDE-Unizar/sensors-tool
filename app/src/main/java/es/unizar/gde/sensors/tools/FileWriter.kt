@@ -1,24 +1,29 @@
 package es.unizar.gde.sensors.tools
 
 import android.app.Activity
+import android.os.Build
 import android.os.Environment
 import android.widget.Toast
 import es.unizar.gde.sensors.R
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
-val FOLDER_NAME = "PracFis"
-
-val EXTERNAL_FOLDER = File(Environment.getExternalStorageDirectory(), FOLDER_NAME)
+val SAVE_FOLDER = File(
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+    } else {
+        Environment.getExternalStorageDirectory()
+    }, "PracFis"
+)
 
 /**
  * Manages writting to a file
  */
 class FileWriter(
-        val cntx: Activity,
-        val suffix: String = "",
+    val cntx: Activity,
+    val suffix: String = "",
 ) {
 
     // data
@@ -37,16 +42,14 @@ class FileWriter(
         // close previous if any
         close()
         // opens the file by creating the parent folder (if required)
-        with(EXTERNAL_FOLDER) {
+        with(SAVE_FOLDER) {
             if (!exists() && !mkdirs()) {
                 // folder error
                 Toast.makeText(cntx, R.string.toast_nofolder, Toast.LENGTH_SHORT).show()
             } else {
                 // folder ready. open file
-                val filesuffix = (if (suffix.isEmpty()) "" else "_$suffix") + (if (subsuffix.isEmpty()) "" else "_$subsuffix") + ".txt"
-                val name = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date()) + filesuffix
-                stream = FileOutputStream(File(this, name))
-                filename = "~/$FOLDER_NAME/$name"
+                filename = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss").format(Date()) + ((if (suffix.isEmpty()) "" else "_$suffix") + (if (subsuffix.isEmpty()) "" else "_$subsuffix") + ".txt")
+                stream = FileOutputStream(File(this, filename))
 
                 if (toast)
                     Toast.makeText(cntx, "Writing file...", Toast.LENGTH_SHORT).show()

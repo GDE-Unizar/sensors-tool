@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.util.Log
 import android.view.View
-import es.unizar.gde.sensors.tools.FOLDER_NAME
+import es.unizar.gde.sensors.tools.SAVE_FOLDER
 
 
 /**
@@ -21,11 +21,11 @@ fun Context.showInfoActivityHelp() = showDialog(R.string.menu_help, getString(R.
 /**
  * Displays a dialog explaining where to find the folder
  */
-fun Context.showFolder() = showDialog(R.string.menu_folder, getString(R.string.folder, FOLDER_NAME))
-//            .setPositiveButton(R.string.open) { _, _ ->
-//                openFolder()
-//            }
-//            .setNegativeButton(android.R.string.cancel, null)
+fun Context.showFolder() = showDialog(R.string.menu_folder, getString(R.string.folder, SAVE_FOLDER))
+//    setPositiveButton(R.string.open) { _, _ ->
+//        openFolder()
+//    }
+//}
 
 ///**
 // * Tries to open the folder on a file explorer app. But fails miserably (thanks android)
@@ -71,25 +71,25 @@ fun Context.helpOnLongTap(vararg views: View) {
  * Returns the string for the help identifier. The tag if present, or the view name.
  */
 fun View.getStringId() =
-        when {
-            tag != null -> tag.toString()
-            id == View.NO_ID -> throw Resources.NotFoundException()
-            else -> resources.getResourceEntryName(id)
-        }
+    when {
+        tag != null -> tag.toString()
+        id == View.NO_ID -> throw Resources.NotFoundException()
+        else -> resources.getResourceEntryName(id)
+    }
 
 /**
  * Wrapper for the dialog creation
  */
 fun Context.showDialog(title: Int, message: String) {
     AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
-            .show()
-            .apply {
-                // close when clicking the text
-                findViewById<View>(android.R.id.message)
-                        .setOnClickListener { dismiss() }
-            }
+        .setTitle(title)
+        .setMessage(message)
+        .show()
+        .apply {
+            // close when clicking the text
+            findViewById<View>(android.R.id.message)
+                .setOnClickListener { dismiss() }
+        }
 }
 
 
