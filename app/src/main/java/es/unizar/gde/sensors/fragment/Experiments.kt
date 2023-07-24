@@ -7,7 +7,11 @@ import es.unizar.gde.sensors.R
 import es.unizar.gde.sensors.helpOnLongTap
 import es.unizar.gde.sensors.tools.FileWriter
 import es.unizar.gde.sensors.tools.Volume
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.acc_clr
+import kotlinx.android.synthetic.main.activity_main.main
+import kotlinx.android.synthetic.main.activity_main.mic_clr
+import kotlinx.android.synthetic.main.activity_main.spk_hz
+import kotlinx.android.synthetic.main.activity_main.spk_toggle
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
@@ -15,18 +19,18 @@ import kotlin.concurrent.thread
  * Manages the experiments
  */
 class Experiments(
-        val acc: Accelerometer,
-        val mic: Microphone,
-        val spk: Speaker,
-        val vib: Vibrator,
-        val cntx: MainActivity,
+    val acc: Accelerometer,
+    val mic: Microphone,
+    val spk: Speaker,
+    val vib: Vibrator,
+    val cntx: MainActivity,
 ) {
 
     // utils
     val file = FileWriter(cntx, "exp")
     val experiments = sequenceOf(
-            cntx.getString(R.string.exp_freq) to ::freqExperiment,
-            cntx.getString(R.string.exp_vol) to ::volumeExperiment,
+        cntx.getString(R.string.exp_freq) to ::freqExperiment,
+        cntx.getString(R.string.exp_vol) to ::volumeExperiment,
     )
 
     // variables
@@ -47,8 +51,8 @@ class Experiments(
 
         // add a button for each experiment
         experiments.forEach { (name, function) ->
-            Button(cntx).apply {
-                text = cntx.getString(R.string.exp_title) + name
+            createButton {
+                text = cntx.getString(R.string.exp_title, name)
                 setOnClickListener {
                     current = thread {
                         screen { cntx.hideAll() }
@@ -69,24 +73,31 @@ class Experiments(
                     }
                 }
                 tag = "exp_$name"
-                cntx.main.addView(this)
                 btn_exps.add(this)
             }
         }
 
         // add stop button
-        btn_stop = Button(cntx).apply {
+        btn_stop = createButton {
             text = context.getString(R.string.exp_stop)
             isEnabled = false
             setOnClickListener { stop() }
             tag = "exp_stop"
-            cntx.main.addView(this)
         }
 
 
         cntx.helpOnLongTap(*btn_exps.toTypedArray(), btn_stop)
 
     }
+
+    /**
+     * Creates a new button in the layout. Includes callback as 'apply'
+     */
+    private fun createButton(callback: Button.() -> Unit) =
+        (cntx.layoutInflater.inflate(R.layout.experiment_button, null) as Button).apply {
+            callback()
+            cntx.main.addView(this)
+        }
 
     /**
      * @return true is there is an experiment running

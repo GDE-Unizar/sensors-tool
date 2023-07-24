@@ -71,7 +71,8 @@
 
                 <ImageButton
                     android:id="@+id/acc_clr"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/desc_clr"
@@ -80,7 +81,8 @@
 
                 <es.unizar.gde.sensors.tools.ToggleImageButton
                     android:id="@+id/acc_rec"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/desc_rec"
@@ -88,7 +90,8 @@
 
                 <ImageButton
                     android:id="@+id/acc_snap"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/desc_snap"
@@ -152,7 +155,8 @@
 
                 <ImageButton
                     android:id="@+id/mic_clr"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -161,7 +165,8 @@
 
                 <es.unizar.gde.sensors.tools.ToggleImageButton
                     android:id="@+id/mic_rec"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -169,7 +174,8 @@
 
                 <ImageButton
                     android:id="@+id/mic_snap"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
@@ -220,19 +226,12 @@
 
                 <es.unizar.gde.sensors.tools.RepeatButton
                     android:id="@+id/spk_dec"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth="50dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="@string/reduce" />
-
-                <es.unizar.gde.sensors.tools.RepeatButton
-                    android:id="@+id/spk_inc"
-                    style="@android:style/Widget.DeviceDefault.Button.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="@string/increase" />
 
                 <SeekBar
                     android:id="@+id/spk_hz"
@@ -242,6 +241,15 @@
                     android:max="22050"
                     android:padding="5dp"
                     android:progress="10" />
+
+                <es.unizar.gde.sensors.tools.RepeatButton
+                    android:id="@+id/spk_inc"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:minWidth="50dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="@string/increase" />
             </LinearLayout>
 
             <Switch
@@ -295,7 +303,8 @@
 
         <Button
             android:id="@+id/s_info"
-            android:layout_width="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"

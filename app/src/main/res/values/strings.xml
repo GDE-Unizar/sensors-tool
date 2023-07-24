@@ -19,7 +19,7 @@
     <string name="toast_nofolder">Can\'t create folder</string>
     <string name="toast_nopermission">Permission denied</string>
 
-    <string name="exp_title">Experiment:\n</string>
+    <string name="exp_title">Run experiment: %s</string>
     <string name="exp_freq">frequency</string>
     <string name="exp_vol">volume</string>
     <string name="exp_start">Initiating experiment in 5 seconds…</string>
@@ -41,7 +41,7 @@
 
     <string name="menu_help">Help</string>
     <string name="menu_folder">Folder</string>
-    <string name="folder">All the files generated (by recording, snapshot, or experiments) are saved in the folder %s in your device (sd card, or internal memory if no card is present).</string>
+    <string name="folder">All the files generated (by recording, snapshot, or experiments) are saved in the folder %s in your device (usually the sd card, or the internal memory if no card is present).</string>
     <string name="open">open</string>
 
     <string name="title_permissions">Permissions</string>
