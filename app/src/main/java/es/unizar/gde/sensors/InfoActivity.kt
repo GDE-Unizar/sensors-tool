@@ -9,7 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_info.*
+import es.unizar.gde.sensors.databinding.ActivityInfoBinding
 
 /**
  * Padding to apply to subelements
@@ -20,13 +20,14 @@ private val PADDING = 25
  * Activity that shows info about all available sensors
  */
 class InfoActivity : Activity() {
+    private lateinit var views: ActivityInfoBinding
 
     /**
      * When the activity starts
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_info)
+        setContentView(ActivityInfoBinding.inflate(layoutInflater).also { views = it }.root)
 
         val sm = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -41,7 +42,7 @@ class InfoActivity : Activity() {
                 setPadding(0, PADDING, 0, 0)
 
                 // add
-                s_info.addView(this)
+                views.sInfo.addView(this)
             }
 
             // add body with the sensor data
@@ -52,10 +53,10 @@ class InfoActivity : Activity() {
 
                     // skip those that...
                     if (
-                            method.equals(sensor::class.java.getDeclaredMethod("toString")) // is toString (used in header)
-                            || method.returnType.equals(Void.TYPE) // return void
-                            || method.typeParameters.isNotEmpty() // has parameters
-                            || method.genericParameterTypes.isNotEmpty() // has type parameters
+                        method.equals(sensor::class.java.getDeclaredMethod("toString")) // is toString (used in header)
+                        || method.returnType.equals(Void.TYPE) // return void
+                        || method.typeParameters.isNotEmpty() // has parameters
+                        || method.genericParameterTypes.isNotEmpty() // has type parameters
                     ) continue
 
                     // append name and result
@@ -73,7 +74,7 @@ class InfoActivity : Activity() {
                 setPadding(PADDING, 0, PADDING, 0)
 
                 // add
-                s_info.addView(this)
+                views.sInfo.addView(this)
             }
 
             // toggle functionality
@@ -97,6 +98,7 @@ class InfoActivity : Activity() {
                 showInfoActivityHelp()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -19,13 +19,6 @@ import es.unizar.gde.sensors.tools.FileWriter
 import es.unizar.gde.sensors.tools.MODE
 import es.unizar.gde.sensors.tools.RangeSerie
 import es.unizar.gde.sensors.utilities.Fragment
-import kotlinx.android.synthetic.main.activity_main.acc_clr
-import kotlinx.android.synthetic.main.activity_main.acc_graph
-import kotlinx.android.synthetic.main.activity_main.acc_mode
-import kotlinx.android.synthetic.main.activity_main.acc_nocal
-import kotlinx.android.synthetic.main.activity_main.acc_rec
-import kotlinx.android.synthetic.main.activity_main.acc_snap
-import kotlinx.android.synthetic.main.activity_main.acc_txt
 import java.text.NumberFormat
 
 private val DELAY = 10 // in milliseconds
@@ -36,6 +29,8 @@ private val DELAY = 10 // in milliseconds
 class Accelerometer(
     val cntx: MainActivity,
 ) : Fragment, SensorEventListener {
+    private val views = cntx.views
+
 
     // utils
     private lateinit var sensorManager: SensorManager
@@ -57,23 +52,23 @@ class Accelerometer(
 
 
         // listeners
-        cntx.acc_clr.setOnClickListener { series.forEach(RangeSerie::clear) }
-        cntx.acc_rec.onCheckedChange { record(it) }
-        cntx.acc_snap.setOnClickListener { snapshot() }
-        cntx.acc_mode.setOnModeChanged { mode -> series.forEach { it.mode = mode } }
-        cntx.acc_nocal.apply {
+        views.accClr.setOnClickListener { series.forEach(RangeSerie::clear) }
+        views.accRec.onCheckedChange { record(it) }
+        views.accSnap.setOnClickListener { snapshot() }
+        views.accMode.setOnModeChanged { mode -> series.forEach { it.mode = mode } }
+        views.accNocal.apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) setOnCheckedChangeListener { _, _ -> recreateAccelerometer() }
             else visibility = View.GONE
         }
 
         // other config
-        cntx.acc_mode.disableMode(MODE.BUFFER)
+        views.accMode.disableMode(MODE.BUFFER)
 
         // graph acelerometer
-        cntx.acc_graph.addSeries(serieX)
-        cntx.acc_graph.addSeries(serieY)
-        cntx.acc_graph.addSeries(serieZ)
-        serieX.initializeGraph(cntx.acc_graph)
+        views.accGraph.addSeries(serieX)
+        views.accGraph.addSeries(serieY)
+        views.accGraph.addSeries(serieZ)
+        serieX.initializeGraph(views.accGraph)
     }
 
     fun recreateAccelerometer() {
@@ -131,7 +126,7 @@ class Accelerometer(
     /**
      * Returns the sensor type to use based on the device and checkbox
      */
-    private fun getSensorType() = if (cntx.acc_nocal.isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Sensor.TYPE_ACCELEROMETER_UNCALIBRATED else Sensor.TYPE_ACCELEROMETER
+    private fun getSensorType() = if (views.accNocal.isChecked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) Sensor.TYPE_ACCELEROMETER_UNCALIBRATED else Sensor.TYPE_ACCELEROMETER
 
     /**
      * When resuming, register the listener
@@ -149,7 +144,7 @@ class Accelerometer(
      */
     override fun onPause() {
         sensorManager.unregisterListener(this)
-        cntx.acc_rec.isChecked = false
+        views.accRec.isChecked = false
     }
 
     /**
@@ -163,10 +158,10 @@ class Accelerometer(
         }
 
         // update graph
-        cntx.acc_graph.onDataChanged(false, false)
-        cntx.acc_graph.viewport.setMaxY((series.map { it.maxY }.maxOrNull() ?: 0.0) + 1.0)
-        cntx.acc_graph.viewport.setMinY((series.map { it.minY }.minOrNull() ?: 0.0) - 1.0)
-        series.forEach { it.labelVerticalWidth = cntx.acc_graph.gridLabelRenderer.labelVerticalWidth * 2 }
+        views.accGraph.onDataChanged(false, false)
+        views.accGraph.viewport.setMaxY((series.map { it.maxY }.maxOrNull() ?: 0.0) + 1.0)
+        views.accGraph.viewport.setMinY((series.map { it.minY }.minOrNull() ?: 0.0) - 1.0)
+        series.forEach { it.labelVerticalWidth = views.accGraph.gridLabelRenderer.labelVerticalWidth * 2 }
 
         // update text info
         SpannableStringBuilder().apply {
@@ -177,7 +172,7 @@ class Accelerometer(
                 append(label)
                 append("={$range} [$min,$max]")
             }
-        }.let { cntx.acc_txt.setText(it, TextView.BufferType.SPANNABLE) }
+        }.let { views.accTxt.setText(it, TextView.BufferType.SPANNABLE) }
 
         // save to file (if recording)
         file.writeLine(event.values.joinToString(" "))

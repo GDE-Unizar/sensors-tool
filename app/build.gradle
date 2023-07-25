@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 33
@@ -29,6 +28,11 @@ android {
         }
     }
     namespace 'es.unizar.gde.sensors'
+
+    buildFeatures {
+        viewBinding true
+    }
+
 }
 
 dependencies {

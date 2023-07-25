@@ -6,7 +6,6 @@ import es.unizar.gde.sensors.MainActivity
 import es.unizar.gde.sensors.utilities.Fragment
 import es.unizar.gde.sensors.utilities.onCheckedChange
 import es.unizar.gde.sensors.utilities.onProgressChange
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.atan
 import kotlin.math.sin
 
@@ -16,6 +15,7 @@ import kotlin.math.sin
 class Speaker(
         val cntx: MainActivity,
 ) : Fragment {
+    private val views = cntx.views
 
     // util
     private var thread: TuneThread? = null
@@ -26,27 +26,27 @@ class Speaker(
     override fun onCreate() {
 
         // toggle to play/stop
-        cntx.spk_toggle.onCheckedChange {
+        views.spkToggle.onCheckedChange {
             if (it) play() else stop()
         }
 
         // change hz bar
-        cntx.spk_hz.onProgressChange {
+        views.spkHz.onProgressChange {
             thread?.tuneFreq = it.toDouble() // update if playing
-            cntx.spk_toggle.text = "$it Hz"
+            views.spkToggle.text = "$it Hz"
         }
-        cntx.spk_hz.progress = 440 // initial value
+        views.spkHz.progress = 440 // initial value
 
         // increase/decrease buttons
-        cntx.spk_inc.setOnClickListener { cntx.spk_hz.progress += 1 }
-        cntx.spk_dec.setOnClickListener { cntx.spk_hz.progress -= 1 }
+        views.spkInc.setOnClickListener { views.spkHz.progress += 1 }
+        views.spkDec.setOnClickListener { views.spkHz.progress -= 1 }
     }
 
     /**
      * On pause, stop
      */
     override fun onPause() {
-        cntx.spk_toggle.isChecked = false
+        views.spkToggle.isChecked = false
     }
 
     /**
@@ -55,11 +55,11 @@ class Speaker(
     fun play() {
         if (thread != null) {
             // already playing, update
-            thread?.tuneFreq = cntx.spk_hz.progress.toDouble()
+            thread?.tuneFreq = views.spkHz.progress.toDouble()
         } else {
             // not playing, start
             thread = TuneThread().apply {
-                tuneFreq = cntx.spk_hz.progress.toDouble()
+                tuneFreq = views.spkHz.progress.toDouble()
                 start()
             }
         }

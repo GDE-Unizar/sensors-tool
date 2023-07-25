@@ -7,11 +7,6 @@ import es.unizar.gde.sensors.R
 import es.unizar.gde.sensors.helpOnLongTap
 import es.unizar.gde.sensors.tools.FileWriter
 import es.unizar.gde.sensors.tools.Volume
-import kotlinx.android.synthetic.main.activity_main.acc_clr
-import kotlinx.android.synthetic.main.activity_main.main
-import kotlinx.android.synthetic.main.activity_main.mic_clr
-import kotlinx.android.synthetic.main.activity_main.spk_hz
-import kotlinx.android.synthetic.main.activity_main.spk_toggle
 import java.lang.Thread.sleep
 import kotlin.concurrent.thread
 
@@ -25,6 +20,7 @@ class Experiments(
     val vib: Vibrator,
     val cntx: MainActivity,
 ) {
+    private val views = cntx.views
 
     // utils
     val file = FileWriter(cntx, "exp")
@@ -96,7 +92,7 @@ class Experiments(
     private fun createButton(callback: Button.() -> Unit) =
         (cntx.layoutInflater.inflate(R.layout.experiment_button, null) as Button).apply {
             callback()
-            cntx.main.addView(this)
+            views.main.addView(this)
         }
 
     /**
@@ -116,16 +112,16 @@ class Experiments(
      */
     fun freqExperiment() {
         // initialize
-        screen { cntx.spk_toggle.isChecked = true }
+        screen { views.spkToggle.isChecked = true }
         file.writeLine("hz mic_amp acc_x_raw acc_y_raw acc_z_raw")
 
         // for each frequency
         for (hz in 10..22010 step 100) {
 
             // play requency and wait
-            screen { cntx.spk_hz.progress = hz }
-            screen { cntx.mic_clr.performClick() }
-            screen { cntx.acc_clr.performClick() }
+            screen { views.spkHz.progress = hz }
+            screen { views.micClr.performClick() }
+            screen { views.accClr.performClick() }
             sleep(1000)
 
             // record values
@@ -144,15 +140,15 @@ class Experiments(
         // initialize
         file.writeLine("hz vol mic_amp acc_x_raw acc_y_raw acc_z_raw")
         val volume = Volume(cntx)
-        screen { cntx.spk_toggle.isChecked = true }
+        screen { views.spkToggle.isChecked = true }
 
         // perform
         for (hz in sequenceOf(100, 1000, 10000)) {
-            screen { cntx.spk_hz.progress = hz }
+            screen { views.spkHz.progress = hz }
 
             for (vol in 0..volume.maxVolume) {
                 screen { volume.setVolume(vol) }
-                screen { cntx.mic_clr.performClick() }
+                screen { views.micClr.performClick() }
                 sleep(1000)
                 val micVal = mic.average
                 val accXVal = acc.serieX.average

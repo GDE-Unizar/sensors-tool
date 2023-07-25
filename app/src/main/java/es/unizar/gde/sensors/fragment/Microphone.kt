@@ -13,7 +13,6 @@ import es.unizar.gde.sensors.tools.MODE
 import es.unizar.gde.sensors.tools.RangeSerie
 import es.unizar.gde.sensors.tools.hasRecordPermission
 import es.unizar.gde.sensors.utilities.Fragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.math.abs
 
 const val HZ = 40000//8000
@@ -24,6 +23,7 @@ const val HZ = 40000//8000
 class Microphone(
         val cntx: MainActivity,
 ) : Fragment {
+    private val views = cntx.views
 
     // utils
     val sm = SoundMeter()
@@ -37,11 +37,11 @@ class Microphone(
         handler = Handler(Looper.getMainLooper())
 
         // graph microphone
-        cntx.mic_graph.addSeries(micSerie)
-        micSerie.initializeGraph(cntx.mic_graph)
+        views.micGraph.addSeries(micSerie)
+        micSerie.initializeGraph(views.micGraph)
 
         // press rec button to start/stop recording
-        cntx.mic_rec.onCheckedChange {
+        views.micRec.onCheckedChange {
             if (it) {
                 file.openNew("rec")
                 file.writeLine("amp")
@@ -49,15 +49,15 @@ class Microphone(
                 file.close()
             }
         }
-        cntx.mic_snap.setOnClickListener {
+        views.micSnap.setOnClickListener {
             snapshot()
         }
 
         // set mode
-        cntx.mic_mode.setOnModeChanged { micSerie.mode = it }
+        views.micMode.setOnModeChanged { micSerie.mode = it }
 
         // clear button
-        cntx.mic_clr.setOnClickListener { micSerie.clear() }
+        views.micClr.setOnClickListener { micSerie.clear() }
     }
 
     fun snapshot() {
@@ -98,11 +98,11 @@ class Microphone(
         }
 
         // update graph
-        cntx.mic_graph.onDataChanged(false, false)
-        cntx.mic_graph.viewport.setMaxY(micSerie.maxY + 1.0)
-        cntx.mic_graph.viewport.setMinY(micSerie.minY - 1.0)
-        micSerie.labelVerticalWidth = cntx.mic_graph.gridLabelRenderer.labelVerticalWidth * 2
-        cntx.mic_txt.text = cntx.getString(R.string.amp_desc, amp)
+        views.micGraph.onDataChanged(false, false)
+        views.micGraph.viewport.setMaxY(micSerie.maxY + 1.0)
+        views.micGraph.viewport.setMinY(micSerie.minY - 1.0)
+        micSerie.labelVerticalWidth = views.micGraph.gridLabelRenderer.labelVerticalWidth * 2
+        views.micTxt.text = cntx.getString(R.string.amp_desc, amp)
         file.writeLine(amp)
     }
 

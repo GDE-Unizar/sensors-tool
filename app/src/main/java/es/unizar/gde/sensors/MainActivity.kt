@@ -7,6 +7,7 @@ import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import es.unizar.gde.sensors.databinding.ActivityMainBinding
 import es.unizar.gde.sensors.fragment.Accelerometer
 import es.unizar.gde.sensors.fragment.Experiments
 import es.unizar.gde.sensors.fragment.Microphone
@@ -14,35 +15,12 @@ import es.unizar.gde.sensors.fragment.Speaker
 import es.unizar.gde.sensors.fragment.Vibrator
 import es.unizar.gde.sensors.tools.permissionsMenu
 import es.unizar.gde.sensors.tools.testPermission
-import kotlinx.android.synthetic.main.activity_main.acc_box
-import kotlinx.android.synthetic.main.activity_main.acc_clr
-import kotlinx.android.synthetic.main.activity_main.acc_graph
-import kotlinx.android.synthetic.main.activity_main.acc_head
-import kotlinx.android.synthetic.main.activity_main.acc_mode
-import kotlinx.android.synthetic.main.activity_main.acc_nocal
-import kotlinx.android.synthetic.main.activity_main.acc_rec
-import kotlinx.android.synthetic.main.activity_main.acc_snap
-import kotlinx.android.synthetic.main.activity_main.acc_txt
-import kotlinx.android.synthetic.main.activity_main.mic_box
-import kotlinx.android.synthetic.main.activity_main.mic_clr
-import kotlinx.android.synthetic.main.activity_main.mic_graph
-import kotlinx.android.synthetic.main.activity_main.mic_head
-import kotlinx.android.synthetic.main.activity_main.mic_mode
-import kotlinx.android.synthetic.main.activity_main.mic_rec
-import kotlinx.android.synthetic.main.activity_main.mic_snap
-import kotlinx.android.synthetic.main.activity_main.mic_txt
-import kotlinx.android.synthetic.main.activity_main.s_info
-import kotlinx.android.synthetic.main.activity_main.spk_box
-import kotlinx.android.synthetic.main.activity_main.spk_head
-import kotlinx.android.synthetic.main.activity_main.spk_toggle
-import kotlinx.android.synthetic.main.activity_main.vib_box
-import kotlinx.android.synthetic.main.activity_main.vib_head
-import kotlinx.android.synthetic.main.activity_main.vib_tog
 
 /**
  * Main activity
  */
 class MainActivity : Activity() {
+    lateinit var views: ActivityMainBinding
 
     // fragments
     val acc by lazy { Accelerometer(this) }
@@ -52,10 +30,10 @@ class MainActivity : Activity() {
 
     val fragments by lazy {
         sequenceOf(
-                Triple(acc_head, acc_box, acc),
-                Triple(mic_head, mic_box, mic),
-                Triple(spk_head, spk_box, spk),
-                Triple(vib_head, vib_box, vib)
+            Triple(views.accHead, views.accBox, acc),
+            Triple(views.micHead, views.micBox, mic),
+            Triple(views.spkHead, views.spkBox, spk),
+            Triple(views.vibHead, views.vibBox, vib)
         )
     }
 
@@ -66,21 +44,23 @@ class MainActivity : Activity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(ActivityMainBinding.inflate(layoutInflater).also { views = it }.root)
 
         for ((_, _, fragment) in fragments) fragment.onCreate()
         initHideable()
 
         exp.onCreate()
 
-        s_info.setOnClickListener {
+        views.sInfo.setOnClickListener {
             startActivity(Intent(this, InfoActivity::class.java))
         }
 
 //        initLongTap(acc_clr, acc_rec, acc_snap, mic_clr, mic_rec, mic_snap)
         testPermission(true)
 
-        helpOnLongTap(acc_head, acc_txt, acc_mode, acc_nocal, acc_clr, acc_rec, acc_snap, acc_graph, mic_head, mic_txt, mic_mode, mic_clr, mic_rec, mic_snap, mic_graph, spk_head, spk_toggle, vib_head, vib_tog, s_info)
+        with(views) {
+            helpOnLongTap(accHead, accTxt, accMode, accNocal, accClr, accRec, accSnap, accGraph, micHead, micTxt, micMode, micClr, micRec, micSnap, micGraph, spkHead, spkToggle, vibHead, vibTog, sInfo)
+        }
     }
 
     // --- menu ------
@@ -104,16 +84,19 @@ class MainActivity : Activity() {
                 showMainActivityHelp()
                 true
             }
+
             R.id.folder -> {
                 // show folder info
                 showFolder()
                 true
             }
+
             R.id.permissions -> {
                 // recheck permissions
                 testPermission(true)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

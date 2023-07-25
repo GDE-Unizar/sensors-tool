@@ -36,7 +36,7 @@ fun Activity.testPermission(ask: Boolean = false) {
     if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED)
         hasRecordPermission = true
 
-    val needed = arrayOf(hasWritePermission to android.Manifest.permission.WRITE_EXTERNAL_STORAGE, hasRecordPermission to android.Manifest.permission.RECORD_AUDIO).filter { !it.first }.map { it.second }
+    val needed = arrayOf(hasWritePermission to Manifest.permission.WRITE_EXTERNAL_STORAGE, hasRecordPermission to Manifest.permission.RECORD_AUDIO).filter { !it.first }.map { it.second }
 
 
     if (needed.isNotEmpty() && ask) {

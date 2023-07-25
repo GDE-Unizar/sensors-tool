@@ -5,7 +5,6 @@ import android.os.Vibrator
 import es.unizar.gde.sensors.MainActivity
 import es.unizar.gde.sensors.utilities.Fragment
 import es.unizar.gde.sensors.utilities.onCheckedChange
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * Makes the device vibrate
@@ -13,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class Vibrator(
         val cntx: MainActivity,
 ) : Fragment {
+    private val views = cntx.views
 
     // variables
     private lateinit var vibrator: Vibrator
@@ -27,7 +27,7 @@ class Vibrator(
         vibrator = cntx.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // toggle to start/stop
-        cntx.vib_tog.onCheckedChange { setState(it) }
+        views.vibTog.onCheckedChange { setState(it) }
     }
 
     /**
@@ -45,7 +45,7 @@ class Vibrator(
      * On pause, stop
      */
     override fun onPause() {
-        cntx.vib_tog.isChecked = false
+        views.vibTog.isChecked = false
     }
 }
 
