@@ -3,7 +3,7 @@ package es.unizar.gde.sensors.tools
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.view.MenuItem
@@ -14,7 +14,7 @@ import es.unizar.gde.sensors.R
 var hasWritePermission = false
 var hasRecordPermission = false
 
-private val PERMISSIONS_CODE = 0
+const val REQUEST_CODE = 0
 
 
 var permissionsMenu: MenuItem? = null
@@ -30,24 +30,24 @@ fun Activity.testPermission(ask: Boolean = false) {
         return
     }
 
-    if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+    if (canCreateFiles(this))
         hasWritePermission = true
 
     if (checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED)
         hasRecordPermission = true
 
-    val needed = arrayOf(hasWritePermission to Manifest.permission.WRITE_EXTERNAL_STORAGE, hasRecordPermission to Manifest.permission.RECORD_AUDIO).filter { !it.first }.map { it.second }
 
-
-    if (needed.isNotEmpty() && ask) {
+    if ((!hasWritePermission || !hasRecordPermission) && ask) {
         AlertDialog.Builder(this)
-                .setTitle(R.string.title_permissions)
-                .setMessage(getString(R.string.text_permissions).trimIndent())
-                .setPositiveButton(android.R.string.ok, DialogInterface.OnClickListener { _, _ ->
-                    requestPermissions(needed.toTypedArray(), PERMISSIONS_CODE)
-                }).setNegativeButton(android.R.string.cancel, null)
-                .show()
+            .setTitle(R.string.title_permissions)
+            .setMessage(getString(R.string.text_permissions).trimIndent())
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                if (!hasRecordPermission) requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_CODE)
 
+                if (!hasWritePermission) startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE), REQUEST_CODE)
+
+            }.setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 
     permissionsMenu?.isVisible = !hasWritePermission || !hasRecordPermission
