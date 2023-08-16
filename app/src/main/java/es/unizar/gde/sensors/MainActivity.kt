@@ -13,9 +13,7 @@ import es.unizar.gde.sensors.fragment.Experiments
 import es.unizar.gde.sensors.fragment.Microphone
 import es.unizar.gde.sensors.fragment.Speaker
 import es.unizar.gde.sensors.fragment.Vibrator
-import es.unizar.gde.sensors.tools.REQUEST_CODE
 import es.unizar.gde.sensors.tools.permissionsMenu
-import es.unizar.gde.sensors.tools.setSaveFolder
 import es.unizar.gde.sensors.tools.testPermission
 
 /**
@@ -131,22 +129,6 @@ class MainActivity : Activity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         testPermission()
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE) {
-            data?.data?.let { treeUri ->
-                contentResolver.takePersistableUriPermission(
-                    treeUri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION or
-                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                )
-
-                setSaveFolder(treeUri.toString(), this)
-            }
-            testPermission()
-        }
-    }
-
 
     /**
      * A key was pressed:

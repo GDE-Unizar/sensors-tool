@@ -16,8 +16,8 @@
     <string name="btn_info">Sensors Info</string>
 
     <string name="toast_saved">File saved: %s</string>
-    <string name="toast_nofolder">Can\'t create folder</string>
-    <string name="toast_nopermission">Permission denied</string>
+    <string name="toast_fileerror">"Can't create file"</string>
+    <string name="toast_writingfile">Writing file…</string>
 
     <string name="exp_title">Run experiment: %s</string>
     <string name="exp_freq">frequency</string>
@@ -41,16 +41,16 @@
 
     <string name="menu_help">Help</string>
     <string name="menu_folder">Folder</string>
-    <string name="folder">All the files generated (by recording, snapshot, or experiments) are saved in the folder %s in your device (usually the sd card, or the internal memory if no card is present).</string>
+    <string name="folder">"All the files generated (by recording, snapshot, or experiments) are saved in the subfolder 'PracFis' inside the downloads folder in your device."</string>
     <string name="open">open</string>
 
     <string name="title_permissions">Permissions</string>
     <string name="text_permissions">"
-        This app requires two permissions:
-        - External storage: used to save files in your device with the graphs data for other analysis. If rejected you won't be able to save files.
-        - Record audio: used to display microphone data in a graph. If rejected the microphone tab won't work.
+        This app requires the record audio permission if you want to display microphone data in a graph. If rejected the microphone tab won't work.
 
-        Note: files nor audio are saved/sent/shared anywhere else. If you reject a permission press the warning button at the top to ask again.
+        Note: audio data is not saved/sent/shared anywhere else, unless you use the save graph feature, in which case the file will be created locally only.
+
+        If you reject the permission, press the warning button at the top to ask again.
         "</string>
 
 </resources>

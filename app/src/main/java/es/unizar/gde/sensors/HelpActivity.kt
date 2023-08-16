@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.util.Log
 import android.view.View
-import es.unizar.gde.sensors.tools.getSaveFolder
 
 
 /**
@@ -21,7 +20,7 @@ fun Context.showInfoActivityHelp() = showDialog(R.string.menu_help, getString(R.
 /**
  * Displays a dialog explaining where to find the folder
  */
-fun Context.showFolder() = showDialog(R.string.menu_folder, getString(R.string.folder, getSaveFolder(this).name))
+fun Context.showFolder() = showDialog(R.string.menu_folder, getString(R.string.folder))
 //    setPositiveButton(R.string.open) { _, _ ->
 //        openFolder()
 //    }
