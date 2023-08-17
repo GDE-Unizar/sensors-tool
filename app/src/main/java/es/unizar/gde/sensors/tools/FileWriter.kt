@@ -15,7 +15,7 @@ import java.util.Date
 import java.util.Locale
 
 /**
- * Manages writting to a file
+ * Manages writing to a file
  */
 class FileWriter(
     private val cntx: Activity,
@@ -34,12 +34,14 @@ class FileWriter(
         close()
 
         // open file for writing
-        val fileName = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US).format(Date()) + suffix.toSuffix + subsuffix.toSuffix + ".txt"
-        runCatching { stream = FileOutputStream(getOutputFolder(cntx) / fileName) }.onFailure {
+        runCatching {
+            val fileName = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US).format(Date()) + suffix.toSuffix + subsuffix.toSuffix + ".txt"
+            stream = FileOutputStream(getOutputFolder(cntx).apply { mkdirs() } / fileName)
+            currentFilename = fileName
+        }.onFailure {
             Toast.makeText(cntx, R.string.toast_fileerror, Toast.LENGTH_SHORT).show()
             return
         }
-        currentFilename = fileName
 
         if (toast)
             Toast.makeText(cntx, R.string.toast_writingfile, Toast.LENGTH_SHORT).show()
