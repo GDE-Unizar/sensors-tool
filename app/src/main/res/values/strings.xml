@@ -17,6 +17,7 @@
 
     <string name="toast_saved">File saved: %s</string>
     <string name="toast_fileerror">"Can't create file"</string>
+    <string name="toast_filepermissions">"No permissions granted. Use the warning icon at the top."</string>
     <string name="toast_writingfile">Writing file…</string>
 
     <string name="exp_title">Run experiment: %s</string>
@@ -46,11 +47,13 @@
 
     <string name="title_permissions">Permissions</string>
     <string name="text_permissions">"
-        This app requires the record audio permission if you want to display microphone data in a graph. If rejected the microphone tab won't work.
+        This app requires the following permissions:
+        - Record audio: if you want to display microphone data in a graph. If rejected the microphone tab won't work.
+        - Access Downloads folder (automatically granted on some Android versions): To save data into txt files. If rejected saving data as files won't work.
 
         Note: audio data is not saved/sent/shared anywhere else, unless you use the save graph feature, in which case the file will be created locally only.
 
-        If you reject the permission, press the warning button at the top to ask again.
+        If you reject the permissions, press the warning button at the top to ask again.
         "</string>
 
 </resources>

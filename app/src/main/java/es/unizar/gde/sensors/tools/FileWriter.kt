@@ -33,6 +33,12 @@ class FileWriter(
         // close previous if any
         close()
 
+        // check permissions
+        if (!hasWritePermission) {
+            Toast.makeText(cntx, R.string.toast_filepermissions, Toast.LENGTH_SHORT).show()
+            return
+        }
+
         // open file for writing
         runCatching {
             val fileName = SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US).format(Date()) + suffix.toSuffix + subsuffix.toSuffix + ".txt"
